@@ -1,0 +1,97 @@
+SUBROUTINE VEOFF_AD
+
+!-----------------------------------------------------------------------
+!                                                                      !
+! VERTICAL TRANSFORM FROM CONTROL TO PHYSICAL SPACE - ADJOINT
+!                                                                      !
+! VERSION 1: S.DOBRICIC 2006                                           !
+! A.STORTO 2009-03 ADPATED FOR GLOBAL MODEL W/O ETA EOFS               !
+!-----------------------------------------------------------------------
+
+
+ USE SET_KND
+ USE DRV_STR
+ USE GRD_STR
+ USE EOF_STR
+ USE RUN, ONLY : LLVARMDT, LL_SSH_UNBALANCED, LL_TQ2_UNBALANCED
+ USE MYFRTPROF, ONLY : MYFRTPROF_WALL
+ USE CTL_STR
+ USE HYBRID
+
+ IMPLICIT NONE
+
+ INTEGER(I4)             :: I, J, K, N, KOFFSET, NKMT
+ REAL(R8), ALLOCATABLE   :: SRO(:,:,:)
+ INTEGER(I4)     :: KT2M, KQ2M, KSSH, KSIC, KSIT, KICU, KICV
+ LOGICAL  :: LLV(ROS%KMT)
+
+ CALL MYFRTPROF_WALL('VEOFF_AD: ADJOINT OF VERT TRANSFORM',0)
+
+ GRD%ROH_AD = 0.0_R8
+
+ ALLOCATE ( SRO(GRD%IM,GRD%JM,ROSH%NEOF) )
+ SRO = 0.0_R8
+
+ NKMT = ROS%KMT
+ LLV = .TRUE.
+ IF (LL_SSH) KSSH = PSV3D*GRD%KM+1
+ IF (LL_TQ2) THEN
+  IF(LL_ICE) THEN
+   KT2M = NKMT-5
+   KQ2M = NKMT-4
+  ELSE
+   KT2M = NKMT-1
+   KQ2M = NKMT
+  ENDIF
+ ENDIF
+ IF(LL_ICE) THEN
+   KSIC = NKMT-3
+   KSIT = NKMT-2
+   KICU = NKMT-1
+   KICV = NKMT
+ ENDIF
+
+IF (DRV%BAL(DRV%KTR) .EQ. 1 .AND. .NOT. LL_SSH_UNBALANCED .AND. LL_SSH ) &
+   LLV(KSSH) = .FALSE.
+
+IF (DRV%BA2(DRV%KTR) .EQ. 1 .AND. .NOT. LL_TQ2_UNBALANCED .AND. LL_TQ2 ) THEN
+   LLV(KT2M) = .FALSE.
+   LLV(KQ2M) = .FALSE.
+ENDIF
+
+IF ( LL_ICE ) THEN
+   LLV(KSIC) = .FALSE.
+   LLV(KSIT) = .FALSE.
+   LLV(KICU) = .FALSE.
+   LLV(KICV) = .FALSE.
+ENDIF
+
+#ifdef SHARED_MEMORY
+!$OMP PARALLEL DEFAULT(SHARED),PRIVATE(J,N,K,I)
+!$OMP DO SCHEDULE(DYNAMIC,1)
+#endif
+ DO N=1,ROSH%NEOF
+  DO K=1,NKMT
+    IF(LLV(K))THEN
+     DO J=1,GRD%JM
+      DO I=1,GRD%IM
+      SRO(I,J,N) = SRO(I,J,N)+ROSH%EVC(REGHH(I,J),K,N)*PSVF_AD(I,J,K)*GRD%MVLOC_H(I,J,K)
+      ENDDO
+     ENDDO
+    ENDIF
+  ENDDO
+  DO J=1,GRD%JM
+    DO I=1,GRD%IM
+      GRD%ROH_AD(I,J,N) = ROSH%EVA(REGHH(I,J),N) * SRO(I,J,N)
+    ENDDO
+  ENDDO
+ ENDDO
+#ifdef SHARED_MEMORY
+!$OMP END DO
+!$OMP END PARALLEL
+#endif
+
+DEALLOCATE (SRO)
+
+ CALL MYFRTPROF_WALL('VEOFF_AD: ADJOINT OF VERT TRANSFORM',1)
+END SUBROUTINE VEOFF_AD

@@ -1,0 +1,524 @@
+MODULE TRACK_CORREL
+
+USE SET_KND
+USE OBS_STR
+USE IOUNITS
+USE MPIREL
+USE MYFRTPROF
+USE RUN
+
+IMPLICIT NONE
+
+INTEGER(I4)       :: NN_TRACK_CORREL
+REAL(R8)          :: RR_TRACK_CORREL
+REAL(R8)          :: RR_TRACK_CORREL_TIME
+REAL(R8)          :: DEG2RAD
+REAL(R8), ALLOCATABLE :: RMAT(:,:,:)
+INTEGER(I4), PARAMETER :: MAXTRACKS=9999
+INTEGER(I4) :: NTRACKS, NOBSPT(MAXTRACKS), &
+& JOSTART(MAXTRACKS), JOEND(MAXTRACKS)
+
+CONTAINS
+
+SUBROUTINE JOSLA_CORREL(JOS)
+
+IMPLICIT NONE
+
+REAL(R8), INTENT(OUT) :: JOS
+INTEGER(I4) :: JTRC, IMAX
+REAL(R8), ALLOCATABLE :: ZTMP(:,:)
+REAL(R8) :: ZT(1,1)
+
+IMAX= MAXVAL( NOBSPT )
+ALLOCATE(ZTMP(IMAX,1))
+
+WRITE(1591+MYPROC,*)
+
+JOS=0._R8
+DO JTRC=1,NTRACKS
+
+   ZTMP(1:NOBSPT(JTRC),1) = OBS%INC(JOSTART(JTRC):JOEND(JTRC))-&
+   & OBS%RES(JOSTART(JTRC):JOEND(JTRC))
+
+   ZT = MATMUL(TRANSPOSE(ZTMP(1:NOBSPT(JTRC),:)),&
+   & MATMUL(RMAT(JTRC,1:NOBSPT(JTRC),1:NOBSPT(JTRC)),ZTMP(1:NOBSPT(JTRC),:)))
+
+   JOS = JOS + 0.5_R8 * ZT(1,1)
+   WRITE(1591+MYPROC,*) JTRC,ZT(1,1),JOS
+
+ENDDO
+
+WRITE(1591+MYPROC,*)
+DEALLOCATE(ZTMP)
+
+END SUBROUTINE JOSLA_CORREL
+
+SUBROUTINE GRASLA_CORREL(N,GRA)
+
+IMPLICIT NONE
+
+INTEGER(I4), INTENT(IN) :: N
+REAL(R8), INTENT(OUT) :: GRA(N)
+REAL(R8) :: GRAT(N,1)
+INTEGER(I4) :: JTRC, IMAX
+REAL(R8), ALLOCATABLE :: ZTMP(:,:)
+
+IMAX= MAXVAL( NOBSPT )
+ALLOCATE(ZTMP(IMAX,1))
+
+DO JTRC=1,NTRACKS
+
+   ZTMP(1:NOBSPT(JTRC),1) = OBS%INC(JOSTART(JTRC):JOEND(JTRC))-&
+   & OBS%RES(JOSTART(JTRC):JOEND(JTRC))
+
+   GRAT( JOSTART(JTRC):JOEND(JTRC),: ) = &
+   & MATMUL(RMAT(JTRC,1:NOBSPT(JTRC),1:NOBSPT(JTRC)),ZTMP(1:NOBSPT(JTRC),:))
+
+ENDDO
+
+GRA(1:N)=GRAT(1:N,1)
+DEALLOCATE(ZTMP)
+
+END SUBROUTINE GRASLA_CORREL
+
+SUBROUTINE PREP_SLARINV
+
+!... SEARCH OUT SLA ALONG-TRACK CO-LOCATIONS
+!    FOR ERROR CORRELATION COMPUTATION
+!... A.S.
+
+IMPLICIT NONE
+
+REAL(R8) :: CR2, E1, E1CR, DIST, ZPI, DET, ZCHK, ZCT, CRT, COR
+REAL(R8), ALLOCATABLE :: RTMP(:,:)
+INTEGER(I4) :: JO, JTRC, KO, JO2, KO2
+INTEGER(I4) :: MA, IERR, KTRACK, KSAT
+INTEGER(I4) :: JD, NDIST, IDN=0
+REAL(R8), ALLOCATABLE :: XEMP(:), YEMP(:)
+LOGICAL :: LLDEB
+CHARACTER(LEN=19) :: CFITM
+
+ CALL MYFRTPROF_WALL('PREP_SLARINV: PREPARING FOR SLA R INVERSION',0)
+
+ WRITE(IOUNLOG,*)
+ WRITE(IOUNLOG,*) ' *** PREPARING FOR SLA R INVERSION'
+ WRITE(IOUNLOG,*) 
+ WRITE(IOUNLOG,*) ' NUMBER OF SLA OBS ',SLA%NO
+
+ IF(LL_HUBERQC_SLA) CALL ABOR1('SLARINV NOT SUPPORTED WITH HUBERQC, ABORTING')
+
+ IF(NN_TRACK_CORREL.NE. 1 .AND.NN_TRACK_CORREL.NE. 2.AND.&
+    NN_TRACK_CORREL.NE.11 .AND.NN_TRACK_CORREL.NE.12.AND.&
+    NN_TRACK_CORREL.NE. 3 ) THEN
+   CALL ABOR1('SLARINV: NN_TRACK_CORREL OPTION NOT SUPPORTED')
+ ENDIF
+
+ NTRACKS = 0
+ KSAT = -1
+ KTRACK = -1
+ NOBSPT = 0
+ 
+ ZPI = 2._R8 * ASIN(1._R8)
+ DEG2RAD = ZPI/180._R8
+
+ E1  = 10._R8
+ E1CR= E1*RR_TRACK_CORREL
+ CR2 = RR_TRACK_CORREL*RR_TRACK_CORREL
+ CRT = RR_TRACK_CORREL_TIME
+
+ IF(NN_TRACK_CORREL.EQ.2.OR.NN_TRACK_CORREL.EQ.12) THEN
+  OPEN(91,FILE='sla_correl.dat',STATUS='OLD')
+  READ(91,*) NDIST
+  ALLOCATE( XEMP(NDIST) )
+  ALLOCATE( YEMP(NDIST) )
+  DO JD=1,NDIST
+     READ(91,*) XEMP(JD), YEMP(JD)
+  ENDDO
+  CLOSE(91)
+ ENDIF
+
+ IF(NN_TRACK_CORREL.EQ.3) THEN
+  OPEN(91,FILE='sla_correl.dat',STATUS='OLD')
+  NDIST=180
+  ALLOCATE( YEMP(NDIST) )
+  DO JD=1,NDIST
+     READ(91,*) YEMP(JD)
+  ENDDO
+  CLOSE(91)
+  WRITE(IOUNLOG,*) ' MIN/MAX/MEAN VALUE FOR CORREL. RAD :',&
+  & MINVAL(YEMP),MAXVAL(YEMP),SUM(YEMP)/NDIST
+ ENDIF
+
+
+ LOOPSLA : DO JO=1,SLA%NO
+    IF(SLA%FLC(JO) .EQ. 0 ) CYCLE LOOPSLA 
+    IF( SLA%KSAT(JO) .EQ. KSAT .AND. SLA%TRACK(JO) .EQ. KTRACK ) THEN
+       NOBSPT( NTRACKS ) = NOBSPT( NTRACKS ) + 1
+       CYCLE LOOPSLA
+    ENDIF
+    NTRACKS = NTRACKS + 1
+    NOBSPT( NTRACKS ) = 1
+    KSAT=SLA%KSAT(JO)
+    KTRACK=SLA%TRACK(JO)
+    JOSTART(NTRACKS) = JO
+    IF( NTRACKS.GT.1) JOEND(NTRACKS-1) = JO-1
+ ENDDO LOOPSLA
+ JOEND(NTRACKS)=SLA%NO
+
+ MA=MAXVAL( NOBSPT(1:NTRACKS) )
+
+ WRITE(IOUNLOG,*)
+ WRITE(IOUNLOG,*) ' REPORT OF SLA TRACKS'
+ WRITE(IOUNLOG,*) ' NUMBER OF SLA TRACKS = ',NTRACKS
+ DO JTRC=1,NTRACKS
+   WRITE(IOUNLOG,*) ' TRACK NO',JTRC,'  -  ',NOBSPT(JTRC),JOSTART(JTRC),JOEND(JTRC)
+ ENDDO
+
+ IF(NN_TRACK_CORREL.GE.11) THEN
+    NTRACKS=1
+    MA=SLA%NO
+    JOSTART(1)=1
+    JOEND  (1)=SLA%NO
+    NOBSPT (1)=SLA%NO
+ ENDIF
+
+ WRITE(IOUNLOG,*) ' ALLOCATING RMAT :', NTRACKS, MA, MA
+ WRITE(IOUNLOG,*) ' ABOUT ', NINT(NTRACKS*MA*MA*8._R8/(1024._R8*1024._R8)), ' MB '
+ ALLOCATE( RMAT( NTRACKS, MA, MA ) )
+ RMAT = 0._R8
+ ALLOCATE( RTMP( MA, MA ) )
+ 
+ WRITE(IOUNLOG,*) ' NUMBER OF SLA TRACKS USED = ',NTRACKS
+ DO JTRC=1,NTRACKS
+   WRITE(IOUNLOG,*) ' TRACK NO',JTRC,'  -  ',NOBSPT(JTRC),JOSTART(JTRC),JOEND(JTRC)
+ ENDDO
+
+ LOOPTRACK : DO JTRC=1,NTRACKS
+    LLDEB = .FALSE.
+    IF( JTRC.EQ.2 .AND. MYPROC.EQ.1 .AND. NN_TRACK_CORREL.LE.10) LLDEB =.TRUE.
+    IF( JTRC.EQ.1 .AND. MYPROC.EQ.1 .AND. NN_TRACK_CORREL.GE.10) LLDEB =.TRUE.
+    IF( MYPROC .EQ. 3 ) LLDEB =.TRUE.
+    LLDEB = .TRUE.
+    IF( NOBSPT( JTRC ) .EQ. 0 ) CYCLE LOOPTRACK
+    IF( NOBSPT( JTRC ) .EQ. 1 ) THEN
+        RMAT(JTRC,1,1) = SLA%ERR(JOSTART(JTRC))*SLA%ERR(JOSTART(JTRC))
+        CYCLE LOOPTRACK
+    ENDIF
+    KO=0
+    WRITE(1561+MYPROC,*) '///',JTRC,NOBSPT(JTRC),JOSTART(JTRC),JOEND(JTRC)
+    IF(MYPROC.EQ.3) WRITE(CFITM,'(A,I3.3,A)') 'track_',JTRC,'.dat'
+    IF(MYPROC.EQ.3) OPEN(161,FILE=CFITM)
+    LOOPSLA2 : DO JO=JOSTART(JTRC),JOEND(JTRC)
+       IF(SLA%FLC(JO) .EQ. 0 ) CYCLE LOOPSLA2
+          IF(MYPROC.EQ.3) WRITE(161,*) SLA%LON(JO),SLA%LAT(JO)
+          KO=KO+1
+          IF( KO .GT. MA ) CALL ABOR1('PREP_SLARINV: RMAT EXCEEDED 1')
+          RMAT(JTRC,KO,KO) = SLA%ERR(JO)*SLA%ERR(JO)
+          KO2=0
+          LOOPSLA3 : DO JO2=JOSTART(JTRC),JO-1
+
+             IF(SLA%FLC(JO2) .EQ. 0 ) CYCLE LOOPSLA3
+             KO2=KO2+1
+             IF(LLDEB) WRITE(1561+MYPROC,*) JO,KO,JO2,KO2
+             IF( KO2 .GT. MA ) CALL ABOR1('PREP_SLARINV: RMAT EXCEEDED 2')
+
+             ! COMPUTE DISTANCE
+             DIST=HAVERSINE(SLA%LON(JO),SLA%LAT(JO),SLA%LON(JO2),SLA%LAT(JO2))
+
+             ! ADD TEMPORAL CORRELATION, EVENTUALLY
+             IF( NN_TRACK_CORREL .GE. 11 ) THEN
+                 ZCT = ABS( SLA%TIM(JO)-SLA%TIM(JO2) )
+                 ZCT = EXP( -ZCT/CRT )
+             ELSE
+                 ZCT = 1._R8
+             ENDIF
+
+             ! COMPUTE CORRELATION
+             IF( NN_TRACK_CORREL .EQ. 1 .OR. NN_TRACK_CORREL .EQ. 11 .OR. &
+                 NN_TRACK_CORREL .EQ. 3 ) THEN
+                IF( NN_TRACK_CORREL .EQ. 3 ) THEN
+                    IDN = INT( (SLA%LAT(JO)+SLA%LAT(JO2))/2._R8 + 90._R8 ) +1
+                    CR2 = YEMP(IDN)*YEMP(IDN)
+                ENDIF
+                COR = EXP(-0.5_R8*DIST*DIST/CR2)
+             ELSEIF ( NN_TRACK_CORREL .EQ. 2 .OR. NN_TRACK_CORREL .EQ. 12) THEN
+                IDN = MINLOC( ABS(XEMP-DIST), DIM=1 )
+                COR = YEMP(IDN)
+             ENDIF
+
+             ! COMPUTE COVARIANCE
+             RMAT(JTRC,KO2,KO) = SLA%ERR(JO)*SLA%ERR(JO2)*COR*ZCT
+             IF(LLDEB) WRITE(1561+MYPROC,*) '***',&
+             & DIST,IDN,COR,CR2,RMAT(JTRC,KO2,KO),&
+             & SLA%LON(JO),SLA%LAT(JO),SLA%LON(JO2),SLA%LAT(JO2)
+ 
+             ! TRUNCATE IF NEEDED
+             IF(RMAT(JTRC,KO2,KO).LT.1.E-99_R8) RMAT(JTRC,KO2,KO) = 0._R8
+
+             ! SYMMETRIZE
+             RMAT(JTRC,KO,KO2) = RMAT(JTRC,KO2,KO)
+          ENDDO LOOPSLA3
+    ENDDO LOOPSLA2
+    IF(MYPROC.EQ.3) CLOSE(161)
+    IF(.FALSE.) THEN
+      IF(NN_TRACK_CORREL.LE.10) THEN
+        WRITE(1561+MYPROC,*) 'TRACK No 2'
+        WRITE(1561+MYPROC,*) '----------------------'
+        DO KO=1,62
+          WRITE(1561+MYPROC,'(70E12.3)') (RMAT(JTRC,KO,KO2),KO2=1,70)
+          WRITE(1581+MYPROC,'(I3,3F15.9)')KO,SLA%LON(KO),SLA%LAT(KO),SLA%ERR(KO)
+        ENDDO
+        WRITE(1561+MYPROC,*) '----------------------'
+      ELSE 
+        WRITE(1561+MYPROC,*) 'TRACK No 1'
+        WRITE(1561+MYPROC,*) '----------------------'
+        DO KO=1,SLA%NO
+          WRITE(1561+MYPROC,'(900E12.3)') (RMAT(JTRC,KO,KO2),KO2=1,SLA%NO)
+          WRITE(1581+MYPROC,'(I3,3F15.9)')KO,SLA%LON(KO),SLA%LAT(KO),SLA%ERR(KO)
+        ENDDO
+        WRITE(1561+MYPROC,*) '----------------------'
+      ENDIF
+    ENDIF
+ ENDDO LOOPTRACK
+
+! FOR THE TIME BEING, OMP PARALLELIZ. IS DISABLED
+!...#ifdef SHARED_MEMORY
+!...$OMP PARALLEL DEFAULT(SHARED), PRIVATE(JTRC,ZCHK,RTMP)
+!...$OMP DO SCHEDULE(DYNAMIC,1)
+!...#endif
+ LOOPTRACK2 : DO JTRC=1,NTRACKS
+    RTMP(:,:) = RMAT(JTRC,:,:)
+    WRITE(1561+MYPROC,*) ' INVERSION: ',JTRC, NOBSPT(JTRC)
+    IF ( NOBSPT(JTRC) .EQ. 1 ) THEN
+       RMAT(JTRC,1,1) = 1._R8 / RMAT(JTRC,1,1)
+    ELSE
+       CALL SYMMINV(RMAT(JTRC,1:NOBSPT(JTRC),1:NOBSPT(JTRC)),NOBSPT(JTRC))
+    ENDIF
+    ZCHK = SUM ( MATMUL(RTMP(1:NOBSPT(JTRC),1:NOBSPT(JTRC)),RMAT(JTRC,1:NOBSPT(JTRC),1:NOBSPT(JTRC))) )
+    WRITE(1561+MYPROC,*) ' RESULT   : ',JTRC, NOBSPT(JTRC),ZCHK, &
+    & 100._R8*ABS(REAL(NOBSPT(JTRC),R8)-ZCHK)/REAL(NOBSPT(JTRC),R8)
+ ENDDO LOOPTRACK2
+!...#ifdef SHARED_MEMORY
+!...$OMP END DO
+!...$OMP END PARALLEL
+!...#endif
+
+ DEALLOCATE( RTMP )
+ IF(NN_TRACK_CORREL.EQ.2.OR.NN_TRACK_CORREL.EQ.12) DEALLOCATE( XEMP, YEMP )
+ IF(NN_TRACK_CORREL.EQ.3) DEALLOCATE( YEMP )
+
+ WRITE(IOUNLOG,*) ' NUMBER OF TRACKS ',NTRACKS
+ WRITE(IOUNLOG,*) ' MIN/MAX NUMBER OF OBS PER TRACK ', &
+ & MINVAL( NOBSPT(1:NTRACKS) ), MA
+
+ CALL MYFRTPROF_WALL('PREP_SLARINV: PREPARING FOR SLA R INVERSION',1)
+
+END SUBROUTINE PREP_SLARINV
+
+REAL(R8) FUNCTION HAVERSINE(LO1,LA1,LO2,LA2)
+
+! A.S. 20.01.2010
+! Haversine formula to compute distance (km)
+! between points in latlon coordinates
+!
+! Use latitudinally-dependent Earth radius
+
+IMPLICIT NONE
+
+REAL(R8),INTENT(IN)  :: LO1,LA1,LO2,LA2
+REAL(R8)             :: ZLATS,ZLONS,ZLATE,ZLONE,DLAT,DLON
+REAL(R8)             :: ZA, ZC, ZR
+REAL(R8),PARAMETER   :: ZA1 = 6378.1370_R8
+REAL(R8),PARAMETER   :: ZB1 = 6356.7523_R8
+
+ZLATS=LA1*DEG2RAD
+ZLATE=LA2*DEG2RAD
+ZLONS=LO1*DEG2RAD
+ZLONE=LO2*DEG2RAD
+
+DLAT=ABS(ZLATS-ZLATE)
+DLON=ABS(ZLONS-ZLONE)
+
+ZA = SIN( DLAT/2._R8 )*SIN( DLAT/2._R8 ) + COS(ZLATS)*COS(ZLATE)*&
+& SIN(DLON/2._R8)*SIN(DLON/2._R8)
+ZC = 2._R8 * ATAN2(SQRT(ZA),SQRT(1._R8-ZA))
+ZR = SQRT( ZA1**4*COS(ZLATS)**2 + ZB1**4*SIN(ZLATS)**2 ) / &
+   & SQRT( ZA1**2*COS(ZLATS)**2 + ZB1**2*SIN(ZLATS)**2 )
+HAVERSINE = ZC*ZR
+
+END FUNCTION HAVERSINE
+
+SUBROUTINE SYMMINV(A,N)
+
+! INVERSE OF SYMMETRIC MATRIX VIA CHOLESKY DECOMP.
+! USE LAPACK STANDARD ROUTINES
+! A.S. - 2016
+
+  IMPLICIT NONE
+  INTEGER(I4), INTENT(IN) :: N
+  REAL(R8), INTENT(INOUT) :: A(N,N)
+  REAL(R8) :: A2(N,N)
+  INTEGER(I4) :: IERR,I,J
+  IF ( N .LE. 0 ) THEN
+     CALL ABOR1('SYMMINV: 0-LENGTH ARRAY')
+  ENDIF
+  IF ( N .EQ. 1 ) THEN
+     A(1,1) = 1._R8 / A(1,1)
+     RETURN
+  ENDIF
+  A2=A
+  IF (R8 == KIND(1._8)) THEN
+     CALL DPOTRF('L',N,A,N,IERR)
+     IF (IERR .NE. 0) THEN
+        WRITE(IOUNLOG,*) ' DPOTRF RETURNED ', IERR
+        WRITE(IOUNLOG,*) ' FAILED INVERSION WITH CHOLESKY DECOMP., DIM = ',N
+        WRITE(IOUNLOG,*) ' USING EIGEN-DECOMP. PSEUDO-INVERSE, DIM = ',N
+        A=A2
+        CALL PINV(N,A)
+        RETURN
+     END IF
+     CALL DPOTRI('L',N,A,N,IERR)
+     IF (IERR .NE. 0) THEN
+        WRITE(IOUNERR,*) ' DPOTRI RETURNED ', IERR
+        WRITE(IOUNLOG,*) ' FAILED INVERSION, DIM = ',N
+        DO J=1,N
+         DO I=1,N
+          WRITE(IOUNLOG,*) I, J, A(I,J)
+         ENDDO
+        ENDDO
+        CALL ABOR1('SYMMINV: ERROR IN DPOTRI')
+     END IF
+  ELSE IF (R8 == KIND(1._4)) THEN
+     CALL SPOTRF('L',N,A,N,IERR)
+     IF (IERR .NE. 0) THEN
+        WRITE(IOUNERR,*) ' SPOTRF RETURNED ', IERR
+        WRITE(IOUNLOG,*) ' FAILED INVERSION, DIM = ',N
+        DO J=1,N
+         DO I=1,N
+          WRITE(IOUNLOG,*) I, J, A(I,J)
+         ENDDO
+        ENDDO
+        CALL ABOR1('SYMMINV: ERROR IN SPOTRF')
+     END IF
+     CALL SPOTRI('L',N,A,N,IERR)
+     IF (IERR .NE. 0) THEN
+        WRITE(IOUNERR,*) ' SPOTRI RETURNED ', IERR
+        WRITE(IOUNLOG,*) ' FAILED INVERSION, DIM = ',N
+        DO J=1,N
+         DO I=1,N
+          WRITE(IOUNLOG,*) I, J, A(I,J)
+         ENDDO
+        ENDDO
+        CALL ABOR1('SYMMINV: ERROR IN SPOTRI')
+     END IF
+  ELSE
+     CALL ABOR1('SYMMINV: UNRECOGNIZED KIND')
+  ENDIF
+  DO J=2,N
+   DO I=1,J-1
+     A(I,J) = A(J,I)
+   ENDDO
+  ENDDO
+END SUBROUTINE SYMMINV
+
+subroutine pinv2 (N, A)
+
+      integer(i4), intent(in) :: N
+      real(R8), intent (inout) :: A(N,N)
+      real(R8), parameter      :: tolerance = 1.E-6_R8
+      real(R8), allocatable    :: work(:)
+      real(R8) :: B(N,N)
+      integer(i4) :: IPIV(N),j,INFO,LW,I
+
+      B = 0._R8
+      DO J =1,N
+         B(J,J) = 1._R8
+      ENDDO
+
+      LW = N*N
+      ALLOCATE(WORK(LW))
+      CALL DGESV(N,N,A,N,IPIV,B,N,INFO)
+      DEALLOCATE(WORK)
+
+      WRITE(1561+MYPROC,*) 'DGESV RETURNED ',INFO
+
+      A = B
+      !DO J=2,N
+      ! DO I=1,J-1
+      !   A(I,J) = A(J,I)
+      ! ENDDO
+      !ENDDO
+
+END subroutine pinv2
+
+function pinv_workspace(N) result(lwork)
+!     Determine the workspace needed for dsyev.
+      implicit none
+      integer(i4),intent(in) :: N
+      integer(i4) :: lwork
+      integer(i4) :: info
+      real(R8) :: dummy,rwork
+      call dsyev('V','U', N, dummy,N, dummy, rwork, -1, info )
+      lwork = ceiling(rwork)
+end function pinv_workspace
+
+
+subroutine pinv (N, A)
+
+!     Compute pseudo-inverse A+ of symmetric A in factored form U D+ U', where
+!     U overwrites A and D is diagonal matrix D+.
+
+!     Saunders notes: Working with the factors of the pseudo-inverse is
+!                     preferable to multiplying them together (more stable,
+!                     less arithmetic).  Also, the choice of tolerance is
+!                     not straightforward.  If A is noisy, try 1.e-2 * || A ||,
+!                     else machine-eps. * || A ||  (1 norms).
+!     Arguments:
+
+      integer(i4), intent(in) :: N
+      real(R8), intent (inout) :: A(N,N)
+      real(R8), parameter      :: tolerance = 1.E-9_R8
+      real(R8), allocatable    :: work(:), D(:)
+      real(R8)  :: C(N,N)
+
+!     Local variables:
+
+      integer :: i, info, NWS, J, K
+
+!     Execution:
+
+      NWS = PINV_WORKSPACE(N) 
+
+      ALLOCATE( work(NWS) )
+      ALLOCATE( D(N) )
+
+!     Eigendecomposition/SVD of symmetric A:
+
+      call dsyev ('V', 'U', N, A, N, D, work, NWS, info)
+
+!     Diagonal factor D+ of pseudo-inverse:
+
+      do i = 1, N
+         if (D(i) > tolerance) then
+            D(i) = 1._R8 / D(i)
+         else
+            D(i) = 0._R8
+         end if
+      end do
+
+      DO K=1,N
+        DO J=1,N
+          C(J,K) = 0._R8
+          DO I=1,N
+            C(J,K) = C(J,K) + A(J,I) * D(I) * A(K,I)
+          END DO
+        END DO
+      END DO
+
+      DEALLOCATE( work, D)
+
+      A = C
+
+      end subroutine pinv
+
+END MODULE TRACK_CORREL

@@ -1,0 +1,166 @@
+SUBROUTINE WRT_OBS_SCREEN
+
+!-----------------------------------------------------------------------
+!                                                                      !
+! WRITE OUTPUTS
+!                                                                      !
+! VERSION 1: S.DOBRICIC 2006                                           !
+! VERSION 2: S.DOBRICIC 2006                                           !
+!-----------------------------------------------------------------------
+
+
+ USE SET_KND
+ USE OBS_STR
+ USE GRD_STR
+ USE IOUNITS
+ USE MYFRTPROF
+
+ IMPLICIT NONE
+
+ INTEGER(I4)  :: I,J,K, KK,JVL,JOBS,I2,JLEV
+ INTEGER(I4)  :: XIND1,NO
+
+ INTEGER(I4), ALLOCATABLE, DIMENSION(:) ::  OTY,OPA,OKB,EVE
+ INTEGER(I4), ALLOCATABLE, DIMENSION(:,:) ::  OIB,OJB
+ INTEGER(I4), ALLOCATABLE :: INST(:)
+ REAL(R8),ALLOCATABLE, DIMENSION(:) ::  SMDT
+ REAL(R8),ALLOCATABLE, DIMENSION(:) ::  LON,LAT,&
+ & TIME,VAL,DEP,BIAS,BGE,RES,ERR,TDI
+
+ CALL MYFRTPROF_WALL('WRT_OBS_SCREEN: WRITE OBSERVATION OUTPUT',0)
+
+ NO=SLA%NO+INS%NO+SST%NO+SSS%NO
+
+ IF(NO.LT.1) RETURN
+
+ !... FORM ADDITIONAL VECTORS FOR OUTPUT
+ ALLOCATE(OTY(NO),LON(NO),LAT(NO),OPA(NO),EVE(NO),ERR(NO),RES(NO),&
+       & OIB(NO,NPQ),OJB(NO,NPQ),OKB(NO),BGE(NO),&
+       & TIME(NO),VAL(NO),DEP(NO),INST(NO),BIAS(NO),TDI(NO))
+
+  LON=0._R8
+  LAT=0._R8
+  EVE=0
+  OPA=0
+  OTY=0
+  OIB=0
+  OJB=0
+  OKB=0
+  BGE=0._R8
+  ERR=0._R8
+  RES=0._R8
+
+  TIME=0._R8
+  VAL=0._R8
+  DEP=0._R8
+  INST=0
+  BIAS=0._R8
+
+  IF( SLA%NO .GT. 0 ) THEN
+    ALLOCATE( SMDT(SLA%NO) )
+    SMDT=-999._R8
+    DO JOBS=1,SLA%NO
+      IF( MINVAL(SLA%IB(JOBS,:)).GE.1 .AND. MAXVAL(SLA%IB(JOBS,:)).LE.GRD%IM &
+    .AND. MINVAL(SLA%JB(JOBS,:)).GE.1 .AND. MAXVAL(SLA%JB(JOBS,:)).LE.GRD%JM &
+    .AND. ALL( SLA%PQ(JOBS,:).GE.0._R8 .AND. SLA%PQ(JOBS,:).LE.1._R8 ) ) THEN
+        SMDT(JOBS)=OSUM(SLA%PQ(JOBS,1:NPQ),GRD%MDT(SLA%IB(JOBS,1:NPQ),SLA%JB(JOBS,1:NPQ) ) )
+      ENDIF
+    ENDDO
+  ENDIF
+
+  K=0
+  !-- SLA
+  O1 : DO JOBS=1,SLA%NO
+     K=K+1
+     EVE(K) = SLA%EVE(JOBS)
+     ERR(K) = SLA%ERR(JOBS)
+     RES(K) = SLA%RES(JOBS)
+     OTY(K) = 21
+     OPA(K) = 21
+     LON(K) = SLA%LON(JOBS)
+     LAT(K) = SLA%LAT(JOBS)
+     TIME(K) = SLA%TIM(JOBS)
+     VAL (K) = SLA%VAL(JOBS)
+     OIB(K,:) = SLA%IB(JOBS,:)+GRD%I0-1
+     OJB(K,:) = SLA%JB(JOBS,:)+GRD%J0-1
+     OKB(K) = SLA%BOT(JOBS)
+     DEP (K) = SMDT(JOBS)
+     INST(K) = SLA%KSAT(JOBS)
+     BIAS(K) = SLA%BIA(JOBS)
+     BGE(K)  = SLA%BGERR(JOBS)
+     TDI(K) = SLA%TDIST(JOBS)
+  ENDDO O1
+  !-- INS
+  O2 : DO JOBS=1,INS%NO
+     K=K+1
+     EVE(K) = INS%EVE(JOBS)
+     ERR(K) = INS%ERR(JOBS)
+     RES(K) = INS%RES(JOBS)
+     OTY(K) = INS%OTYPE(JOBS)
+     OPA(K) = INS%PAR(JOBS)
+     LON(K) = INS%LON(JOBS)
+     LAT(K) = INS%LAT(JOBS)
+     TIME(K) = INS%TIM(JOBS)
+     VAL (K) = INS%VAL(JOBS)
+     DEP (K) = INS%DPT(JOBS)
+     INST(K) = TRANSFER(INS%PLNO(JOBS)(1:8),INST(K))
+     BIAS(K) = INS%BIA(JOBS)
+     OIB(K,:) = INS%IB(JOBS,:)+GRD%I0-1
+     OJB(K,:) = INS%JB(JOBS,:)+GRD%J0-1
+     OKB(K) = INS%KB(JOBS)
+     BGE(K) = INS%BGERR(JOBS)
+     TDI(K) = INS%TDIST(JOBS)
+  ENDDO O2
+  !-- SST
+  O3 : DO JOBS=1,SST%NO
+     K=K+1
+     EVE(K) = SST%EVE(JOBS)
+     ERR(K) = SST%ERR(JOBS)
+     RES(K) = SST%RES(JOBS)
+     OTY(K) = 20
+     OPA(K) = 20
+     LON(K) = SST%LON(JOBS)
+     LAT(K) = SST%LAT(JOBS)
+     TIME(K) = SST%TIM(JOBS)
+     VAL (K) = SST%VAL(JOBS)
+     DEP (K) = 0._R8
+     INST(K) = SST%KSAT(JOBS)
+     BIAS(K) = SST%BIA(JOBS)
+     OIB(K,:) = SST%IB(JOBS,:)+GRD%I0-1
+     OJB(K,:) = SST%JB(JOBS,:)+GRD%J0-1
+     OKB(K) = 0
+     BGE(K) = SST%BGERR(JOBS)
+     TDI(K) = SST%TDIST(JOBS)
+  ENDDO O3
+  !-- SSS
+  O4 : DO JOBS=1,SSS%NO
+     K=K+1
+     EVE(K) = SSS%EVE(JOBS)
+     ERR(K) = SSS%ERR(JOBS)
+     RES(K) = SSS%RES(JOBS)
+     OTY(K) = 19
+     OPA(K) = 19
+     LON(K) = SSS%LON(JOBS)
+     LAT(K) = SSS%LAT(JOBS)
+     TIME(K) = SSS%TIM(JOBS)
+     VAL (K) = SSS%VAL(JOBS)
+     DEP (K) = 0._R8
+     INST(K) = SSS%KSAT(JOBS)
+     BIAS(K) = SSS%BIA(JOBS)
+     OIB(K,:) = SSS%IB(JOBS,:)+GRD%I0-1
+     OJB(K,:) = SSS%JB(JOBS,:)+GRD%J0-1
+     OKB(K) = 0
+     BGE(K) = SSS%BGERR(JOBS)
+     TDI(K) = SSS%TDIST(JOBS)
+  ENDDO O4
+
+  CALL WRITENCOBSS(NO,NPQ,OTY,OPA,INST,LON,LAT,TIME,DEP,VAL,&
+          & ERR,RES,BIAS,OIB,OJB,OKB,BGE,EVE,TDI)
+
+  DEALLOCATE(EVE,OTY,LON,LAT,BGE,ERR,RES,&
+          & TIME,VAL,DEP,INST,OIB,OJB,OKB)
+
+  IF( SLA%NO .GT. 0 ) DEALLOCATE( SMDT )
+
+ CALL MYFRTPROF_WALL('WRT_OBS_SCREEN: WRITE OBSERVATION OUTPUT',1)
+END SUBROUTINE WRT_OBS_SCREEN

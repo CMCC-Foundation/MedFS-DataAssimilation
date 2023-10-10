@@ -1,0 +1,240 @@
+MODULE FILTRW
+
+USE SET_KND
+
+IMPLICIT NONE
+
+!.. COMPUTE FILTER WEIGHTS
+!..
+!.. ADOPTED FROM THE NCL CODE
+
+!  -> DFILTRQ : FOR HIGH-, LOW- OR BAND- PASS LANCZOS FILTERS
+!  -> FILWGTNORMAL : FOR GAUSSIAN FILTERS
+
+!  NOTE THAT FOR SPATIAL APPLICATIONS THE WEIGHTED RUNNING AVERAGE
+!  WITH THE OUTPUT OF THIS FILTERS ASSUMES EQUALLY SPACED DATA, I.E.
+!  FOR SLA WE CANNOT FILTER OUT NON-VALID DATA AND ALSO ASSUME
+!  CONSTANT RESOLUTION OF DATA.
+!
+!  FOR THE LANCZOS FILTER
+!  ----------------------
+!  THE CUT-OFF FREQUENCY IS RELATIVE TO THE SPATIAL UNIT:
+!  EXAMPLE WITH SLA:
+!    - SPATIAL RESOLUTION IS ~ 20 KM
+!    - CUT-OFF WAVELENGTH FOR LOW-PASS FILTER IS 100 KM
+!    - CUT-OFF FREQUENCY IS 20 / 100 = 0.2
+!  THE SAME APPLIES IN CASE OF HIGH- OR BAND- PASS FILTER
+
+!.. ANDREA STORTO ..
+
+PUBLIC :: DFILTRQ,FILWGTNORMAL
+PRIVATE :: DFILWTQ
+
+CONTAINS
+
+SUBROUTINE DFILTRQ(NWT,FCA,FCB,NSIGMA,IHP,WT,RESP,FREQ,IER)
+
+IMPLICIT NONE
+
+! ROUTINE TO CALCULATE FILTER WGTS AND THE ASSOCIATED RESPONSE FUNCTION
+
+! SEE AN ARTICLE BY C. DUCHON (U. OF OKLAHOMA):
+!                   J. APPLIED METEOROLOGY;  AUGUST,1979; PP 1016-1022
+!                   "LANCZOS FILTERING IN ONE AND TWO DIMENSIONS"
+
+      INTEGER(I4) :: NWT,IHP,IER
+      REAL(R8) :: FCA,FCB,NSIGMA
+      REAL(R8) :: WT(NWT)
+      REAL(R8) :: FREQ(2*NWT-1),RESP(2*NWT-1)
+
+! INPUT PARAMETERS :
+!
+!     NWT     TOTAL NUMBER OF WEIGHTS (AN ODD NUMBER; NWT.GE.3)
+!             THE MORE WGTS .... THE BETTER THE FILTER BUT THERE
+!             IS A GREATER LOSS OF DATA.
+!
+!     FCA     THE CUT-OFF FREQ OF THE IDEAL HIGH OR
+!             LOW-PASS FILTER: [ 0.0 < FCA < 0.5 ]
+!
+!     FCB     USED ONLY WHEN A BAND-PASS FILTER IS DESIRED,
+!             IN WHICH CASE IT IS THE CUT-OFF FREQ FOR THE
+!             SECOND LOW-PASS FILTER:  [ FCA < FCB < 0.5 ]
+!
+!     NSIGMA  THE POWER OF THE SIGMA FACTOR.  IT IS
+!             GREATER THAN OR EQUAL TO ZERO.
+!             NOTE: NSIGMA=1 TO 3 IS USUALLY GOOD ENOUGH.
+!
+!     IHP     IF LOW-PASS FILTER IHP = 0,
+!             IF HIGH-PASS IHP = 1,
+!             IF BAND-PASS IHP = 2.
+!
+!     WORK    WORK ARRAY OF LENGTH NWT
+!
+! OUTPUT PARAMETERS :
+!
+!     WT      VECTOR CONTAINING THE COMPUTED WGTS. ITS LENGTH IS NWT.
+!             THE CENTRAL WEIGHT IS LOCATED AT NWT/2+1.
+!
+!     RESP    THE ARRAY OF RESPONSES AT FREQ INTVLS
+!             OF 0.5/(2*NWT-2)  CYCLES/DATA INTVL FROM THE
+!             ORIGIN TO THE NYQUIST.  ITS LENGTH IS 2*NWT-1.
+!
+!     FREQ    THE ARRAY OF FREQS AT INTVLS OF 0.5/(2*NWT-2)
+!             CYCLES/DATA INTVL AT WHICH THE RESPONSES
+!             ARE CALCULATED.  ITS LENGTH IS 2*NWT-1 .
+!
+!     IER     SIMPLE ERROR CODE
+!                                                   ! AUTOMATIC
+      REAL(R8) :: WORK(NWT)
+      REAL(R8) :: PI,TWOPI,FNW,ZSUM,FRQINT
+      INTEGER(I4) :: NW,N,NWP1,I,J,NF
+
+      IER = 0
+
+!      IF (NWT.LT.3) IER = 1
+!      IF (IHP.LT.0 .OR. IHP.GT.2) IER = IER + 10
+!      IF (FCA.LT.0.0D0 .OR. FCA.GT.0.5D0) IER = IER + 100
+!      IF (IHP.EQ.2) THEN
+!          IF (FCB.LT.0.0D0 .OR. FCB.GT.0.5D0) IER = IER + 1000
+!          IF (FCB.LT.FCA) IER = IER + 10000
+!      END IF
+
+      IF (IER.NE.0) RETURN
+
+      PI = 4._R8*ATAN(1._R8)
+      TWOPI = 2._R8*PI
+      NW = (NWT-1)/2
+      FNW = REAL(NW,R8)
+
+! COMPUTE WEIGHTS
+
+      CALL DFILWTQ(WT,NWT,NW,FCA,PI,TWOPI,NSIGMA)
+!                               ! ALTER WEIGHTS TO GET HIGH-PASS FILTER.
+      IF (IHP.EQ.1) THEN
+          WT(1) = 1._R8 - WT(1)
+          DO I = 2,NW + 1
+              WT(I) = -WT(I)
+          END DO
+      ELSE IF (IHP.EQ.2) THEN
+!                               ! COMPUTE WGTS OF 2ND LOW-PASS FILT
+!                               ! SAVE 1ST SET OF LOW PASS FILTER WGTS
+          DO I = 1,NW + 1
+              WORK(I) = WT(I)
+          END DO
+          CALL DFILWTQ(WT,NWT,NW,FCB,PI,TWOPI,NSIGMA)
+!                               ! ALTER WEIGHTS TO GET BAND-PASS FILTER
+          DO I = 1,NW + 1
+              WT(I) = WT(I) - WORK(I)
+          END DO
+      END IF
+
+! COMPUTE RESPONSE FCTN
+
+      ZSUM = 0._R8
+      NF = 2*NWT - 1
+      FREQ(1) = 0._R8
+      FRQINT = 0.5_R8/REAL(NF-1,R8)
+      DO J = 2,NW + 1
+          ZSUM = ZSUM + 2._R8*WT(J)
+      END DO
+      RESP(1) = ZSUM + WT(1)
+
+      DO I = 2,NF
+          ZSUM = 0._R8
+          FREQ(I) = REAL(I-1,R8)*FRQINT
+          DO J = 2,NW + 1
+              ZSUM = ZSUM + WT(J)*COS(TWOPI*FREQ(I)*REAL(J-1,R8))
+          END DO
+          RESP(I) = WT(1) + 2._R8*ZSUM
+      END DO
+
+! MAKE WT SYMMETRIC
+
+      NWP1 = NW + 1
+      DO N = 1,NW
+          WORK(N) = WT(N+1)
+      END DO
+      WT(NWP1) = WT(1)
+      DO N = 1,NW
+          WT(N) = WORK(NWP1-N)
+          WT(NWP1+N) = WORK(N)
+      END DO
+
+      RETURN
+      END SUBROUTINE DFILTRQ
+! ----------------------------------------------------------
+      SUBROUTINE DFILWTQ(WT,NWT,NW,FC,PI,TWOPI,NSIGMA)
+      IMPLICIT NONE
+
+! COMPUTE AND NORMALIZE FILTER WGTS
+
+      INTEGER(I4) :: NWT,NW
+      REAL(R8) :: WT(NWT),FC,PI,TWOPI,NSIGMA
+!                                                ! LOCAL
+      REAL(R8) :: ARG,FNW,SINX,SINY,ZSUM
+      INTEGER(I4) :: I
+
+      ARG = TWOPI*FC
+      FNW = REAL(NW,R8)
+
+      WT(1) = 2._R8*FC
+      DO I = 1,NW
+          SINX = SIN(ARG*REAL(I,R8))/ (PI*REAL(I,R8))
+          SINY = FNW*SIN(REAL(I,R8)*PI/FNW)/ (REAL(I,R8)*PI)
+          WT(I+1) = SINX*SINY**NSIGMA
+      END DO
+
+!                                                ! NORMALIZE WEIGHTS
+      ZSUM = WT(1)
+      DO I = 2,NW + 1
+          ZSUM = ZSUM + 2._R8*WT(I)
+      END DO
+      DO I = 1,NW + 1
+          WT(I) = WT(I)/ZSUM
+      END DO
+
+      RETURN
+      END SUBROUTINE DFILWTQ
+
+      SUBROUTINE FILWGTNORMAL (NWT, W, ITYPE, SIGMA, IER)
+      IMPLICIT NONE
+      INTEGER(I4) ::  NWT, ITYPE, IER
+      REAL(R8) ::     W(NWT), SIGMA
+!
+! NCL: WGTS = FILWGTS(NWT, SIGMA, ITYPE)
+! CURRENTLY THIS ONLY DOES GAUSSIAN (NORMAL) WEIGHTS
+!
+      REAL(R8) ::    PI, C1, C2, MEAN, DELX, X, WSUM
+      INTEGER(I4) :: N
+
+      IER  = 0
+      MEAN = 0._R8
+
+      PI   = 4._R8*ATAN(1._R8)
+      C1   = 1._R8/(SIGMA*SQRT(2._R8*PI))
+      C2   = -0.5_R8/SIGMA**2
+
+!                   DELX = FSPAN(-1, 1, NWT)
+      DELX = 2._R8/(NWT-1)
+
+! C C IF (ITYPE.EQ.0) THEN
+          X    = -(1._R8+DELX)
+          WSUM = 0._R8
+          DO N=1,NWT
+             X = X+DELX
+             W(N) = C1*EXP(C2*(X-MEAN)**2)
+             WSUM = WSUM+W(N)
+          END DO
+! C C ELSE
+! C C     IER = 1
+! C C     PRINT ("FILWGTS: UNSUPPORTED OPTION")
+! C C END IF
+
+      DO N=1,NWT
+         W(N) = W(N)/WSUM
+      END DO
+
+      RETURN
+      END SUBROUTINE FILWGTNORMAL
+
+END MODULE FILTRW

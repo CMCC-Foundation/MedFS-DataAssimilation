@@ -1,0 +1,164 @@
+SUBROUTINE VEOF
+
+!-----------------------------------------------------------------------
+!                                                                      !
+! VERTICAL TRANSFORM FROM CONTROL TO PHYSICAL SPACE
+!                                                                      !
+! VERSION 1: S.DOBRICIC 2006                                           !
+! A.STORTO 2009-03 ADPATED FOR GLOBAL MODEL W/O ETA EOFS               !
+!-----------------------------------------------------------------------
+
+
+ USE SET_KND
+ USE DRV_STR
+ USE GRD_STR
+ USE EOF_STR
+ USE CTL_STR
+ USE RUN, ONLY : LLVARMDT, LL_SSH_UNBALANCED, LL_TQ2_UNBALANCED
+ USE MYFRTPROF, ONLY : MYFRTPROF_WALL
+ USE IOUNITS, ONLY : IOUNLOG
+ USE HYBRID
+
+ IMPLICIT NONE
+
+ INTEGER(I4)     :: I, J, K, N,KOFFSET, NKMT
+ INTEGER(I4)     :: KT2M, KQ2M, KSSH, KSIC, KSIT, KICU, KICV
+ LOGICAL  :: LLV(ROS%KMT)
+ REAL(R8) :: ZA1, ZA2
+
+ CALL MYFRTPROF_WALL('VEOF: VERTICAL TRANSFORM',0)
+
+ NKMT = ROS%KMT
+ LLV = .TRUE.
+ IF (LL_SSH) KSSH = PSV3D*GRD%KM+1
+
+ IF (LL_TQ2) THEN
+  IF(LL_ICE) THEN
+   KT2M = NKMT-5
+   KQ2M = NKMT-4
+  ELSE
+   KT2M = NKMT-1
+   KQ2M = NKMT
+  ENDIF
+ ENDIF
+ IF(LL_ICE) THEN
+   KSIC = NKMT-3
+   KSIT = NKMT-2
+   KICU = NKMT-1
+   KICV = NKMT
+ ENDIF
+
+IF ( (DRV%BMD(DRV%KTR)+DRV%BAL(DRV%KTR)) .GT. 0 .AND. .NOT. LL_SSH_UNBALANCED .AND. LL_SSH ) &
+   LLV(KSSH) = .FALSE.
+
+IF (DRV%BA2(DRV%KTR) .EQ. 1 .AND. .NOT. LL_TQ2_UNBALANCED .AND. LL_TQ2 ) THEN
+    LLV(KT2M) = .FALSE.
+    LLV(KQ2M) = .FALSE.
+ENDIF
+
+IF ( LL_ICE ) THEN
+   LLV(KSIC) = .FALSE.
+   LLV(KSIT) = .FALSE.
+   LLV(KICU) = .FALSE.
+   LLV(KICV) = .FALSE.
+ENDIF
+
+ IF( LL_HYBRID ) THEN
+    IF( LL_ALPHA_CTL ) THEN
+      IF(LL_PRECON_ALPHA) THEN
+        ZA1 = ALPHAB(1) + ALPHA(1)*SQRT(ZALPHA_VAR)
+        ZA2 = SQRT(1._R8-ZA1*ZA1)
+      ELSE
+! TEST ONLY WITHOUT PRECOND
+!        ZA1 = SQRT(ALPHAB(1)*ALPHAB(1) + ALPHA(1))
+        ZA1 = ALPHAB(1) + ALPHA(1)
+        ZA2 = SQRT(1._R8-ZA1*ZA1)
+      ENDIF
+      WRITE(IOUNLOG,*) ' ALPHA :: ',ZA1**2, ALPHAB(1), ALPHA(1)
+    ELSE
+      ZA1 = ZALPHA
+      ZA2 = SQRT(1._R8-ZA1*ZA1)
+    ENDIF
+ ELSE
+    ZA1 = 1._R8
+ ENDIF
+
+ ZHYB_A = ZA1
+ ZHYB_B = ZA2
+ IF ( LL_HYBRID_CR ) ZA1 = 1._R8
+
+ PSV = 0._R8
+
+#ifdef SHARED_MEMORY
+!$OMP PARALLEL DEFAULT(SHARED), PRIVATE(K,J,I,N)
+!$OMP DO SCHEDULE(DYNAMIC)
+#endif
+  DO K=1,NKMT
+   IF(LLV(K)) THEN
+   DO J=1,GRD%JM
+    DO I=1,GRD%IM
+     IF (GRD%REG(I,J) .GT. 0) THEN
+       DO N=1,ROS%NEOF
+#ifdef opt_huge_memory
+        PSV(I,J,K) = PSV(I,J,K)+ZA1*ROS%EVC( I, J, K, N)  * &
+                      GRD%MVLOC(I,J,K) * ROS%EVA( I, J, N) * GRD%RO(I,J,N)
+#else
+        PSV(I,J,K) = PSV(I,J,K)+ZA1*ROS%EVC(GRD%REG(I,J), K ,N)  * &
+                      GRD%MVLOC(I,J,K) * ROS%EVA(GRD%REG(I,J), N) * GRD%RO(I,J,N)
+#endif
+       ENDDO
+     ENDIF
+    ENDDO
+   ENDDO
+   ENDIF
+  ENDDO
+#ifdef SHARED_MEMORY
+!$OMP END DO
+!$OMP END PARALLEL
+#endif
+
+IF( LL_HYBRID .AND. .NOT. LL_HYBRID_CR) THEN
+
+IF (LL_DIAH) THEN
+  ALLOCATE (PSV_DH(GRD%IM,GRD%JM,NKMT))
+  PSV_DH = PSV
+ENDIF
+
+#ifdef SHARED_MEMORY
+!$OMP PARALLEL DEFAULT(SHARED), PRIVATE(K,J,I,N)
+!$OMP DO SCHEDULE(DYNAMIC)
+#endif
+  DO K=1,NKMT
+   IF(LLV(K)) THEN
+   DO J=1,GRD%JM
+    DO I=1,GRD%IM
+     DO N=1,ROSH%NEOF
+      PSV(I,J,K) = PSV(I,J,K)+ZA2*ROSH%EVC(REGHH(I,J), K ,N)  * &
+                    GRD%MVLOC_H(I,J,K) * ROSH%EVA(REGHH(I,J), N) * GRD%ROH(I,J,N)
+     ENDDO
+    ENDDO
+   ENDDO
+   ENDIF
+  ENDDO
+#ifdef SHARED_MEMORY
+!$OMP END DO
+!$OMP END PARALLEL
+#endif
+
+IF (LL_DIAH) PSV_DH = PSV - PSV_DH
+
+ENDIF
+
+CALL FLUSH(IOUNLOG)
+
+IF(LLVARMDT) THEN
+    GRD%CMDT(:,:) = GRD%CMDT(:,:) * GRD%CMDT_STDEV(:,:)
+ENDIF
+
+IF(DRV%BA2(DRV%KTR) .EQ. 1 .AND. .NOT. LL_TQ2_UNBALANCED) THEN
+   GRD%T2M = 0._R8
+   GRD%Q2M = 0._R8
+ENDIF
+
+ CALL MYFRTPROF_WALL('VEOF: VERTICAL TRANSFORM',1)
+END SUBROUTINE VEOF

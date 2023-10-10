@@ -1,0 +1,75 @@
+SUBROUTINE OBS_INS_TL
+
+!-----------------------------------------------------------------------
+!                                                                      !
+! APPLY OBSERVATIONAL OPERATOR FOR INS DATA, TANGENT-LINEAR VERSION    !
+!                                                                      !
+! VERSION 1: A.STORTO 2009                                             !
+!-----------------------------------------------------------------------
+
+
+ USE SET_KND
+ USE GRD_STR
+ USE OBSDEF
+ USE OBS_STR
+ USE CTL_STR
+ USE IOUNITS , ONLY : IOUNERR
+ USE TLAD_VARS
+ USE MYFRTPROF
+
+ IMPLICIT NONE
+
+ INTEGER(I4)   ::  D, KK,I2
+ INTEGER(I4)   ::  XIND1
+
+CALL MYFRTPROF_WALL('OBS_INS_TL: INS OBSERVATION OPERATOR',0)
+
+#ifdef SHARED_MEMORY
+!$OMP PARALLEL DEFAULT(SHARED), PRIVATE(KK,D)
+!$OMP DO SCHEDULE(DYNAMIC,1)
+#endif
+CYOBS : DO KK = 1,INS%NO
+
+ IF( .NOT. LL_4DVAR .OR. ( LL_4DVAR .AND. INS%TATS(KK) .EQ. TLAD_TS )) THEN
+
+  D=INS%KB(KK)
+
+  IF( INS%PAR(KK).EQ.KKTEMP)THEN
+
+    INS%INC(KK) = &
+& OSUM( INS%PQ(KK,1:NPQ),GRD%TEM(INS%IB(KK,1:NPQ),INS%JB(KK,1:NPQ),D) )+ &
+& OSUM( INS%PQ(KK,NPQ+1:2*NPQ),GRD%TEM(INS%IB(KK,1:NPQ),INS%JB(KK,1:NPQ),D+1) )
+
+  ELSE IF(INS%PAR(KK).EQ.KKSAL )THEN
+
+    INS%INC(KK) = &
+& OSUM( INS%PQ(KK,1:NPQ),GRD%SAL(INS%IB(KK,1:NPQ),INS%JB(KK,1:NPQ),D) )+ &
+& OSUM( INS%PQ(KK,NPQ+1:2*NPQ),GRD%SAL(INS%IB(KK,1:NPQ),INS%JB(KK,1:NPQ),D+1) )
+
+  ELSE IF(INS%PAR(KK).EQ.KKT2M )THEN
+
+    INS%INC(KK) = &
+& OSUM( INS%PQ(KK,1:NPQ),GRD%T2M(INS%IB(KK,1:NPQ),INS%JB(KK,1:NPQ)) )
+
+  ELSE IF(INS%PAR(KK).EQ.KKQ2M )THEN
+
+    INS%INC(KK) = &
+& OSUM( INS%PQ(KK,1:NPQ),GRD%Q2M(INS%IB(KK,1:NPQ),INS%JB(KK,1:NPQ)) )
+
+  ELSE 
+
+    CALL ABOR1('OBS_INS_TL: UNSUPPORTED PARAMETER')
+
+  ENDIF
+ 
+ ENDIF
+
+ENDDO CYOBS
+#ifdef SHARED_MEMORY
+!$OMP END DO
+!$OMP END PARALLEL
+#endif
+
+CALL MYFRTPROF_WALL('OBS_INS_TL: INS OBSERVATION OPERATOR',1)
+
+END SUBROUTINE OBS_INS_TL

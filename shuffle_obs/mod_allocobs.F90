@@ -1,0 +1,167 @@
+MODULE ALLOCOBS
+
+USE SET_KND
+USE OBS_STR
+
+IMPLICIT NONE
+
+CONTAINS
+
+SUBROUTINE ALLOCINS(NIN,LINIT)
+
+IMPLICIT NONE
+
+INTEGER(I4), INTENT(IN) :: NIN
+LOGICAL    , INTENT(IN) :: LINIT
+
+  WRITE(IOUNLOG,*) ' ** ALLOCATING INSITU OBS VECTOR **'
+  WRITE(IOUNLOG,*) '    NUMBER OF OBS IS  ',NIN
+  WRITE(IOUNLOG,*) '    INITIALIZATION IS ',LINIT
+
+  ALLOCATE(INS%INO(NIN),INS%FLG(NIN),INS%FLC(NIN),INS%PAR(NIN))
+  ALLOCATE(INS%LON(NIN),INS%LAT(NIN),INS%DPT(NIN),INS%TIM(NIN))
+  ALLOCATE(INS%VAL(NIN),INS%BAC(NIN),INS%INC(NIN),INS%TDIST(NIN))
+  ALLOCATE(INS%BIA(NIN),INS%ERR(NIN),INS%EVE(NIN),INS%KTY(NIN))
+  ALLOCATE(INS%RES(NIN),INS%B_A(NIN),INS%OTYPE(NIN),INS%PROF(NIN),INS%PRIND(NIN))
+  ALLOCATE(INS%IB(NIN,NPQ),INS%JB(NIN,NPQ),INS%KB(NIN),INS%PLNO(NIN),INS%DSRC(NIN))
+  ALLOCATE(INS%RB(NIN),INS%BGERR(NIN))
+  ALLOCATE(INS%PQ(NIN,2*NPQ))
+  ALLOCATE(INS%INST(NIN))
+  ALLOCATE(INS%NIND(NIN))
+
+  IF(LINIT) THEN
+    INS%FLG(:)=1
+    INS%FLC(:)=0
+    INS%EVE(:)=0
+    INS%BIA(:)=0._R8
+    INS%ERR(:)=100._R8
+  ENDIF
+
+END SUBROUTINE ALLOCINS
+
+SUBROUTINE ALLOCSLA(NIN,LINIT)
+
+IMPLICIT NONE
+
+INTEGER(I4), INTENT(IN) :: NIN
+LOGICAL    , INTENT(IN) :: LINIT
+
+  ALLOCATE(SLA%LON(NIN),&
+        &SLA%INO(NIN),&
+        &SLA%NIND(NIN),&
+        &SLA%LAT(NIN),&
+        &SLA%VAL(NIN),&
+        &SLA%TDIST(NIN),&
+        &SLA%FLG(NIN),&
+        &SLA%FLC(NIN),&
+        &SLA%KSAT(NIN),&
+        &SLA%EVE(NIN),&
+        &SLA%BOT(NIN),&
+        &SLA%INC(NIN),&
+        &SLA%BAC(NIN),&
+        &SLA%BIA(NIN),&
+        &SLA%ERR(NIN),&
+        &SLA%RES(NIN),&
+        &SLA%B_A(NIN),&
+        &SLA%IB (NIN,NPQ),&
+        &SLA%JB (NIN,NPQ),&
+        &SLA%PQ (NIN,NPQ),&
+        &SLA%TRACK(NIN),&
+        &SLA%BGERR(NIN),&
+        &SLA%DPT(NIN),&
+        &SLA%TB(NIN,KM),&
+        &SLA%SB(NIN,KM),&
+        &SLA%BCP(NIN,NPRD_SLA),&
+        &SLA%TIM(NIN))
+
+  IF(LINIT) THEN
+    SLA%FLG(:) = 1
+    SLA%FLC(:) = 0
+    SLA%EVE(:) = 0
+    SLA%BIA(:) = 0._R8
+    SLA%ERR(:)=100._R8
+  ENDIF
+
+END SUBROUTINE ALLOCSLA
+
+SUBROUTINE ALLOCSST(NIN,LINIT)
+
+IMPLICIT NONE
+
+INTEGER(I4), INTENT(IN) :: NIN
+LOGICAL    , INTENT(IN) :: LINIT
+
+ALLOCATE(SST%LON(NIN),&
+        &SST%LAT(NIN),&
+        &SST%NIND(NIN),&
+        &SST%VAL(NIN),&
+        &SST%TDIST(NIN),&
+        &SST%FLG(NIN),&
+        &SST%FLC(NIN),&
+        &SST%KSAT(NIN),&
+        &SST%EVE(NIN),&
+        &SST%INC(NIN),&
+        &SST%BAC(NIN),&
+        &SST%BIA(NIN),&
+        &SST%ERR(NIN),&
+        &SST%RES(NIN),&
+        &SST%B_A(NIN),&
+        &SST%IB (NIN,NPQ),&
+        &SST%JB (NIN,NPQ),&
+        &SST%PQ (NIN,NPQ),&
+        &SST%TRACK(NIN),&
+        &SST%BGERR(NIN),&
+        &SST%BCP(NIN,NPRD_SST),&
+        &SST%TIM(NIN))
+
+IF(LINIT) THEN
+   SST%FLG(:) = 1
+   SST%FLC(:) = 0
+   SST%EVE(:) = 0
+   SST%BIA(:) = 0._R8
+   SST%ERR(:) = 100._R8
+ENDIF
+
+END SUBROUTINE ALLOCSST
+
+SUBROUTINE ALLOCSSS(NIN,LINIT)
+
+IMPLICIT NONE
+
+INTEGER(I4), INTENT(IN) :: NIN
+LOGICAL    , INTENT(IN) :: LINIT
+
+ALLOCATE(SSS%LON(NIN),&
+        &SSS%LAT(NIN),&
+        &SSS%NIND(NIN),&
+        &SSS%VAL(NIN),&
+        &SSS%TDIST(NIN),&
+        &SSS%FLG(NIN),&
+        &SSS%FLC(NIN),&
+        &SSS%KSAT(NIN),&
+        &SSS%EVE(NIN),&
+        &SSS%INC(NIN),&
+        &SSS%BAC(NIN),&
+        &SSS%BIA(NIN),&
+        &SSS%ERR(NIN),&
+        &SSS%RES(NIN),&
+        &SSS%B_A(NIN),&
+        &SSS%IB (NIN,NPQ),&
+        &SSS%JB (NIN,NPQ),&
+        &SSS%PQ (NIN,NPQ),&
+        &SSS%TRACK(NIN),&
+        &SSS%BGERR(NIN),&
+        &SSS%BCP(NIN,NPRD_SSS),&
+        &SSS%TIM(NIN))
+
+IF(LINIT) THEN
+   SSS%FLG(:) = 1
+   SSS%FLC(:) = 0
+   SSS%EVE(:) = 0
+   SSS%BIA(:) = 0._R8
+   SSS%ERR(:) = 100._R8
+ENDIF
+
+END SUBROUTINE ALLOCSSS
+
+END MODULE ALLOCOBS

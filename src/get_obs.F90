@@ -1,0 +1,65 @@
+SUBROUTINE GET_OBS
+
+!-----------------------------------------------------------------------
+!                                                                      !
+! LOAD OBSERVATIONS                                                    !
+!                                                                      !
+! VERSION 1: S.DOBRICIC 2006                                           !
+!-----------------------------------------------------------------------
+
+
+ USE SET_KND
+ USE OBS_STR
+ USE IOUNITS, ONLY : IOUNOUT, IOUNLOG
+ USE MYFRTPROF, ONLY: MYFRTPROF_WALL
+
+ IMPLICIT NONE
+
+  INTEGER(I4)    ::  K, I
+
+CALL MYFRTPROF_WALL('GET_OBS: READING-IN OBSERVATIONS',0)
+
+! ----
+! LOAD SLA OBSERVATIONS
+IF ( OBS%SLA .GT. 0 ) THEN
+  WRITE(IOUNOUT,*) ' READING IN SLA OBSERVATIONS'
+     CALL GET_OBS_SLA
+ENDIF
+
+! ----
+! LOAD ARGO OBSERVATIONS
+IF ( OBS%ARG .GT. 0 ) THEN
+  WRITE(IOUNOUT,*) ' READING IN ARGO OBSERVATIONS'
+  CALL GET_OBS_ARG
+ENDIF
+
+! ----
+! LOAD XBT OBSERVATIONS
+IF ( OBS%XBT .GT. 0 ) THEN
+  WRITE(IOUNOUT,*) ' READING IN XBT OBSERVATIONS'
+  CALL GET_OBS_XBT
+ENDIF
+
+! ----
+! LOAD GLIDER OBSERVATIONS
+IF ( OBS%GLD .GT. 0 ) THEN
+  WRITE(IOUNOUT,*) ' READING IN GLIDERS OBSERVATIONS'
+  CALL GET_OBS_GLD
+ENDIF
+
+! ----
+! LOAD VELOCITY OBSERVATIONS
+IF ( OBS%VEL .GT. 0 ) THEN
+  WRITE(IOUNOUT,*) ' READING IN VELOCITY OBSERVATIONS'
+  CALL GET_OBS_VEL
+ENDIF
+
+! ----
+! LOAD TRAJECTORY OBSERVATIONS
+IF ( OBS%TRJ .GT. 0 ) THEN
+  WRITE(IOUNOUT,*) ' READING IN TRAJECTORY OBSERVATIONS'
+  CALL GET_OBS_TRJ
+ENDIF
+
+CALL MYFRTPROF_WALL('GET_OBS: READING-IN OBSERVATIONS',1)
+END SUBROUTINE GET_OBS

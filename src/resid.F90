@@ -1,0 +1,173 @@
+SUBROUTINE RESID
+
+!-----------------------------------------------------------------------
+!                                                                      !
+! CALCULATE ANALYSIS - OBSERVATION                                     !
+!                                                                      !
+! VERSION 1: S.DOBRICIC 2006                                           !
+!-----------------------------------------------------------------------
+
+
+ USE SET_KND
+ USE OBS_STR
+ USE CTL_STR
+ USE IOUNITS
+ USE RUN, ONLY : COBSOPT,RES_ITER
+ USE TLAD_VARS
+ USE MYFRTPROF, ONLY : MYFRTPROF_WALL
+ USE MPIREL
+
+ IMPLICIT NONE
+
+ INTEGER(I4)   :: I, K
+
+ CALL MYFRTPROF_WALL('RESID: RESIDUAL INCREMENTS',0)
+
+ RES_ITER = RES_ITER + 1
+
+IF(COBSOPT.EQ.'MFS') THEN
+
+  K = 0
+
+! SATELLITE OBSERVATIONS OF SLA
+ DO I=1,SLA%NO
+  IF(SLA%FLC(I).EQ.1)THEN
+   K = K + 1
+   OBS%INC(K) = SLA%INC(I)
+   OBS%AMO(K) = ( OBS%INC(K) - OBS%RES(K) ) / OBS%ERR(K)
+  ENDIF
+ ENDDO
+
+! ARGO OBSERVATIONS
+ DO I=1,ARG%NO
+  IF(ARG%FLC(I).EQ.1)THEN
+   K = K + 1
+   OBS%INC(K) = ARG%INC(I)
+   OBS%AMO(K) = ( OBS%INC(K) - OBS%RES(K) ) / OBS%ERR(K)
+  ENDIF
+ ENDDO
+
+! XBT OBSERVATIONS
+ DO I=1,XBT%NO
+  IF(XBT%FLC(I).EQ.1)THEN
+   K = K + 1
+   OBS%INC(K) = XBT%INC(I)
+   OBS%AMO(K) = ( OBS%INC(K) - OBS%RES(K) ) / OBS%ERR(K)
+  ENDIF
+ ENDDO
+
+! GLIDER OBSERVATIONS
+ DO I=1,GLD%NO
+  IF(GLD%FLC(I).EQ.1)THEN
+   K = K + 1
+   OBS%INC(K) = GLD%INC(I)
+   OBS%AMO(K) = ( OBS%INC(K) - OBS%RES(K) ) / OBS%ERR(K)
+  ENDIF
+ ENDDO
+
+! VELOCITY OBSERVATIONS
+ DO I=1,VEL%NO
+  IF(VEL%FLC(I).EQ.1)THEN
+   K = K + 1
+   OBS%INC(K) = VEL%INC(I)
+   OBS%AMO(K) = ( OBS%INC(K) - OBS%RES(K) ) / OBS%ERR(K)
+  ENDIF
+ ENDDO
+
+! TRAJ OBSERVATIONS
+ DO I=1,TRJ%NO
+  IF(TRJ%FLC(I).EQ.1)THEN
+   K = K + 1
+   OBS%INC(K) = TRJ%INC(I)
+   OBS%AMO(K) = ( OBS%INC(K) - OBS%RES(K) ) / OBS%ERR(K)
+  ENDIF
+ ENDDO
+
+ELSEIF(COBSOPT.EQ.'GLO' .OR. COBSOPT.EQ.'ASC' ) THEN
+
+ K=0
+
+! SATELLITE OBSERVATIONS OF SLA
+ DO I=1,SLA%NO
+  IF(SLA%FLC(I).EQ.1)THEN
+   K = K + 1
+   OBS%INC(K) = SLA%INC(I)
+   OBS%AMO(K) = ( OBS%INC(K) - OBS%RES(K) ) / OBS%ERR(K)
+  ENDIF
+ ENDDO
+
+! INS OBSERVATIONS
+ DO I=1,INS%NO
+  IF(INS%FLC(I).EQ.1)THEN
+   K = K + 1
+   OBS%INC(K) = INS%INC(I)
+   OBS%AMO(K) = ( OBS%INC(K) - OBS%RES(K) ) / OBS%ERR(K)
+  ENDIF
+ ENDDO
+
+! SST OBSERVATIONS
+ DO I=1,SST%NO
+  IF(SST%FLC(I).EQ.1)THEN
+   K = K + 1
+   OBS%INC(K) = SST%INC(I)
+   OBS%AMO(K) = ( OBS%INC(K) - OBS%RES(K) ) / OBS%ERR(K)
+  ENDIF
+ ENDDO
+
+! SSS OBSERVATIONS
+ DO I=1,SSS%NO
+  IF(SSS%FLC(I).EQ.1)THEN
+   K = K + 1
+   OBS%INC(K) = SSS%INC(I)
+   OBS%AMO(K) = ( OBS%INC(K) - OBS%RES(K) ) / OBS%ERR(K)
+  ENDIF
+ ENDDO
+
+ IF(LL_4DVAR .AND. .NOT. LL_OBSGRAINIT) THEN
+
+  WRITE(IOUNLOG,*) ' --- INITIALIZING OBS GRADIENT INDEX FOR 4DVAR ---'
+
+  K=0
+
+  DO I=1,SLA%NO
+  IF(SLA%FLC(I).EQ.1)THEN
+   K = K + 1
+   SLA%OBIN(I) = K
+  ENDIF
+ ENDDO
+
+! INS OBSERVATIONS
+ DO I=1,INS%NO
+  IF(INS%FLC(I).EQ.1)THEN
+   K = K + 1
+   INS%OBIN(I) = K
+  ENDIF
+ ENDDO
+
+! SST OBSERVATIONS
+ DO I=1,SST%NO
+  IF(SST%FLC(I).EQ.1)THEN
+   K = K + 1
+   SST%OBIN(I) = K
+  ENDIF
+ ENDDO
+
+! SSS OBSERVATIONS
+ DO I=1,SSS%NO
+  IF(SSS%FLC(I).EQ.1)THEN
+   K = K + 1
+   SSS%OBIN(I) = K
+  ENDIF
+ ENDDO
+
+    LL_OBSGRAINIT=.TRUE.
+ ENDIF
+
+ELSE
+
+  CALL ABOR1('COBSOPT OPTION IN OBSOP '//COBSOPT//' UNSUPPORTED')
+
+ENDIF
+
+CALL MYFRTPROF_WALL('RESID: RESIDUAL INCREMENTS',1)
+END SUBROUTINE RESID

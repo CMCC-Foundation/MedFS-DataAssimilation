@@ -1,0 +1,1498 @@
+nohup: ignoring input
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE set_knd.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o set_knd.o
+xiar -rv liboceanvar_athena.a set_knd.o	
+xiar: executing 'ar'
+ar: creating liboceanvar_athena.a
+a - /tmp/xiar_ipoktWzno/set_knd.o
+a - /tmp/xiar_ipoohGrFt/set_knd.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_obsdef.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_obsdef.o
+xiar -rv liboceanvar_athena.a mod_obsdef.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipotstVMP/mod_obsdef.o
+a - /tmp/xiar_ipoRQDENY/mod_obsdef.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE drv_str.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o drv_str.o
+xiar -rv liboceanvar_athena.a drv_str.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo7dq52W/drv_str.o
+a - /tmp/xiar_ipoRDYFV6/drv_str.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_str.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_str.o
+xiar -rv liboceanvar_athena.a obs_str.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoLL2yd6/obs_str.o
+a - /tmp/xiar_ipovOOEhh/obs_str.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE grd_str.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o grd_str.o
+xiar -rv liboceanvar_athena.a grd_str.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipopDG3gj/grd_str.o
+a - /tmp/xiar_ipoRpuIyv/grd_str.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE bmd_str.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o bmd_str.o
+xiar -rv liboceanvar_athena.a bmd_str.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo34mNCo/bmd_str.o
+a - /tmp/xiar_ipohRa2PB/bmd_str.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE eof_str.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o eof_str.o
+xiar -rv liboceanvar_athena.a eof_str.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipohlGtay/eof_str.o
+a - /tmp/xiar_ipo9HIUeM/eof_str.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE ctl_str.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o ctl_str.o
+xiar -rv liboceanvar_athena.a ctl_str.o	
+xiar: executing 'ar'
+a - /tmp/xiar_iporWSdCE/ctl_str.o
+a - /tmp/xiar_ipoxkzqxT/ctl_str.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_myfrtprof.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_myfrtprof.o
+xiar -rv liboceanvar_athena.a mod_myfrtprof.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipot0dr8N/mod_myfrtprof.o
+a - /tmp/xiar_ipodvj1U4/mod_myfrtprof.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_mynetcdf.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_mynetcdf.o
+xiar -rv liboceanvar_athena.a mod_mynetcdf.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoC0WX9f/mod_mynetcdf.o
+a - /tmp/xiar_ipoeywonB/mod_mynetcdf.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE sdl_module.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o sdl_module.o
+xiar -rv liboceanvar_athena.a sdl_module.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipocWFH2y/sdl_module.o
+a - /tmp/xiar_ipo6TjPcW/sdl_module.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_iounits.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_iounits.o
+xiar -rv liboceanvar_athena.a mod_iounits.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipokP5H5I/mod_iounits.o
+a - /tmp/xiar_ipoQf4ia7/mod_iounits.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_run.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_run.o
+xiar -rv liboceanvar_athena.a mod_run.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipouwAisO/mod_run.o
+a - /tmp/xiar_ipoojdxsd/mod_run.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE oceantools.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o oceantools.o
+xiar -rv liboceanvar_athena.a oceantools.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipokMbDDX/oceantools.o
+a - /tmp/xiar_ipo2NjlVn/oceantools.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE check_time.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o check_time.o
+xiar -rv liboceanvar_athena.a check_time.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoFYyNjc/check_time.o
+a - /tmp/xiar_ipot9fDbF/check_time.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE gcdist.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o gcdist.o
+xiar -rv liboceanvar_athena.a gcdist.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipotKUDYn/gcdist.o
+a - /tmp/xiar_ipo9dKDmS/gcdist.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_mpirel.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_mpirel.o
+xiar -rv liboceanvar_athena.a mod_mpirel.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoRUkhaw/mod_mpirel.o
+a - /tmp/xiar_ipopB6yv1/mod_mpirel.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE defprec.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o defprec.o
+xiar -rv liboceanvar_athena.a defprec.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipodRg3nC/defprec.o
+a - /tmp/xiar_ipoLUpzx8/defprec.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE errioipsl.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o errioipsl.o
+xiar -rv liboceanvar_athena.a errioipsl.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoh83cEM/errioipsl.o
+a - /tmp/xiar_ipoTcFOLj/errioipsl.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE stringop.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o stringop.o
+xiar -rv liboceanvar_athena.a stringop.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoBi2iOU/stringop.o
+a - /tmp/xiar_ipolWU8mt/stringop.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mathelp.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mathelp.o
+xiar -rv liboceanvar_athena.a mathelp.o	
+xiar: executing 'ar'
+a - /tmp/xiar_iporb1FAs/mathelp.o
+a - /tmp/xiar_ipol0ixXf/mathelp.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE calendar.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o calendar.o
+xiar -rv liboceanvar_athena.a calendar.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipopCIOgT/calendar.o
+a - /tmp/xiar_ipoxyfaCf/calendar.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_obshandling.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_obshandling.o
+xiar -rv liboceanvar_athena.a mod_obshandling.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoGvR7gg/mod_obshandling.o
+a - /tmp/xiar_ipok02tOF/mod_obshandling.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_recfilter.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_recfilter.o
+xiar -rv liboceanvar_athena.a mod_recfilter.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo0iy2Ft/mod_recfilter.o
+a - /tmp/xiar_ipoUsWvtU/mod_recfilter.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE random_numbers.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o random_numbers.o
+xiar -rv liboceanvar_athena.a random_numbers.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoQ6ipLB/random_numbers.o
+a - /tmp/xiar_ipoqmcJn4/random_numbers.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_lbclnk.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_lbclnk.o
+xiar -rv liboceanvar_athena.a mod_lbclnk.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoK9zzBa/mod_lbclnk.o
+a - /tmp/xiar_ipoSv9WRG/mod_lbclnk.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_rdfield.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_rdfield.o
+xiar -rv liboceanvar_athena.a mod_rdfield.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipodmuQfk/mod_rdfield.o
+a - /tmp/xiar_ipoHIqVaT/mod_rdfield.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_readfg.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_readfg.o
+xiar -rv liboceanvar_athena.a mod_readfg.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoXY802B/mod_readfg.o
+a - /tmp/xiar_ipoVIyDOc/mod_readfg.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_writecorr.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_writecorr.o
+xiar -rv liboceanvar_athena.a mod_writecorr.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipozMiaeQ/mod_writecorr.o
+a - /tmp/xiar_ipo9OAUzu/mod_writecorr.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE procsplit.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o procsplit.o
+xiar -rv liboceanvar_athena.a procsplit.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoysIwLZ/procsplit.o
+a - /tmp/xiar_ipomlURML/procsplit.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE filtrw.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o filtrw.o
+xiar -rv liboceanvar_athena.a filtrw.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo6cIPRb/filtrw.o
+a - /tmp/xiar_ipoWBbmj0/filtrw.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE ecsort.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o ecsort.o
+xiar -rv liboceanvar_athena.a ecsort.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo0VZBpW/ecsort.o
+a - /tmp/xiar_ipockH30T/ecsort.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_extgrid.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_extgrid.o
+xiar -rv liboceanvar_athena.a mod_extgrid.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipofnYAUf/mod_extgrid.o
+a - /tmp/xiar_ipoPkrTIa/mod_extgrid.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_allocobs.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_allocobs.o
+xiar -rv liboceanvar_athena.a mod_allocobs.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoWHyduH/mod_allocobs.o
+a - /tmp/xiar_ipoIiqR3p/mod_allocobs.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_readobas.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_readobas.o
+xiar -rv liboceanvar_athena.a mod_readobas.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoWZMNTT/mod_readobas.o
+a - /tmp/xiar_ipoEaSnOJ/mod_readobas.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_readobas103.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_readobas103.o
+xiar -rv liboceanvar_athena.a mod_readobas103.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoHdRTK6/mod_readobas103.o
+a - /tmp/xiar_ipo34EE91/mod_readobas103.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_debugtmp.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_debugtmp.o
+xiar -rv liboceanvar_athena.a mod_debugtmp.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoQjPWwQ/mod_debugtmp.o
+a - /tmp/xiar_ipoeaBJWW/mod_debugtmp.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_drwn.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_drwn.o
+xiar -rv liboceanvar_athena.a mod_drwn.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoYGykw8/mod_drwn.o
+a - /tmp/xiar_ipo4eqexi/mod_drwn.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_ice.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_ice.o
+xiar -rv liboceanvar_athena.a mod_ice.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo7wjNq2/mod_ice.o
+a - /tmp/xiar_iponTNhUk/mod_ice.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_phinterp.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_phinterp.o
+xiar -rv liboceanvar_athena.a mod_phinterp.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipowAjKOc/mod_phinterp.o
+a - /tmp/xiar_ipoCieiPD/mod_phinterp.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_stats.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_stats.o
+xiar -rv liboceanvar_athena.a mod_stats.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipocjxirO/mod_stats.o
+a - /tmp/xiar_ipokouHEk/mod_stats.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE init0.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o init0.o
+xiar -rv liboceanvar_athena.a init0.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipopXEeEF/init0.o
+a - /tmp/xiar_ipovrRkci/init0.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE slamdtundef.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o slamdtundef.o
+xiar -rv liboceanvar_athena.a slamdtundef.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipozc0RmY/slamdtundef.o
+a - /tmp/xiar_ipor7x6iD/slamdtundef.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE findfgtimes.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o findfgtimes.o
+xiar -rv liboceanvar_athena.a findfgtimes.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipozMm6Qj/findfgtimes.o
+a - /tmp/xiar_iponn7jc1/findfgtimes.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readfg4df.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readfg4df.o
+xiar -rv liboceanvar_athena.a readfg4df.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipolE2ymA/readfg4df.o
+a - /tmp/xiar_ipodQzPwj/readfg4df.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readfgetab.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readfgetab.o
+xiar -rv liboceanvar_athena.a readfgetab.o	
+xiar: executing 'ar'
+a - /tmp/xiar_iposastrI/readfgetab.o
+a - /tmp/xiar_ipoEYpUFt/readfgetab.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readfgfields.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readfgfields.o
+xiar -rv liboceanvar_athena.a readfgfields.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo86uWV0/readfgfields.o
+a - /tmp/xiar_ipoQ0XuZO/readfgfields.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_firstguess.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_firstguess.o
+xiar -rv liboceanvar_athena.a read_firstguess.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoentdZB/read_firstguess.o
+a - /tmp/xiar_ipocX9K5t/read_firstguess.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE deallbg.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o deallbg.o
+xiar -rv liboceanvar_athena.a deallbg.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoQ66lmX/deallbg.o
+a - /tmp/xiar_ipoA9wBPR/deallbg.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rf_init.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rf_init.o
+xiar -rv liboceanvar_athena.a rf_init.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo49zBYb/rf_init.o
+a - /tmp/xiar_ipoOZbFi9/rf_init.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE coastrej.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o coastrej.o
+xiar -rv liboceanvar_athena.a coastrej.o	
+xiar: executing 'ar'
+a - /tmp/xiar_iponxaLvO/coastrej.o
+a - /tmp/xiar_ipoLHG8cR/coastrej.ilo
+ifort -c -openmp -i4 -r8 -convert big_endian -align all -assume byterecl  -convert big_endian -align all -assume byterecl  -fpconstant  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE cg1.F -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o cg1.o
+xiar -rv liboceanvar_athena.a cg1.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipohDbpdj/cg1.o
+a - /tmp/xiar_ipoBoUk4s/cg1.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE setfgfiles.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o setfgfiles.o
+xiar -rv liboceanvar_athena.a setfgfiles.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoBRR2qi/setfgfiles.o
+a - /tmp/xiar_ipodwdxlF/setfgfiles.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obsstat.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obsstat.o
+xiar -rv liboceanvar_athena.a obsstat.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoPbmcVy/obsstat.o
+a - /tmp/xiar_ipoBxYS5X/obsstat.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE print_eofs.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o print_eofs.o
+xiar -rv liboceanvar_athena.a print_eofs.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipozBQWQ5/print_eofs.o
+a - /tmp/xiar_ipoRsCSpA/print_eofs.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE setfgflayout.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o setfgflayout.o
+xiar -rv liboceanvar_athena.a setfgflayout.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoClYDW0/setfgflayout.o
+a - /tmp/xiar_ipoy1xT2B/setfgflayout.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE setmppneighb.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o setmppneighb.o
+xiar -rv liboceanvar_athena.a setmppneighb.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipow2Jrxm/setmppneighb.o
+a - /tmp/xiar_ipo2d7Vi0/setmppneighb.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE io_obs.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o io_obs.o
+xiar -rv liboceanvar_athena.a io_obs.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipobwrk1w/io_obs.o
+a - /tmp/xiar_ipoBkEdfi/io_obs.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE writeobs102.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o writeobs102.o
+xiar -rv liboceanvar_athena.a writeobs102.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoDziUWm/writeobs102.o
+a - /tmp/xiar_ipoBkrYnc/writeobs102.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readobs103.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readobs103.o
+xiar -rv liboceanvar_athena.a readobs103.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo6FhzlW/readobs103.o
+a - /tmp/xiar_ipoYoquVH/readobs103.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readobs103dd.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readobs103dd.o
+xiar -rv liboceanvar_athena.a readobs103dd.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipomo6r51/readobs103dd.o
+a - /tmp/xiar_ipoSiQ3Vy/readobs103dd.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readobs103bin.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readobs103bin.o
+xiar -rv liboceanvar_athena.a readobs103bin.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoNpkcCE/readobs103bin.o
+a - /tmp/xiar_ipoRpCLpO/readobs103bin.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE bgsde_obs.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o bgsde_obs.o
+xiar -rv liboceanvar_athena.a bgsde_obs.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipowBDOPp/bgsde_obs.o
+a - /tmp/xiar_ipoe7a2GZ/bgsde_obs.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE unbias_sla.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o unbias_sla.o
+xiar -rv liboceanvar_athena.a unbias_sla.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoaJKPD1/unbias_sla.o
+a - /tmp/xiar_ipo6LavAF/unbias_sla.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE check_slabg.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o check_slabg.o
+xiar -rv liboceanvar_athena.a check_slabg.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoeXqVJm/check_slabg.o
+a - /tmp/xiar_ipoyyhue3/check_slabg.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE termin0.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o termin0.o
+xiar -rv liboceanvar_athena.a termin0.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoEjEGMF/termin0.o
+a - /tmp/xiar_ipokCnhso/termin0.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE termin1.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o termin1.o
+xiar -rv liboceanvar_athena.a termin1.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo9AqYnJ/termin1.o
+a - /tmp/xiar_ipov3RGDt/termin1.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_bineof.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_bineof.o
+xiar -rv liboceanvar_athena.a read_bineof.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoF7cJg0/read_bineof.o
+a - /tmp/xiar_ipo5CFkuM/read_bineof.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mdeofs.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mdeofs.o
+xiar -rv liboceanvar_athena.a mdeofs.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipopOjYEk/mdeofs.o
+a - /tmp/xiar_ipoPemGNb/mdeofs.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE eigenv.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o eigenv.o
+xiar -rv liboceanvar_athena.a eigenv.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipok9qaIL/eigenv.o
+a - /tmp/xiar_ipo8USFbM/eigenv.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readsst.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readsst.o
+xiar -rv liboceanvar_athena.a readsst.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoKy1hL6/readsst.o
+a - /tmp/xiar_ipogPDIDb/readsst.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rddns.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rddns.o
+xiar -rv liboceanvar_athena.a rddns.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo1B4A07/rddns.o
+a - /tmp/xiar_ipoNpeEVj/rddns.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rddns2.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rddns2.o
+xiar -rv liboceanvar_athena.a rddns2.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoHMNe3q/rddns2.o
+a - /tmp/xiar_ipod7bUbF/rddns2.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_amsre_day.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_amsre_day.o
+xiar -rv liboceanvar_athena.a read_amsre_day.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoAny1SN/read_amsre_day.o
+a - /tmp/xiar_ipoOTIRV5/read_amsre_day.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE int_par_sst.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o int_par_sst.o
+xiar -rv liboceanvar_athena.a int_par_sst.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoOC693e/int_par_sst.o
+a - /tmp/xiar_ipocA77YA/int_par_sst.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_sst.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_sst.o
+xiar -rv liboceanvar_athena.a obs_sst.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo4szBlS/obs_sst.o
+a - /tmp/xiar_ipoawoWCi/obs_sst.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_sst_tl.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_sst_tl.o
+xiar -rv liboceanvar_athena.a obs_sst_tl.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoatnplf/obs_sst_tl.o
+a - /tmp/xiar_ipocZ205H/obs_sst_tl.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_sst_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_sst_ad.o
+xiar -rv liboceanvar_athena.a obs_sst_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo33tdcm/obs_sst_ad.o
+a - /tmp/xiar_ipoX55pbR/obs_sst_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE sulogf.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o sulogf.o
+xiar -rv liboceanvar_athena.a sulogf.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipod2dbTI/sulogf.o
+a - /tmp/xiar_ipoZiq6eg/sulogf.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE sumpi.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o sumpi.o
+xiar -rv liboceanvar_athena.a sumpi.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo7hq6wd/sumpi.o
+a - /tmp/xiar_ipohFb3EO/sumpi.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE abor1.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o abor1.o
+xiar -rv liboceanvar_athena.a abor1.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoJ8V0xv/abor1.o
+a - /tmp/xiar_ipoJA7QX8/abor1.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE abor1fl.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o abor1fl.o
+xiar -rv liboceanvar_athena.a abor1fl.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo64EXLD/abor1fl.o
+a - /tmp/xiar_ipo2JRK1i/abor1fl.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE posnam.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o posnam.o
+xiar -rv liboceanvar_athena.a posnam.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoOSDMuO/posnam.o
+a - /tmp/xiar_ipoqyZ2qv/posnam.ilo
+ifort -c -openmp -i4 -r8 -convert big_endian -align all -assume byterecl  -convert big_endian -align all -assume byterecl  -fpconstant  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE routines.F -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o routines.o
+routines.F(2777): remark #8291: Recommended relationship between field width 'W' and the number of fractional digits 'D' in this edit descriptor is 'W>=D+7'.
+ 3001 FORMAT(2(1X,I4),2(1X,I5),2X,A3,1X,I4,1P,2(2X,D7.1),1P,2(1X,D10.3))
+----------------------------------------------------^
+routines.F(2868): remark #8291: Recommended relationship between field width 'W' and the number of fractional digits 'D' in this edit descriptor is 'W>=D+7'.
+ 3002 FORMAT(2(1X,I4),2(1X,I5),2X,A3,1X,I4,1P,2(2X,D7.1),6X,'-',10X,'-')
+----------------------------------------------------^
+routines.F(3240): remark #8290: Recommended relationship between field width 'W' and the number of fractional digits 'D' in this edit descriptor is 'W>=D+3'.
+ 1002 FORMAT ( 'ALPHA = ',F7.5,' BACKTRACK TO THE BOX')	
+---------------------------^
+xiar -rv liboceanvar_athena.a routines.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipomPtRhg/routines.o
+a - /tmp/xiar_ipo0uMT08/routines.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE def_nml.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o def_nml.o
+xiar -rv liboceanvar_athena.a def_nml.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipohv2iNL/def_nml.o
+a - /tmp/xiar_ipoBrSQ69/def_nml.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE sav_itr.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o sav_itr.o
+xiar -rv liboceanvar_athena.a sav_itr.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoJZgXqt/sav_itr.o
+a - /tmp/xiar_ipodzzwa5/sav_itr.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE ini_itr.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o ini_itr.o
+xiar -rv liboceanvar_athena.a ini_itr.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipozMYJiB/ini_itr.o
+a - /tmp/xiar_ipoXC4nuk/ini_itr.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE ini_bmd.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o ini_bmd.o
+xiar -rv liboceanvar_athena.a ini_bmd.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo6tSTpV/ini_bmd.o
+a - /tmp/xiar_ipoo0BfcK/ini_bmd.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rdgrds.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rdgrds.o
+rdgrds.F90(139): remark #8290: Recommended relationship between field width 'W' and the number of fractional digits 'D' in this edit descriptor is 'W>=D+3'.
+     WRITE(IOUNLOG,'(X,X,A,X,2(F6.4,X))') '              ',GRD%DLN,GRD%DLT
+--------------------------------^
+rdgrds.F90(278): remark #8291: Recommended relationship between field width 'W' and the number of fractional digits 'D' in this edit descriptor is 'W>=D+7'.
+    WRITE(IOUNLOG,'(X,X,A,E12.07)') 'AVERAGE NODE DXDY (KM): ', SQRT(GRD%ADXDY)/1000.
+---------------------------^
+xiar -rv liboceanvar_athena.a rdgrds.o	
+xiar: executing 'ar'
+a - /tmp/xiar_iporvIGfq/rdgrds.o
+a - /tmp/xiar_ipoxv97lv/rdgrds.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE handle_err.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o handle_err.o
+xiar -rv liboceanvar_athena.a handle_err.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoBZyEGP/handle_err.o
+a - /tmp/xiar_iponTXyNf/handle_err.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE set_stdgrd.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o set_stdgrd.o
+xiar -rv liboceanvar_athena.a set_stdgrd.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoVuisq4/set_stdgrd.o
+a - /tmp/xiar_ipoFaFj7w/set_stdgrd.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE get_obs.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o get_obs.o
+xiar -rv liboceanvar_athena.a get_obs.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoaKdpru/get_obs.o
+a - /tmp/xiar_ipo8K1oW0/get_obs.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE get_obs_sla.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o get_obs_sla.o
+xiar -rv liboceanvar_athena.a get_obs_sla.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo0ozj1L/get_obs_sla.o
+a - /tmp/xiar_ipokbtIzk/get_obs_sla.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE get_obs_arg.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o get_obs_arg.o
+xiar -rv liboceanvar_athena.a get_obs_arg.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoQZMW15/get_obs_arg.o
+a - /tmp/xiar_ipoqS69cJ/get_obs_arg.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE get_obs_xbt.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o get_obs_xbt.o
+xiar -rv liboceanvar_athena.a get_obs_xbt.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo7B9kLy/get_obs_xbt.o
+a - /tmp/xiar_ipolDQbbo/get_obs_xbt.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE get_obs_gld.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o get_obs_gld.o
+xiar -rv liboceanvar_athena.a get_obs_gld.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoIMWt82/get_obs_gld.o
+a - /tmp/xiar_ipoOfrEV4/get_obs_gld.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE get_obs_vel.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o get_obs_vel.o
+get_obs_vel.F90(19): remark #7713: This statement function has not been used.   [INSL]
+  LOGICAL       ::  INSL
+--------------------^
+xiar -rv liboceanvar_athena.a get_obs_vel.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoXvtM7w/get_obs_vel.o
+a - /tmp/xiar_ipoHUQdYI/get_obs_vel.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE get_obs_trj.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o get_obs_trj.o
+get_obs_trj.F90(19): remark #7713: This statement function has not been used.   [INSL]
+  LOGICAL       ::  INSL
+--------------------^
+xiar -rv liboceanvar_athena.a get_obs_trj.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipow5bX4W/get_obs_trj.o
+a - /tmp/xiar_ipoYLrBve/get_obs_trj.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_phinterp2.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_phinterp2.o
+xiar -rv liboceanvar_athena.a mod_phinterp2.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo7tLt8X/mod_phinterp2.o
+a - /tmp/xiar_ipo579lbn/mod_phinterp2.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE int_par_sla.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o int_par_sla.o
+xiar -rv liboceanvar_athena.a int_par_sla.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipojyDb7y/int_par_sla.o
+a - /tmp/xiar_ipoNWimh3/int_par_sla.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE int_par.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o int_par.o
+xiar -rv liboceanvar_athena.a int_par.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo5jdIJo/int_par.o
+a - /tmp/xiar_iponD1m6X/int_par.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_vec.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_vec.o
+xiar -rv liboceanvar_athena.a obs_vec.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoAhcgnA/obs_vec.o
+a - /tmp/xiar_ipo4CBYcc/obs_vec.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE sucov.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o sucov.o
+xiar -rv liboceanvar_athena.a sucov.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoWgUgZU/sucov.o
+a - /tmp/xiar_ipo6nhulz/sucov.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE reo4min.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o reo4min.o
+xiar -rv liboceanvar_athena.a reo4min.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipogvSAxk/reo4min.o
+a - /tmp/xiar_ipo4FJQZY/reo4min.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE sueofsr.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o sueofsr.o
+xiar -rv liboceanvar_athena.a sueofsr.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoz4rgPL/sueofsr.o
+a - /tmp/xiar_ipoDTwIvr/sueofsr.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE surf.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o surf.o
+xiar -rv liboceanvar_athena.a surf.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoFMsymj/surf.o
+a - /tmp/xiar_ipoR5ekD2/surf.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE surf_lv.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o surf_lv.o
+xiar -rv liboceanvar_athena.a surf_lv.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoNcHNTC/surf_lv.o
+a - /tmp/xiar_ipoFi1bho/surf_lv.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE surfsr1z.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o surfsr1z.o
+xiar -rv liboceanvar_athena.a surfsr1z.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipokRDLGM/surfsr1z.o
+a - /tmp/xiar_iposz7jqA/surfsr1z.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_rfceg.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_rfceg.o
+xiar -rv liboceanvar_athena.a read_rfceg.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipok5ql27/read_rfceg.o
+a - /tmp/xiar_ipoCoXcAY/read_rfceg.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_gtspp.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_gtspp.o
+xiar -rv liboceanvar_athena.a read_gtspp.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipocayEet/read_gtspp.o
+a - /tmp/xiar_ipo4vIHom/read_gtspp.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_argo.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_argo.o
+xiar -rv liboceanvar_athena.a read_argo.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo4OysQS/read_argo.o
+a - /tmp/xiar_ipoY0BDWR/read_argo.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_arglevs.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_arglevs.o
+xiar -rv liboceanvar_athena.a read_arglevs.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoMhxP2w/read_arglevs.o
+a - /tmp/xiar_ipoIhpPrH/read_arglevs.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE test_machp.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o test_machp.o
+xiar -rv liboceanvar_athena.a test_machp.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo6muFyL/test_machp.o
+a - /tmp/xiar_iposdSXHX/test_machp.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE redcheck.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o redcheck.o
+xiar -rv liboceanvar_athena.a redcheck.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoKCEHfa/redcheck.o
+a - /tmp/xiar_ipoeGsLtp/redcheck.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE ini_cfn.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o ini_cfn.o
+xiar -rv liboceanvar_athena.a ini_cfn.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoMpXg7A/ini_cfn.o
+a - /tmp/xiar_ipocWoDsU/ini_cfn.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE min_cfn.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o min_cfn.o
+xiar -rv liboceanvar_athena.a min_cfn.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipovx7Os7/min_cfn.o
+a - /tmp/xiar_ipohUQonv/min_cfn.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE costf.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o costf.o
+costf.F90(172): remark #8291: Recommended relationship between field width 'W' and the number of fractional digits 'D' in this edit descriptor is 'W>=D+7'.
+   WRITE(IOUNLOG,'(A,X,I3,I3,6(X,E12.6))') &
+----------------------------------^
+xiar -rv liboceanvar_athena.a costf.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoFI7o6y/costf.o
+a - /tmp/xiar_ipovKf5J0/costf.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE cnv_ctv.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o cnv_ctv.o
+xiar -rv liboceanvar_athena.a cnv_ctv.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoTh4Xde/cnv_ctv.o
+a - /tmp/xiar_ipoF2sx4J/cnv_ctv.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE ver_hor.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o ver_hor.o
+xiar -rv liboceanvar_athena.a ver_hor.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo4dyHZu/ver_hor.o
+a - /tmp/xiar_ipoY99Ide/ver_hor.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE ver_hor202.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o ver_hor202.o
+xiar -rv liboceanvar_athena.a ver_hor202.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoPyDDqP/ver_hor202.o
+a - /tmp/xiar_ipov9x8e6/ver_hor202.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE get_byg.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o get_byg.o
+xiar -rv liboceanvar_athena.a get_byg.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoQDqdyf/get_byg.o
+a - /tmp/xiar_ipo0n7IxB/get_byg.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE veof.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o veof.o
+xiar -rv liboceanvar_athena.a veof.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoXCNOZ4/veof.o
+a - /tmp/xiar_ipotGEeJx/veof.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE bar_mod.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o bar_mod.o
+xiar -rv liboceanvar_athena.a bar_mod.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipojVQMSX/bar_mod.o
+a - /tmp/xiar_ipovvaFZJ/bar_mod.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE get_vel.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o get_vel.o
+xiar -rv liboceanvar_athena.a get_vel.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoolA3SH/get_vel.o
+a - /tmp/xiar_ipo6yVFUc/get_vel.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE div_dmp.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o div_dmp.o
+xiar -rv liboceanvar_athena.a div_dmp.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoNOP7T7/div_dmp.o
+a - /tmp/xiar_iporR1lCN/div_dmp.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE bar_mod_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o bar_mod_ad.o
+xiar -rv liboceanvar_athena.a bar_mod_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoAEBt1e/bar_mod_ad.o
+a - /tmp/xiar_ipo2XSFYu/bar_mod_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE invrt.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o invrt.o
+xiar -rv liboceanvar_athena.a invrt.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo4V0an6/invrt.o
+a - /tmp/xiar_ipoUMZoQL/invrt.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE invrt_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o invrt_ad.o
+xiar -rv liboceanvar_athena.a invrt_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoYFZEgB/invrt_ad.o
+a - /tmp/xiar_ipoCNMFnk/invrt_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE shapiro_1d.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o shapiro_1d.o
+xiar -rv liboceanvar_athena.a shapiro_1d.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoXUpR0X/shapiro_1d.o
+a - /tmp/xiar_ipoZ1pIYK/shapiro_1d.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obsop.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obsop.o
+xiar -rv liboceanvar_athena.a obsop.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipof3cFdt/obsop.o
+a - /tmp/xiar_ipoTeSbkj/obsop.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_sla.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_sla.o
+xiar -rv liboceanvar_athena.a obs_sla.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoJsj9SN/obs_sla.o
+a - /tmp/xiar_ipolSaCPG/obs_sla.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_arg.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_arg.o
+xiar -rv liboceanvar_athena.a obs_arg.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoMKeBd6/obs_arg.o
+a - /tmp/xiar_ipom2Fyl2/obs_arg.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_xbt.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_xbt.o
+xiar -rv liboceanvar_athena.a obs_xbt.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoyEkNYr/obs_xbt.o
+a - /tmp/xiar_ipoMbEKFq/obs_xbt.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_gld.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_gld.o
+xiar -rv liboceanvar_athena.a obs_gld.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoEmYOVO/obs_gld.o
+a - /tmp/xiar_ipoSFtLIQ/obs_gld.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_vel.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_vel.o
+xiar -rv liboceanvar_athena.a obs_vel.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoeg7mgf/obs_vel.o
+a - /tmp/xiar_ipoagI0Oj/obs_vel.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_trj.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_trj.o
+xiar -rv liboceanvar_athena.a obs_trj.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipozjlF1p/obs_trj.o
+a - /tmp/xiar_ipoZnyF7w/obs_trj.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE resid.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o resid.o
+xiar -rv liboceanvar_athena.a resid.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoJGqPtR/resid.o
+a - /tmp/xiar_ipoj3qYW1/resid.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE res_inc.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o res_inc.o
+xiar -rv liboceanvar_athena.a res_inc.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoKvIZb1/res_inc.o
+a - /tmp/xiar_ipouTtP8l/res_inc.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obsop_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obsop_ad.o
+xiar -rv liboceanvar_athena.a obsop_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoAoOaeF/obsop_ad.o
+a - /tmp/xiar_ipoSAEks4/obsop_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_sla_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_sla_ad.o
+xiar -rv liboceanvar_athena.a obs_sla_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoer5Fh1/obs_sla_ad.o
+a - /tmp/xiar_ipo6SfX8s/obs_sla_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_arg_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_arg_ad.o
+xiar -rv liboceanvar_athena.a obs_arg_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoNIX9Qd/obs_arg_ad.o
+a - /tmp/xiar_ipoZ9aUuI/obs_arg_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_xbt_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_xbt_ad.o
+xiar -rv liboceanvar_athena.a obs_xbt_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoXSMpzG/obs_xbt_ad.o
+a - /tmp/xiar_ipopAJfne/obs_xbt_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_gld_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_gld_ad.o
+xiar -rv liboceanvar_athena.a obs_gld_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoPL9e81/obs_gld_ad.o
+a - /tmp/xiar_ipo9fUaPC/obs_gld_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_vel_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_vel_ad.o
+xiar -rv liboceanvar_athena.a obs_vel_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipojSUzzu/obs_vel_ad.o
+a - /tmp/xiar_ipolV2No8/obs_vel_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_trj_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_trj_ad.o
+xiar -rv liboceanvar_athena.a obs_trj_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoWdf4sK/obs_trj_ad.o
+a - /tmp/xiar_ipo8uwRjr/obs_trj_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE veof_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o veof_ad.o
+xiar -rv liboceanvar_athena.a veof_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipog9hyg7/veof_ad.o
+a - /tmp/xiar_ipoak4nPS/veof_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE ver_hor_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o ver_hor_ad.o
+xiar -rv liboceanvar_athena.a ver_hor_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo78MGpq/ver_hor_ad.o
+a - /tmp/xiar_ipoHQ6f6s/ver_hor_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE ver_hor_ad202.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o ver_hor_ad202.o
+xiar -rv liboceanvar_athena.a ver_hor_ad202.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoIElUiP/ver_hor_ad202.o
+a - /tmp/xiar_ipoaXXaok/ver_hor_ad202.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE get_vel_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o get_vel_ad.o
+xiar -rv liboceanvar_athena.a get_vel_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoF3qg9v/get_vel_ad.o
+a - /tmp/xiar_iporfnmxe/get_vel_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE prepprof.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o prepprof.o
+xiar -rv liboceanvar_athena.a prepprof.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipofCfBlp/prepprof.o
+a - /tmp/xiar_ipoZ4gmUv/prepprof.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE prep_extgrid1.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o prep_extgrid1.o
+xiar -rv liboceanvar_athena.a prep_extgrid1.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoOfQ2bE/prep_extgrid1.o
+a - /tmp/xiar_ipoqN2hBN/prep_extgrid1.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE prep_extgrid2.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o prep_extgrid2.o
+xiar -rv liboceanvar_athena.a prep_extgrid2.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo0CSQBZ/prep_extgrid2.o
+a - /tmp/xiar_ipouDbsBb/prep_extgrid2.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE int_bacval_sla.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o int_bacval_sla.o
+xiar -rv liboceanvar_athena.a int_bacval_sla.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo8OJOAn/int_bacval_sla.o
+a - /tmp/xiar_ipoyj1xbD/int_bacval_sla.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE div_dmp_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o div_dmp_ad.o
+xiar -rv liboceanvar_athena.a div_dmp_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipojtYTSS/div_dmp_ad.o
+a - /tmp/xiar_ipodP4gGf/div_dmp_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE get_byg_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o get_byg_ad.o
+xiar -rv liboceanvar_athena.a get_byg_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoA4M7cy/get_byg_ad.o
+a - /tmp/xiar_ipoKbtPJ7/get_byg_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_trj_tl.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_trj_tl.o
+xiar -rv liboceanvar_athena.a mod_trj_tl.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoDz1jvS/mod_trj_tl.o
+a - /tmp/xiar_ipopAdFRB/mod_trj_tl.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_trj_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_trj_ad.o
+xiar -rv liboceanvar_athena.a mod_trj_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoJcJUOz/mod_trj_ad.o
+a - /tmp/xiar_ipoBnBbAo/mod_trj_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE cnv_ctv_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o cnv_ctv_ad.o
+xiar -rv liboceanvar_athena.a cnv_ctv_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo83bppk/cnv_ctv_ad.o
+a - /tmp/xiar_ipoudyG8e/cnv_ctv_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE cnv_inn.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o cnv_inn.o
+xiar -rv liboceanvar_athena.a cnv_inn.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipocts5dG/cnv_inn.o
+a - /tmp/xiar_ipoOqYaxD/cnv_inn.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE hrinterp.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o hrinterp.o
+xiar -rv liboceanvar_athena.a hrinterp.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoe7p6N5/hrinterp.o
+a - /tmp/xiar_ipoYGkGO7/hrinterp.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE wrt_out.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o wrt_out.o
+xiar -rv liboceanvar_athena.a wrt_out.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoj9zz5e/wrt_out.o
+a - /tmp/xiar_ipoTlgYhy/wrt_out.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE wrt_obs.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o wrt_obs.o
+xiar -rv liboceanvar_athena.a wrt_obs.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoNG06gW/wrt_obs.o
+a - /tmp/xiar_ipozPcPmP/wrt_obs.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE wrt_obs_screen.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o wrt_obs_screen.o
+xiar -rv liboceanvar_athena.a wrt_obs_screen.o	
+xiar: executing 'ar'
+a - /tmp/xiar_iporpAaO0/wrt_obs_screen.o
+a - /tmp/xiar_ipo3HRMrf/wrt_obs_screen.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE varjob.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o varjob.o
+xiar -rv liboceanvar_athena.a varjob.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo2v4QLd/varjob.o
+a - /tmp/xiar_ipo4sRZcB/varjob.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE setup0.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o setup0.o
+xiar -rv liboceanvar_athena.a setup0.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoEHoJJI/setup0.o
+a - /tmp/xiar_ipo40PFm9/setup0.ilo
+ifort -c -openmp -i4 -r8 -convert big_endian -align all -assume byterecl  -convert big_endian -align all -assume byterecl  -fpconstant  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE m1qn3.F -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o m1qn3.o
+m1qn3.F(761): remark #8291: Recommended relationship between field width 'W' and the number of fractional digits 'D' in this edit descriptor is 'W>=D+7'.
+     &        '(1X,I5,2X,I5,2X,1PD8.2,2X,D21.14,2X,D11.5,2X,D10.4)')
+----------------------------------^
+m1qn3.F(761): remark #8291: Recommended relationship between field width 'W' and the number of fractional digits 'D' in this edit descriptor is 'W>=D+7'.
+     &        '(1X,I5,2X,I5,2X,1PD8.2,2X,D21.14,2X,D11.5,2X,D10.4)')
+----------------------------------------------------^
+m1qn3.F(761): remark #8291: Recommended relationship between field width 'W' and the number of fractional digits 'D' in this edit descriptor is 'W>=D+7'.
+     &        '(1X,I5,2X,I5,2X,1PD8.2,2X,D21.14,2X,D11.5,2X,D10.4)')
+-------------------------------------------------------------^
+xiar -rv liboceanvar_athena.a m1qn3.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoadKSS7/m1qn3.o
+a - /tmp/xiar_ipo8SYsME/m1qn3.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE min_cfn_m1qn3.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o min_cfn_m1qn3.o
+xiar -rv liboceanvar_athena.a min_cfn_m1qn3.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo45NRyX/min_cfn_m1qn3.o
+a - /tmp/xiar_ipoUeUbiH/min_cfn_m1qn3.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE min_cfn_cg1.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o min_cfn_cg1.o
+xiar -rv liboceanvar_athena.a min_cfn_cg1.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo2ev9Ki/min_cfn_cg1.o
+a - /tmp/xiar_ipoAYThh5/min_cfn_cg1.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readNetCDF_SLA_ATP.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readNetCDF_SLA_ATP.o
+xiar -rv liboceanvar_athena.a readNetCDF_SLA_ATP.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoGs2fzI/readNetCDF_SLA_ATP.o
+a - /tmp/xiar_ipour1W2x/readNetCDF_SLA_ATP.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readnetcdf_sla_new.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readnetcdf_sla_new.o
+xiar -rv liboceanvar_athena.a readnetcdf_sla_new.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipob7thQ1/readnetcdf_sla_new.o
+a - /tmp/xiar_ipov4BeLU/readnetcdf_sla_new.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_remss_mwoisst_nc.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_remss_mwoisst_nc.o
+xiar -rv liboceanvar_athena.a read_remss_mwoisst_nc.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipondgz3p/read_remss_mwoisst_nc.o
+a - /tmp/xiar_ipolJTY7l/read_remss_mwoisst_nc.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readsla.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readsla.o
+xiar -rv liboceanvar_athena.a readsla.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipopajahP/readsla.o
+a - /tmp/xiar_ipo5n9kcO/readsla.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_sla2.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_sla2.o
+xiar -rv liboceanvar_athena.a obs_sla2.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoxKngJj/obs_sla2.o
+a - /tmp/xiar_ipozmCGxm/obs_sla2.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_sla2_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_sla2_ad.o
+xiar -rv liboceanvar_athena.a obs_sla2_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoMF9qAH/obs_sla2_ad.o
+a - /tmp/xiar_ipoQliTdO/obs_sla2_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE prep_lha.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o prep_lha.o
+xiar -rv liboceanvar_athena.a prep_lha.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoe4JKtc/prep_lha.o
+a - /tmp/xiar_ipoMiBJNm/prep_lha.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE writecorr2d.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o writecorr2d.o
+xiar -rv liboceanvar_athena.a writecorr2d.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoQCupvG/writecorr2d.o
+a - /tmp/xiar_ipokiiWFU/writecorr2d.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE wranal.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o wranal.o
+xiar -rv liboceanvar_athena.a wranal.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoNpHgaY/wranal.o
+a - /tmp/xiar_ipoJWKFzf/wranal.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE wrmdt.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o wrmdt.o
+xiar -rv liboceanvar_athena.a wrmdt.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoFqwAyB/wrmdt.o
+a - /tmp/xiar_ipoTHHEnX/wrmdt.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE wraninc.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o wraninc.o
+xiar -rv liboceanvar_athena.a wraninc.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipodesArW/wraninc.o
+a - /tmp/xiar_ipoxMG85k/wraninc.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE wraninchr.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o wraninchr.o
+xiar -rv liboceanvar_athena.a wraninchr.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipooCZlue/wraninchr.o
+a - /tmp/xiar_ipoUavrgG/wraninchr.ilo
+ifort -c -openmp -i4 -r8 -convert big_endian -align all -assume byterecl  -convert big_endian -align all -assume byterecl  -fpconstant  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE check_err.F -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o check_err.o
+xiar -rv liboceanvar_athena.a check_err.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipomX9YJJ/check_err.o
+a - /tmp/xiar_ipoCX2x3e/check_err.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE gentrbk.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o gentrbk.o
+xiar -rv liboceanvar_athena.a gentrbk.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoKdNczd/gentrbk.o
+a - /tmp/xiar_ipoGxohPM/gentrbk.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readen3.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readen3.o
+xiar -rv liboceanvar_athena.a readen3.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoTcA1bv/readen3.o
+a - /tmp/xiar_ipoVgAlS7/readen3.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readnrt.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readnrt.o
+xiar -rv liboceanvar_athena.a readnrt.o	
+xiar: executing 'ar'
+a - /tmp/xiar_iponkkqy5/readnrt.o
+a - /tmp/xiar_ipo3poL1M/readnrt.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readen3file.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readen3file.o
+xiar -rv liboceanvar_athena.a readen3file.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo6B4VZK/readen3file.o
+a - /tmp/xiar_ipooyBp7y/readen3file.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readen3levs.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readen3levs.o
+xiar -rv liboceanvar_athena.a readen3levs.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoIwcvNM/readen3levs.o
+a - /tmp/xiar_ipoGj1cxH/readen3levs.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE assign_slaerr.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o assign_slaerr.o
+assign_slaerr.F90(197): remark #8290: Recommended relationship between field width 'W' and the number of fractional digits 'D' in this edit descriptor is 'W>=D+3'.
+    WRITE(91,'(I6,X,I6,X,F8.3,5(X,F5.3))') K, SLA%TRACK(K),&
+-----------------------------------^
+xiar -rv liboceanvar_athena.a assign_slaerr.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo3KhfNa/assign_slaerr.o
+a - /tmp/xiar_ipoBtG8ta/assign_slaerr.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE assign_ssterr.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o assign_ssterr.o
+xiar -rv liboceanvar_athena.a assign_ssterr.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoPlEHe2/assign_ssterr.o
+a - /tmp/xiar_ipoFmF6a7/assign_ssterr.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readobs.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readobs.o
+xiar -rv liboceanvar_athena.a readobs.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipopHvWOj/readobs.o
+a - /tmp/xiar_ipoh4oB7q/readobs.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readobsa.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readobsa.o
+xiar -rv liboceanvar_athena.a readobsa.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipomoAuxw/readobsa.o
+a - /tmp/xiar_ipo22gUAG/readobsa.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readobsa103.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readobsa103.o
+xiar -rv liboceanvar_athena.a readobsa103.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoeiWWZS/readobsa103.o
+a - /tmp/xiar_iposw0iM5/readobsa103.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE int_par_ins.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o int_par_ins.o
+xiar -rv liboceanvar_athena.a int_par_ins.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoaER69q/int_par_ins.o
+a - /tmp/xiar_ipo8VE0hJ/int_par_ins.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE int_par_ins_2.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o int_par_ins_2.o
+xiar -rv liboceanvar_athena.a int_par_ins_2.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo9TCzev/int_par_ins_2.o
+a - /tmp/xiar_ipoV1jcMV/int_par_ins_2.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE int_par_sla_2.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o int_par_sla_2.o
+xiar -rv liboceanvar_athena.a int_par_sla_2.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipot5uhDh/int_par_sla_2.o
+a - /tmp/xiar_ipolFCE2N/int_par_sla_2.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE int_par_sst_2.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o int_par_sst_2.o
+xiar -rv liboceanvar_athena.a int_par_sst_2.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoMlFPFO/int_par_sst_2.o
+a - /tmp/xiar_ipoSAxUcq/int_par_sst_2.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE int_par_sss_2.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o int_par_sss_2.o
+xiar -rv liboceanvar_athena.a int_par_sss_2.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoMlHGdw/int_par_sss_2.o
+a - /tmp/xiar_ipo6KwUFc/int_par_sss_2.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_ins.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_ins.o
+xiar -rv liboceanvar_athena.a obs_ins.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoXVhRr5/obs_ins.o
+a - /tmp/xiar_ipolZAJcR/obs_ins.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_ins_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_ins_ad.o
+xiar -rv liboceanvar_athena.a obs_ins_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipozDWa3z/obs_ins_ad.o
+a - /tmp/xiar_ipoh2ofBp/obs_ins_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_ins_tl.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_ins_tl.o
+xiar -rv liboceanvar_athena.a obs_ins_tl.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoYDX9b0/obs_ins_tl.o
+a - /tmp/xiar_ipouUNzQT/obs_ins_tl.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_vec2.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_vec2.o
+xiar -rv liboceanvar_athena.a obs_vec2.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo0TiTlA/obs_vec2.o
+a - /tmp/xiar_ipowEpggz/obs_vec2.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE int_par2.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o int_par2.o
+xiar -rv liboceanvar_athena.a int_par2.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipojKVFWj/int_par2.o
+a - /tmp/xiar_ipopG3joo/int_par2.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obserrors.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obserrors.o
+xiar -rv liboceanvar_athena.a obserrors.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoTBODDE/obserrors.o
+a - /tmp/xiar_ipoFBhdHL/obserrors.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE assign_inserr.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o assign_inserr.o
+xiar -rv liboceanvar_athena.a assign_inserr.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoBOKik7/assign_inserr.o
+a - /tmp/xiar_iponGbwJh/assign_inserr.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE thinout_sla.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o thinout_sla.o
+xiar -rv liboceanvar_athena.a thinout_sla.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipobxrSjC/thinout_sla.o
+a - /tmp/xiar_ipo7iIb3Q/thinout_sla.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE thinout_sst.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o thinout_sst.o
+xiar -rv liboceanvar_athena.a thinout_sst.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo6SCku7/thinout_sst.o
+a - /tmp/xiar_ipoMsEj9q/thinout_sst.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE climcheck.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o climcheck.o
+xiar -rv liboceanvar_athena.a climcheck.o	
+xiar: executing 'ar'
+a - /tmp/xiar_iposlO5CP/climcheck.o
+a - /tmp/xiar_ipoEXwWSe/climcheck.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_clim.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_clim.o
+xiar -rv liboceanvar_athena.a read_clim.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoZmvIQE/read_clim.o
+a - /tmp/xiar_ipotOLoza/read_clim.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE bgqcheck.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o bgqcheck.o
+xiar -rv liboceanvar_athena.a bgqcheck.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoXfMym9/bgqcheck.o
+a - /tmp/xiar_ipo5cwcbJ/bgqcheck.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE vertcheck.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o vertcheck.o
+xiar -rv liboceanvar_athena.a vertcheck.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoY9WJKK/vertcheck.o
+a - /tmp/xiar_ipoMCBeXp/vertcheck.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE bgqcheckp.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o bgqcheckp.o
+xiar -rv liboceanvar_athena.a bgqcheckp.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoa0l4vj/bgqcheckp.o
+a - /tmp/xiar_ipow0Rrb3/bgqcheckp.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_bgerrs.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_bgerrs.o
+xiar -rv liboceanvar_athena.a read_bgerrs.o	
+xiar: executing 'ar'
+a - /tmp/xiar_iporkfp5V/read_bgerrs.o
+a - /tmp/xiar_ipoJ0BQQK/read_bgerrs.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE usageov.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o usageov.o
+xiar -rv liboceanvar_athena.a usageov.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoFLLcRg/usageov.o
+a - /tmp/xiar_ipo98Qdq8/usageov.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE calcdeta.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o calcdeta.o
+xiar -rv liboceanvar_athena.a calcdeta.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipozNzZrD/calcdeta.o
+a - /tmp/xiar_ipoZdflLx/calcdeta.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE thinout_ins_a.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o thinout_ins_a.o
+xiar -rv liboceanvar_athena.a thinout_ins_a.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo9OXIeb/thinout_ins_a.o
+a - /tmp/xiar_ipoFVKvea/thinout_ins_a.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE thinout_ins_b.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o thinout_ins_b.o
+xiar -rv liboceanvar_athena.a thinout_ins_b.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoCSUR9Z/thinout_ins_b.o
+a - /tmp/xiar_iposHHi85/thinout_ins_b.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE thinning.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o thinning.o
+xiar -rv liboceanvar_athena.a thinning.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoXYP4Gw/thinning.o
+a - /tmp/xiar_ipo3TZC7G/thinning.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE repeve.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o repeve.o
+xiar -rv liboceanvar_athena.a repeve.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoBv2nhU/repeve.o
+a - /tmp/xiar_iponH16r8/repeve.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE blacklist.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o blacklist.o
+xiar -rv liboceanvar_athena.a blacklist.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo3CK3gF/blacklist.o
+a - /tmp/xiar_ipo1aG2FY/blacklist.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE writencobs.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o writencobs.o
+xiar -rv liboceanvar_athena.a writencobs.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoQ9ZBj1/writencobs.o
+a - /tmp/xiar_ipoyFvnDo/writencobs.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE writencobss.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o writencobss.o
+xiar -rv liboceanvar_athena.a writencobss.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipokXlCjC/writencobss.o
+a - /tmp/xiar_ipok2BhZ3/writencobss.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE sfiltatslal.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o sfiltatslal.o
+xiar -rv liboceanvar_athena.a sfiltatslal.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoyZmcQ7/sfiltatslal.o
+a - /tmp/xiar_ipoMRvA1C/sfiltatslal.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_remss_swath_amsre_nc.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_remss_swath_amsre_nc.o
+xiar -rv liboceanvar_athena.a read_remss_swath_amsre_nc.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipod22g8r/read_remss_swath_amsre_nc.o
+a - /tmp/xiar_ipoLxdE90/read_remss_swath_amsre_nc.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE assign_ssserr.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o assign_ssserr.o
+xiar -rv liboceanvar_athena.a assign_ssserr.o	
+xiar: executing 'ar'
+a - /tmp/xiar_iponsqAV2/assign_ssserr.o
+a - /tmp/xiar_ipoDJFohG/assign_ssserr.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE int_par_sss.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o int_par_sss.o
+xiar -rv liboceanvar_athena.a int_par_sss.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo74htEu/int_par_sss.o
+a - /tmp/xiar_ipoPhHo1b/int_par_sss.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_sss.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_sss.o
+xiar -rv liboceanvar_athena.a obs_sss.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipogwV3Ac/obs_sss.o
+a - /tmp/xiar_ipoYpVqKZ/obs_sss.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_sss_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_sss_ad.o
+xiar -rv liboceanvar_athena.a obs_sss_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoA7ieVF/obs_sss_ad.o
+a - /tmp/xiar_ipos1ejhw/obs_sss_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE obs_sss_tl.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o obs_sss_tl.o
+xiar -rv liboceanvar_athena.a obs_sss_tl.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipos9ipNZ/obs_sss_tl.o
+a - /tmp/xiar_ipo4nhVVS/obs_sss_tl.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE readsss.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o readsss.o
+xiar -rv liboceanvar_athena.a readsss.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoUase4q/readsss.o
+a - /tmp/xiar_iposkMLEx/readsss.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE thinout_sss.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o thinout_sss.o
+xiar -rv liboceanvar_athena.a thinout_sss.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo4416w9/thinout_sss.o
+a - /tmp/xiar_ipounz6al/thinout_sss.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_aquarius.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_aquarius.o
+xiar -rv liboceanvar_athena.a read_aquarius.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipooqkk7M/read_aquarius.o
+a - /tmp/xiar_ipoCJsCb3/read_aquarius.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE slaatcorr.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o slaatcorr.o
+xiar -rv liboceanvar_athena.a slaatcorr.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoh34Ir4/slaatcorr.o
+a - /tmp/xiar_ipoDD3Lgo/slaatcorr.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE getsstmb.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o getsstmb.o
+xiar -rv liboceanvar_athena.a getsstmb.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipotEsxAR/getsstmb.o
+a - /tmp/xiar_iponxqqAg/getsstmb.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE compalpha.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o compalpha.o
+xiar -rv liboceanvar_athena.a compalpha.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoabBzM4/compalpha.o
+a - /tmp/xiar_ipowyOm7w/compalpha.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE compalpha_lv.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o compalpha_lv.o
+xiar -rv liboceanvar_athena.a compalpha_lv.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo4ol56L/compalpha_lv.o
+a - /tmp/xiar_ipo0Bilrk/compalpha_lv.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE compalpha_lvm.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o compalpha_lvm.o
+xiar -rv liboceanvar_athena.a compalpha_lvm.o	
+xiar: executing 'ar'
+a - /tmp/xiar_iporc9NgQ/compalpha_lvm.o
+a - /tmp/xiar_ipofeThUw/compalpha_lvm.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE compsc.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o compsc.o
+xiar -rv liboceanvar_athena.a compsc.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo9rl4Cu/compsc.o
+a - /tmp/xiar_ipob4Z20g/compsc.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE compsc_lv.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o compsc_lv.o
+xiar -rv liboceanvar_athena.a compsc_lv.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipokaInoq/compsc_lv.o
+a - /tmp/xiar_ipoC8wM8m/compsc_lv.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE defextgrd.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o defextgrd.o
+xiar -rv liboceanvar_athena.a defextgrd.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo2NfgSx/defextgrd.o
+a - /tmp/xiar_ipowCuyBK/defextgrd.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE defextgrd_lv.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o defextgrd_lv.o
+xiar -rv liboceanvar_athena.a defextgrd_lv.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo8AMWEG/defextgrd_lv.o
+a - /tmp/xiar_ipoQjuJN2/defextgrd_lv.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE defextgrd_lvm.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o defextgrd_lvm.o
+xiar -rv liboceanvar_athena.a defextgrd_lvm.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoZQ42C5/defextgrd_lvm.o
+a - /tmp/xiar_ipol5xszB/defextgrd_lvm.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE defextgrdsrz.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o defextgrdsrz.o
+xiar -rv liboceanvar_athena.a defextgrdsrz.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo67oeGs/defextgrdsrz.o
+a - /tmp/xiar_ipoYFkNz2/defextgrdsrz.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_cr.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_cr.o
+xiar -rv liboceanvar_athena.a read_cr.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipogaYAJ4/read_cr.o
+a - /tmp/xiar_ipoqVa6LI/read_cr.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_crz.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_crz.o
+xiar -rv liboceanvar_athena.a read_crz.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo5rFVZD/read_crz.o
+a - /tmp/xiar_ipo9Wr3An/read_crz.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_rfc.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_rfc.o
+xiar -rv liboceanvar_athena.a read_rfc.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipovvMpe5/read_rfc.o
+a - /tmp/xiar_iponCXKGS/read_rfc.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_rfcz.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_rfcz.o
+xiar -rv liboceanvar_athena.a read_rfcz.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoDF5ROT/read_rfcz.o
+a - /tmp/xiar_iponPKMGM/read_rfcz.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE def_coef.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o def_coef.o
+xiar -rv liboceanvar_athena.a def_coef.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipowrhqkf/def_coef.o
+a - /tmp/xiar_ipoaWN2Vb/def_coef.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rcfl_2.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rcfl_2.o
+xiar -rv liboceanvar_athena.a rcfl_2.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoAG84dE/rcfl_2.o
+a - /tmp/xiar_ipos7zkRD/rcfl_2.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rcfl_2_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rcfl_2_ad.o
+xiar -rv liboceanvar_athena.a rcfl_2_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoYpNvI3/rcfl_2_ad.o
+a - /tmp/xiar_ipoEyJWc6/rcfl_2_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rcfl_x_2d.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rcfl_x_2d.o
+xiar -rv liboceanvar_athena.a rcfl_x_2d.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipowVQ7qr/rcfl_x_2d.o
+a - /tmp/xiar_ipo8AeaEx/rcfl_x_2d.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rcfl_x_ad_2d.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rcfl_x_ad_2d.o
+xiar -rv liboceanvar_athena.a rcfl_x_ad_2d.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoLSGNcZ/rcfl_x_ad_2d.o
+a - /tmp/xiar_ipolOO3Na/rcfl_x_ad_2d.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rcfl_x_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rcfl_x_ad.o
+xiar -rv liboceanvar_athena.a rcfl_x_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoYcwXgK/rcfl_x_ad.o
+a - /tmp/xiar_ipoaMHwWk/rcfl_x_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rcfl_x.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rcfl_x.o
+xiar -rv liboceanvar_athena.a rcfl_x.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoZvIlCE/rcfl_x.o
+a - /tmp/xiar_ipopYYcqm/rcfl_x.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rcfl_xz_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rcfl_xz_ad.o
+xiar -rv liboceanvar_athena.a rcfl_xz_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipobdJvn4/rcfl_xz_ad.o
+a - /tmp/xiar_ipoLaW9H9/rcfl_xz_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rcfl_xz.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rcfl_xz.o
+xiar -rv liboceanvar_athena.a rcfl_xz.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoQSqMEi/rcfl_xz.o
+a - /tmp/xiar_ipoQRd45w/rcfl_xz.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rcfl_y_2d.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rcfl_y_2d.o
+xiar -rv liboceanvar_athena.a rcfl_y_2d.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoVgLFMS/rcfl_y_2d.o
+a - /tmp/xiar_ipoJFcbnc/rcfl_y_2d.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rcfl_y_ad_2d.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rcfl_y_ad_2d.o
+xiar -rv liboceanvar_athena.a rcfl_y_ad_2d.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo5N1wMz/rcfl_y_ad_2d.o
+a - /tmp/xiar_iponFaK5Y/rcfl_y_ad_2d.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rcfl_y_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rcfl_y_ad.o
+xiar -rv liboceanvar_athena.a rcfl_y_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoIWqCWq/rcfl_y_ad.o
+a - /tmp/xiar_ipoecWA5f/rcfl_y_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rcfl_yz_ad.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rcfl_yz_ad.o
+xiar -rv liboceanvar_athena.a rcfl_yz_ad.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoz8Q653/rcfl_yz_ad.o
+a - /tmp/xiar_iporGVXBT/rcfl_yz_ad.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rcfl_y_ad_old.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rcfl_y_ad_old.o
+xiar -rv liboceanvar_athena.a rcfl_y_ad_old.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipocHiQDg/rcfl_y_ad_old.o
+a - /tmp/xiar_ipoUlQAUf/rcfl_y_ad_old.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rcfl_y.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rcfl_y.o
+xiar -rv liboceanvar_athena.a rcfl_y.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipowS6cBj/rcfl_y.o
+a - /tmp/xiar_ipocyWNry/rcfl_y.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rcfl_yz.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rcfl_yz.o
+xiar -rv liboceanvar_athena.a rcfl_yz.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoinvJJY/rcfl_yz.o
+a - /tmp/xiar_ipomn5PhI/rcfl_yz.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rcfl_y_old.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rcfl_y_old.o
+xiar -rv liboceanvar_athena.a rcfl_y_old.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo00FGBx/rcfl_y_old.o
+a - /tmp/xiar_ipoAlSCvl/rcfl_y_old.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rdfdf.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rdfdf.o
+xiar -rv liboceanvar_athena.a rdfdf.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoVE9C3D/rdfdf.o
+a - /tmp/xiar_ipovJLrKA/rdfdf.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_crf1.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_crf1.o
+xiar -rv liboceanvar_athena.a read_crf1.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipofDSlD5/read_crf1.o
+a - /tmp/xiar_ipo9yMh55/read_crf1.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rearralpha.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rearralpha.o
+xiar -rv liboceanvar_athena.a rearralpha.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoEa1RxY/rearralpha.o
+a - /tmp/xiar_ipoEU7Zv8/rearralpha.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rearralpha_lv.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rearralpha_lv.o
+xiar -rv liboceanvar_athena.a rearralpha_lv.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipolKYMWp/rearralpha_lv.o
+a - /tmp/xiar_ipox06VXP/rearralpha_lv.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rearralpha_lvm.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rearralpha_lvm.o
+xiar -rv liboceanvar_athena.a rearralpha_lvm.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoRIHFbR/rearralpha_lvm.o
+a - /tmp/xiar_iporqKbLD/rearralpha_lvm.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE rearralphasrz.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rearralphasrz.o
+xiar -rv liboceanvar_athena.a rearralphasrz.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipogebERv/rearralphasrz.o
+a - /tmp/xiar_ipoOlZhgq/rearralphasrz.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE xind1.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o xind1.o
+xiar -rv liboceanvar_athena.a xind1.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoZJRvL2/xind1.o
+a - /tmp/xiar_ipovxHIj7/xind1.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE check.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o check.o
+xiar -rv liboceanvar_athena.a check.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoBmXWbu/check.o
+a - /tmp/xiar_ipoxNsFOB/check.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE setuprfcr.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o setuprfcr.o
+xiar -rv liboceanvar_athena.a setuprfcr.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipo4BXYaO/setuprfcr.o
+a - /tmp/xiar_ipouvtsqZ/setuprfcr.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE index_sort.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o index_sort.o
+xiar -rv liboceanvar_athena.a index_sort.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipocRt0ip/index_sort.o
+a - /tmp/xiar_ipo8FPMVE/index_sort.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_nceof.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_nceof.o
+xiar -rv liboceanvar_athena.a read_nceof.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoYlvCWT/read_nceof.o
+a - /tmp/xiar_ipoiy4rEd/read_nceof.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE write_nceof.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o write_nceof.o
+xiar -rv liboceanvar_athena.a write_nceof.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoZhVA0g/write_nceof.o
+a - /tmp/xiar_ipo14VssE/write_nceof.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE cofdis_2d.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o cofdis_2d.o
+xiar -rv liboceanvar_athena.a cofdis_2d.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoJJ7kVV/cofdis_2d.o
+a - /tmp/xiar_ipoppU2Eo/cofdis_2d.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE haversine.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o haversine.o
+xiar -rv liboceanvar_athena.a haversine.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipowH2ory/haversine.o
+a - /tmp/xiar_ipoqUKkr6/haversine.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE prep_c202.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o prep_c202.o
+xiar -rv liboceanvar_athena.a prep_c202.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipokdZVxZ/prep_c202.o
+a - /tmp/xiar_ipouHUd7A/prep_c202.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE read_slamis.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o read_slamis.o
+xiar -rv liboceanvar_athena.a read_slamis.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoT8iMYs/read_slamis.o
+a - /tmp/xiar_ipovbIpij/read_slamis.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE master.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o master.o
+xiar -rv liboceanvar_athena.a master.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoxTGD8h/master.o
+a - /tmp/xiar_ipo1D1Bpl/master.ilo
+icc -c -DLINUX -DSTATIC_LINKING -DXPRIVATE=PRIVATE -UINTERCEPT_ALLOC -DINTEGER_IS_INT -D_ABI64 ecqsort.c -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o ecqsort.o
+xiar -rv liboceanvar_athena.a ecqsort.o	
+xiar: executing 'ar'
+a - ecqsort.o
+icc -c -DLINUX -DSTATIC_LINKING -DXPRIVATE=PRIVATE -UINTERCEPT_ALLOC -DINTEGER_IS_INT -D_ABI64 rsort32.c -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rsort32.o
+xiar -rv liboceanvar_athena.a rsort32.o	
+xiar: executing 'ar'
+a - rsort32.o
+icc -c -DLINUX -DSTATIC_LINKING -DXPRIVATE=PRIVATE -UINTERCEPT_ALLOC -DINTEGER_IS_INT -D_ABI64 rsort64.c -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o rsort64.o
+xiar -rv liboceanvar_athena.a rsort64.o	
+xiar: executing 'ar'
+a - rsort64.o
+icc -c -DLINUX -DSTATIC_LINKING -DXPRIVATE=PRIVATE -UINTERCEPT_ALLOC -DINTEGER_IS_INT -D_ABI64 CDFP_PublicReadAlongTrackProduct.c -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o CDFP_PublicReadAlongTrackProduct.o
+xiar -rv liboceanvar_athena.a CDFP_PublicReadAlongTrackProduct.o	
+xiar: executing 'ar'
+a - CDFP_PublicReadAlongTrackProduct.o
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE mod_timefinc.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o mod_timefinc.o
+xiar -rv liboceanvar_athena.a mod_timefinc.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipodIQelZ/mod_timefinc.o
+a - /tmp/xiar_ipoJMyQDV/mod_timefinc.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE adddate.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o adddate.o
+xiar -rv liboceanvar_athena.a adddate.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoWyeZdn/adddate.o
+a - /tmp/xiar_ipok37Kan/adddate.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE addtime.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o addtime.o
+xiar -rv liboceanvar_athena.a addtime.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoy1ZBsM/addtime.o
+a - /tmp/xiar_ipoIOJKvP/addtime.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE addtimer.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o addtimer.o
+xiar -rv liboceanvar_athena.a addtimer.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoCuSKxk/addtimer.o
+a - /tmp/xiar_ipooUhoBr/addtimer.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE diffdate.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o diffdate.o
+xiar -rv liboceanvar_athena.a diffdate.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoLexMgy/diffdate.o
+a - /tmp/xiar_ipodT3O8H/diffdate.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE difftime.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o difftime.o
+xiar -rv liboceanvar_athena.a difftime.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipofXFss2/difftime.o
+a - /tmp/xiar_ipoxIwH3f/difftime.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE difftimer.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o difftimer.o
+xiar -rv liboceanvar_athena.a difftimer.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipoVyUh1t/difftimer.o
+a - /tmp/xiar_ipo5T0jUK/difftimer.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE toupperdt.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o toupperdt.o
+xiar -rv liboceanvar_athena.a toupperdt.o	
+xiar: executing 'ar'
+a - /tmp/xiar_ipomZMiwx/toupperdt.o
+a - /tmp/xiar_ipoO6X8JX/toupperdt.ilo
+ifort -c -openmp -threads -convert big_endian -align all -assume byterecl  -O3 -no-prec-div -static -xHost -fno-alias -ipo -ip -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE master.F90 -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include -o master.o
+ifort -openmp -threads -o ../bin/var_3d_athena.x master.o -L. -loceanvar_athena -L/users/home/opt/netcdf/netcdf-3.6.3/lib -lnetcdf -L/users/home/ans012/model/3dvar/external/drhook_CY33R1.007_icc -ldrhook -lmpi_serial -L/users/home/ans012/model/3dvar/external/ARPACK_OMP -larpack_IFORT_OMP -L/users/home/opt/szip/szip-2.1/lib -L/users/home/opt/hdf5/hdf5-1.8.10-patch1/lib -L/usr/lib64/ -L/usr/lib/x86_64-redhat-linux5E/lib64 -lz -lm -lcurl -lgpfs
+ipo: remark #11000: performing multi-file optimizations
+ipo: remark #11006: generating object file /tmp/ipo_iforti6Wd7n.o
+
+****
+All the executables have been compiled!
+****
+

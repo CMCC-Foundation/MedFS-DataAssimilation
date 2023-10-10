@@ -1,0 +1,43 @@
+#... Compiler F90
+DEBUG0 = 
+F_C = sxf90 -f2003 nocbind -c -g $(DEBUG0) -Popenmp
+#... Compiler F77
+F_77 = sxf90 -f2003 nocbind -c -g $(DEBUG0) -Popenmp
+#... Compiler flags
+F_F = -dw -dW -Wf"-NA" -R5 -size_t64 -Wf"-P nh -O overlap" -Wf"-P nh" -Wf"-init stack=nan -init heap=nan" # -Wf,"-M zdiv flovf flunf"
+#... Compiler flags F77
+F_F77 = $(F_F) 
+#... Pre-processor options
+# P_P = -EP -Wp,-Dopt_netcdf -Wp,-DNOMPI -Wp,-DNECSX -Wp,-DDEEPLY_FGAT -Wp,-DSHARED_MEMORY -Wp,-Dopt_huge_memory
+P_P = -EP -Wp,-Dopt_netcdf -Wp,-DNOMPI -Wp,-DNECSX -Wp,-DDEEPLY_FGAT -Wp,-DSHARED_MEMORY
+# -Wp,-DUSE_POINTERS
+#... Optimization flags
+F_O = -Cvopt -Wf,-pvctl,noassume,fullmsg -pi auto exp=xind1,abor1,rho_unesco expin=xind1.F90,abor1.F90,oceantools.F90 line=500
+#... Debug flags
+F_D = -Cdebug
+#... C Compiler
+C_C = sxc++ -c -size_t64
+#... C Flags
+C_F = -DNECSX -DSTATIC_LINKING -DXPRIVATE=PRIVATE \
+  -UINTERCEPT_ALLOC -DINTEGER_IS_INT -D_ABI64 -UHAS_XMOTIF \
+#... Linker
+F_L = sxf90 -f2003 nocbind -size_t64 
+#... Linking options
+L_O = -dW -Wf"-NA" -pi auto -Popenmp -dw
+#... Debug flag (Debug on: 1 ; Debug off: whatelse)
+DEBUG = 0
+#... AR add
+AR_I = sxar -rv
+#... AR delete
+AR_E = sxar -d
+#.. Remove
+RM      = /bin/rm -f
+
+#... Include dirs
+EXTINC = -I/SX/usr/local/netcdf/include \
+         -I../include
+#... Libraries
+DRHOOK_LIB = /S/home00/G5032/c0341/ODA/aux/drhook_CY33R1.007.necsx9_noftrace_64/lib
+EXTLIB = -L/SX/usr/local/netcdf/lib64 -lnetcdf \
+         -L$(DRHOOK_LIB) -ldrhook -L/SX/opt/mathkeisan/MK3_0/lib0 -larpack_64 -llapack_64 -lblas_64
+#

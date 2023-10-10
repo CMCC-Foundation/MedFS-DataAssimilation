@@ -1,0 +1,48 @@
+#... Compiler F90
+DEBUG0 = -g -fpe0 -traceback -check all
+DEBUG0 = 
+F_C = ifort -c -openmp -threads -g -traceback -fpe0 
+#... Compiler F77
+F_77 = ifort -c -openmp -i4 -r8 -traceback -fpe0 -g
+#... Compiler flags
+F_F = -convert big_endian -assume byterecl
+#... Compiler flags F77
+F_F77 = $(F_F) -fpconstant 
+#... Pre-processor options
+P_P = -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE
+# -Wp,-DUSE_POINTERS
+#... Optimization flags
+F_O = -O0 -static 
+#... Debug flags
+F_D = -Cdebug
+#... C Compiler
+C_C = icc -c
+#... C Flags
+C_F = -DLINUX -DSTATIC_LINKING -DXPRIVATE=PRIVATE \
+  -UINTERCEPT_ALLOC -DINTEGER_IS_INT -D_ABI64
+#... Linker
+F_L = ifort
+#... Linking options
+L_O = -openmp -threads -traceback -O0 -fpe0 -g
+#... Debug flag (Debug on: 1 ; Debug off: whatelse)
+DEBUG = 0
+#... AR add
+AR_I = ar -rv
+#... AR delete
+AR_E = ar -d
+#.. Remove
+RM   = rm -f
+
+#... Include dirs
+EXTINC = -I/users/home/opt/netcdf/netcdf-3.6.3/include -I../include
+#... Libraries
+DRHOOK_LIB = /users/home/ans012/model/3dvar/external/drhook_CY33R1.007_icc
+ARPACK = /users/home/ans012/model/3dvar/external/ARPACK_OMP
+EXTLIB = -L/users/home/opt/netcdf/netcdf-3.6.3/lib \
+	 -lnetcdf \
+         -L$(DRHOOK_LIB) -ldrhook -lmpi_serial \
+         -L$(ARPACK) -larpack_IFORT_OMP \
+	 -L/users/home/opt/szip/szip-2.1/lib \
+         -L/users/home/opt/hdf5/hdf5-1.8.10-patch1/lib -L/usr/lib64/ \
+	 -L/usr/lib/x86_64-redhat-linux5E/lib64 -lz -lm -lcurl -lgpfs
+#

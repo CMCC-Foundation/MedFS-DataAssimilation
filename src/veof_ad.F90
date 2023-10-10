@@ -1,0 +1,202 @@
+SUBROUTINE VEOF_AD
+
+!-----------------------------------------------------------------------
+!                                                                      !
+! VERTICAL TRANSFORM FROM CONTROL TO PHYSICAL SPACE - ADJOINT
+!                                                                      !
+! VERSION 1: S.DOBRICIC 2006                                           !
+! A.STORTO 2009-03 ADPATED FOR GLOBAL MODEL W/O ETA EOFS               !
+!-----------------------------------------------------------------------
+
+
+ USE SET_KND
+ USE DRV_STR
+ USE GRD_STR
+ USE EOF_STR
+ USE RUN, ONLY : LLVARMDT, LL_SSH_UNBALANCED, LL_TQ2_UNBALANCED
+ USE MYFRTPROF, ONLY : MYFRTPROF_WALL
+ USE CTL_STR
+ USE HYBRID
+
+ IMPLICIT NONE
+
+ INTEGER(I4)             :: I, J, K, N, KOFFSET, NKMT
+ REAL(R8), ALLOCATABLE   :: SRO(:,:,:)
+ INTEGER(I4)     :: KT2M, KQ2M, KSSH, KSIC, KSIT, KICU, KICV
+ LOGICAL  :: LLV(ROS%KMT)
+ REAL(R8) :: ZA1, ZA2, ZA1_AD, ZA2_AD
+
+
+ CALL MYFRTPROF_WALL('VEOF_AD: ADJOINT OF VERT TRANSFORM',0)
+
+ GRD%RO_AD = 0.0_R8
+ IF( LL_HYBRID ) GRD%ROH_AD = 0.0_R8
+
+ IF( LL_HYBRID ) THEN
+    IF( LL_ALPHA_CTL ) THEN
+      IF(LL_PRECON_ALPHA) THEN
+        ZA1 = ALPHAB(1) + ALPHA(1)*SQRT(ZALPHA_VAR)
+        ZA2 = SQRT(1._R8-ZA1*ZA1)
+        ZA1_AD = 1._R8
+        ZA2_AD = - (1._R8 / SQRT(1._R8-ZA1*ZA1) ) * ZA1
+      ELSE
+! TEST ONLY WITHOUT PRECOND
+ !       ZA1 = SQRT(ALPHAB(1)*ALPHAB(1) + ALPHA(1))
+        ZA1 = ALPHAB(1) + ALPHA(1)
+        ZA2 = SQRT(1._R8-ZA1*ZA1)
+        ZA1_AD = 1._R8
+        ZA2_AD = - (1._R8 / SQRT(1._R8-ZA1*ZA1) ) * ZA1
+      ENDIF
+      WRITE(IOUNLOG,*) ' ALPHA (AD) :: ',ZA1**2,ALPHAB(1),ALPHA(1),ZA1_AD,ZA2_AD
+    ELSE
+      ZA1 = ZALPHA
+      ZA2 = SQRT(1._R8-ZA1*ZA1)
+    ENDIF
+ ELSE
+    ZA1 = 1._R8
+ ENDIF
+
+ IF ( LL_HYBRID_CR ) ZA1 = 1._R8
+
+ ALLOCATE ( SRO(GRD%IM,GRD%JM,ROS%NEOF) )
+ SRO = 0._R8
+
+ NKMT = ROS%KMT
+ LLV = .TRUE.
+ IF (LL_SSH) KSSH = PSV3D*GRD%KM+1
+ IF (LL_TQ2) THEN
+  IF(LL_ICE) THEN
+   KT2M = NKMT-5
+   KQ2M = NKMT-4
+  ELSE
+   KT2M = NKMT-1
+   KQ2M = NKMT
+  ENDIF
+ ENDIF
+ IF(LL_ICE) THEN
+   KSIC = NKMT-3
+   KSIT = NKMT-2
+   KICU = NKMT-1
+   KICV = NKMT
+ ENDIF
+
+IF ( (DRV%BMD(DRV%KTR)+DRV%BAL(DRV%KTR)) .GT. 0 .AND. .NOT. LL_SSH_UNBALANCED .AND. LL_SSH ) &
+   LLV(KSSH) = .FALSE.
+
+IF (DRV%BA2(DRV%KTR) .EQ. 1 .AND. .NOT. LL_TQ2_UNBALANCED .AND. LL_TQ2 ) THEN
+   LLV(KT2M) = .FALSE.
+   LLV(KQ2M) = .FALSE.
+ENDIF
+
+IF ( LL_ICE ) THEN
+   LLV(KSIC) = .FALSE.
+   LLV(KSIT) = .FALSE.
+   LLV(KICU) = .FALSE.
+   LLV(KICV) = .FALSE.
+ENDIF
+
+#ifdef SHARED_MEMORY
+!$OMP PARALLEL DEFAULT(SHARED),PRIVATE(J,N,K,I)
+!$OMP DO SCHEDULE(DYNAMIC,1)
+#endif
+DO N=1,ROS%NEOF
+  DO K=1,NKMT
+    IF(LLV(K))THEN
+     DO J=1,GRD%JM
+      DO I=1,GRD%IM
+#ifdef opt_huge_memory
+      SRO(I,J,N) = SRO(I,J,N)+ZA1*ROS%EVC( I, J, K, N) * PSV_AD(I,J,K) * GRD%MVLOC(I,J,K)
+#else
+      IF (GRD%REG(I,J) .GT. 0) THEN
+         SRO(I,J,N) = SRO(I,J,N)+ZA1*ROS%EVC(GRD%REG(I,J),K ,N) * PSV_AD(I,J,K) * GRD%MVLOC(I,J,K)
+      ENDIF
+#endif
+      ENDDO
+     ENDDO
+    ENDIF
+  ENDDO
+  DO J=1,GRD%JM
+    DO I=1,GRD%IM
+#ifdef opt_huge_memory
+      GRD%RO_AD(I,J,N) = ROS%EVA( I, J, N) * SRO(I,J,N)
+#else
+      IF (GRD%REG(I,J) .GT. 0) THEN
+         GRD%RO_AD(I,J,N) = ROS%EVA(GRD%REG(I,J),N) * SRO(I,J,N)
+      ENDIF
+#endif
+    ENDDO
+  ENDDO
+ENDDO
+#ifdef SHARED_MEMORY
+!$OMP END DO
+!$OMP END PARALLEL
+#endif
+
+IF( LL_HYBRID .AND. .NOT. LL_HYBRID_CR) THEN
+ IF( ROS%NEOF .EQ. ROSH%NEOF ) THEN
+    SRO = 0._R8
+ ELSE
+    DEALLOCATE(SRO)
+    ALLOCATE ( SRO(GRD%IM,GRD%JM,ROSH%NEOF) )
+    SRO = 0._R8
+ ENDIF
+#ifdef SHARED_MEMORY
+!$OMP PARALLEL DEFAULT(SHARED),PRIVATE(J,N,K,I)
+!$OMP DO SCHEDULE(DYNAMIC,1)
+#endif
+ DO N=1,ROSH%NEOF
+  DO K=1,NKMT
+    IF(LLV(K))THEN
+     DO J=1,GRD%JM
+      DO I=1,GRD%IM
+      SRO(I,J,N) = SRO(I,J,N)+ZA2*ROSH%EVC(REGHH(I,J),K,N)*PSV_AD(I,J,K)*GRD%MVLOC_H(I,J,K)
+      ENDDO
+     ENDDO
+    ENDIF
+  ENDDO
+  DO J=1,GRD%JM
+    DO I=1,GRD%IM
+      GRD%ROH_AD(I,J,N) = ROSH%EVA(REGHH(I,J),N) * SRO(I,J,N)
+    ENDDO
+  ENDDO
+ ENDDO
+#ifdef SHARED_MEMORY
+!$OMP END DO
+!$OMP END PARALLEL
+#endif
+
+ IF( LL_ALPHA_CTL ) THEN
+    ALPHA_AD=0._R8
+    DO N=1,ROS%NEOF
+     DO J=1,GRD%JM
+      DO I=1,GRD%IM
+       ALPHA_AD(1) = ALPHA_AD(1) + ZA1_AD * GRD%RO_AD(I,J,N)*GRD%RO(I,J,N)
+      ENDDO
+     ENDDO
+    ENDDO
+    WRITE(IOUNLOG,*) ' ALPHA_AD :: ',ALPHA_AD
+    DO N=1,ROSH%NEOF
+     DO J=1,GRD%JM
+      DO I=1,GRD%IM
+       ALPHA_AD(1) = ALPHA_AD(1) + ZA2_AD * GRD%ROH_AD(I,J,N)*GRD%ROH(I,J,N)
+      ENDDO
+     ENDDO
+    ENDDO
+    WRITE(IOUNLOG,*) ' ALPHA_AD :: ',ALPHA_AD
+    IF( LL_PRECON_ALPHA ) THEN
+        ALPHA_AD(1) = ALPHA_AD(1) * SQRT( ZALPHA_VAR ) !+ ALPHA(1)
+    ELSE
+        ALPHA_AD(1) = ALPHA_AD(1) !+ ALPHA(1)/ZALPHA_VAR
+    ENDIF
+ ENDIF
+
+ENDIF
+
+DEALLOCATE (SRO)
+
+IF(LLVARMDT) THEN
+    GRD%CMDT_AD(:,:) = GRD%CMDT_AD(:,:) * GRD%CMDT_STDEV(:,:)
+ENDIF
+
+ CALL MYFRTPROF_WALL('VEOF_AD: ADJOINT OF VERT TRANSFORM',1)
+END SUBROUTINE VEOF_AD

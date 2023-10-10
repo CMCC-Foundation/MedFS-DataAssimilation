@@ -1,0 +1,167 @@
+SUBROUTINE REARRALPHA
+USE RECFILTER
+
+!-- RECOMPUTE ALPHAS ACCORDING TO EXTENDED GRID
+!   THIS ROUTINE IS SUITABLE TO BE RECALLED WITHIN RF ROUTINES
+
+USE GRD_STR
+
+IMPLICIT  NONE
+
+INTEGER(KIND=I4) :: NX,NY,NZ
+INTEGER(KIND=I4) :: I,J,K,KK,K2
+
+WRITE(IOUNLOG,*)
+WRITE(IOUNLOG,*) ' /// REARRANGE ALPHA'
+WRITE(IOUNLOG,*)
+
+#ifndef USE_POINTERS
+IF( .NOT.ALLOCATED(GRD%DX).OR..NOT.ALLOCATED(GRD%DY).OR.&
+  & .NOT.ALLOCATED(GRD%MSR)) THEN
+   WRITE(IOUNERR,*) 'REARRALPHA CALLED BEFORE GRID INITIALIZATION'
+   CALL ABOR1('ERROR IN REARRALPHA, CANNOT PROCEED')
+ENDIF
+#endif
+
+IF(.NOT.LLRFINIT) &
+& CALL ABOR1('REARRALPHA CALLED BEFORE RF INITIALIZATION')
+
+NX=GRD%IM
+NY=GRD%JM
+NZ=GRD%KM
+
+WRITE(*,*) 'ABOUT TO ALLOCATE FCT:',NX,NY,NTOTV
+
+ALLOCATE( FCT(NX,NY,NTOTV) )
+
+WRITE(*,*) 'ABOUT TO ALLOCATE RF_X ARRAYS:',NY,IMAX,NTOTV
+WRITE(*,*) '              AND RF_Y ARRAYS:',NX,JMAX,NTOTV
+
+ALLOCATE( RF_AEX(NY,IMAX,NTOTV),&
+        & RF_BEX(NY,IMAX,NTOTV),&
+        & RF_AEY(NX,JMAX,NTOTV),&
+        & RF_BEY(NX,JMAX,NTOTV) )
+
+
+RF_AEX = 0._R8
+RF_AEY = 0._R8
+RF_BEX = 0._R8
+RF_BEY = 0._R8
+
+
+DO K = 1, NTOTV
+   K2=K
+   IF(K2.GT.NZ) K2=K2-NZ
+   DO J = 1, NY
+      KK = ISTPNS(1,J,K)
+      IF(LLMSR(1,J,K2)) THEN
+          KK = KK + 1
+          RF_AEX(J,1:KK,K) = ALXNS(1,J,K)
+          RF_BEX(J,1:KK,K) = BTXNS(1,J,K)
+      ENDIF
+      DO I = 2,NX
+         IF(.NOT.LLMSR(I,J,K2) .AND. LLMSR(I-1,J,K2)) THEN
+                 RF_AEX(J,KK+1:KK+ISTPNS(I,J,K),K) = ALXNS(I,J,K)
+                 RF_BEX(J,KK+1:KK+ISTPNS(I,J,K),K) = BTXNS(I,J,K)
+                 KK = KK + ISTPNS(I,J,K)
+         ELSEIF(LLMSR(I,J,K2) .AND. .NOT.LLMSR(I-1,J,K2)) THEN
+                 RF_AEX(J,KK+1:KK+ISTPNS(I,J,K)+1,K) = ALXNS(I,J,K)
+                 RF_BEX(J,KK+1:KK+ISTPNS(I,J,K)+1,K) = BTXNS(I,J,K)
+                 KK = KK + ISTPNS(I,J,K) + 1
+         ELSEIF(LLMSR(I,J,K2)) THEN
+                 RF_AEX(J,KK+1,K) = ALXNS(I,J,K)
+                 RF_BEX(J,KK+1,K) = BTXNS(I,J,K)
+                 KK = KK + 1
+         ENDIF
+      ENDDO
+   ENDDO
+   IF (LL_PRINT_RECFILT) THEN
+      WRITE(IOUNLOG,*) 'RF_AEX ', K, ': ',SUM(RF_AEX(:,1:KK,K))/(NY*KK),&
+      & MINVAL(RF_AEX(:,1:KK,K)),MAXVAL(RF_AEX(:,1:KK,K))
+      WRITE(IOUNLOG,*) 'RF_BEX ', K, ': ',SUM(RF_BEX(:,1:KK,K))/(NY*KK),&
+      & MINVAL(RF_BEX(:,1:KK,K)),MAXVAL(RF_BEX(:,1:KK,K))
+   ENDIF
+ CALL FLUSH(IOUNLOG)
+
+   DO I = 1, NX
+      KK = JSTPNS(I,1,K)
+      IF(LLMSR(I,1,K2)) THEN
+          KK = KK + 1
+          RF_AEY(I,1:KK,K) = ALYNS(I,1,K)
+          RF_BEY(I,1:KK,K) = BTYNS(I,1,K)
+      ENDIF
+      DO J = 2, NY
+         IF(.NOT.LLMSR(I,J,K2) .AND. LLMSR(I,J-1,K2)) THEN
+                 RF_AEY(I,KK+1:KK+JSTPNS(I,J,K),K) = ALYNS(I,J,K)
+                 RF_BEY(I,KK+1:KK+JSTPNS(I,J,K),K) = BTYNS(I,J,K)
+                 KK = KK + JSTPNS(I,J,K)
+         ELSEIF(LLMSR(I,J,K2) .AND. .NOT.LLMSR(I,J-1,K2)) THEN
+                 RF_AEY(I,KK+1:KK+JSTPNS(I,J,K)+1,K) = ALYNS(I,J,K)
+                 RF_BEY(I,KK+1:KK+JSTPNS(I,J,K)+1,K) = BTYNS(I,J,K)
+                 KK = KK + JSTPNS(I,J,K) + 1
+         ELSEIF(LLMSR(I,J,K2)) THEN
+                 RF_AEY(I,KK+1,K) = ALYNS(I,J,K)
+                 RF_BEY(I,KK+1,K) = BTYNS(I,J,K)
+                 KK = KK + 1
+         ENDIF
+      ENDDO
+   ENDDO
+
+ENDDO
+
+!! TEST !!
+IF(.FALSE.) THEN
+IMX(49)=IMX(48)
+IMX(50)=IMX(48)
+IMX(99)=IMX(98)
+IMX(100)=IMX(98)
+JMX(49)=JMX(48)
+JMX(50)=JMX(48)
+JMX(99)=JMX(98)
+JMX(100)=JMX(98)
+
+INX(:,:,49)=INX(:,:,48)
+INX(:,:,50)=INX(:,:,48)
+INX(:,:,99)=INX(:,:,98)
+INX(:,:,100)=INX(:,:,98)
+JNX(:,:,49)=JNX(:,:,48)
+JNX(:,:,50)=JNX(:,:,48)
+JNX(:,:,99)=JNX(:,:,98)
+JNX(:,:,100)=JNX(:,:,98)
+
+RF_AEX(:,:,49)=RF_AEX(:,:,48)
+RF_AEX(:,:,50)=RF_AEX(:,:,48)
+RF_BEX(:,:,49)=RF_BEX(:,:,48)
+RF_BEX(:,:,50)=RF_BEX(:,:,48)
+RF_AEX(:,:,99)=RF_AEX(:,:,98)
+RF_AEX(:,:,100)=RF_AEX(:,:,98)
+RF_BEX(:,:,99)=RF_BEX(:,:,98)
+RF_BEX(:,:,100)=RF_BEX(:,:,98)
+RF_AEY(:,:,49)=RF_AEY(:,:,48)
+RF_AEY(:,:,50)=RF_AEY(:,:,48)
+RF_BEY(:,:,49)=RF_BEY(:,:,48)
+RF_BEY(:,:,50)=RF_BEY(:,:,48)
+RF_AEY(:,:,99)=RF_AEY(:,:,98)
+RF_AEY(:,:,100)=RF_AEY(:,:,98)
+RF_BEY(:,:,99)=RF_BEY(:,:,98)
+RF_BEY(:,:,100)=RF_BEY(:,:,98)
+ENDIF
+!! TEST !!
+
+
+DO K=1,NTOTV
+   K2=K
+   IF(K2.GT.NZ) K2=K2-NZ
+   DO J=1,NY
+      DO I=1,NX
+         IF(LLMSR(I,J,K2))THEN
+           FCT(I,J,K) = 1._R8  !SQRT(1./GRD%FCT(I,J,K))
+         ELSE
+           FCT(I,J,K) = 0._R8
+         ENDIF
+      ENDDO
+   ENDDO
+ENDDO
+
+RETURN
+END SUBROUTINE REARRALPHA

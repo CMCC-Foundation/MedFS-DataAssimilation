@@ -1,0 +1,28 @@
+      INTERFACE
+      SUBROUTINE COSTF(INDIC,NDIM,X,XJ,XGJ,NITER,IZS,RZS,DZS,ISTEP)
+      
+      USE SET_KND
+      ! USE OBS_STR
+      ! USE GRD_STR
+      ! USE EOF_STR
+      ! USE CTL_STR
+      ! USE IOUNITS, ONLY : IOUNERR, IOUNOUT, IOUNLOG, IOUNCOST
+      ! USE RUN , ONLY : COBSOPT,LLVARMDT,NCONF
+      ! USE MYFRTPROF
+      ! USE STATS, ONLY : MEAN
+      
+       IMPLICIT NONE
+      
+       INTEGER(I4), INTENT(IN)    :: INDIC
+       INTEGER(I4), INTENT(IN)    :: NDIM, NITER
+       INTEGER(I4), INTENT(IN), OPTIONAL :: ISTEP
+      
+       REAL(R8), DIMENSION(NDIM), INTENT(IN)   :: X
+       REAL(R8), DIMENSION(NDIM), INTENT(OUT)  :: XGJ
+       REAL(R8), INTENT(OUT)                   :: XJ
+      
+       INTEGER(I4)  :: IZS
+       REAL(R8)     :: RZS
+       REAL(R8)     :: DZS
+      END SUBROUTINE COSTF
+      END INTERFACE

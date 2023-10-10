@@ -1,0 +1,55 @@
+#... Compiler F90
+### DEBUG0 = -qflttrap=ov:zero:inv:en -C -qinitauto=7FF7FFFF
+DEBUG0 = -Wf,"-init stack=nan heap=nan -M zdiv flovf flunf"
+DEBUG0 = 
+F_C = sxf90 -f2003 -c -g $(DEBUG0) -Popenmp
+#... Compiler F77
+F_77 = sxf90 -c -g $(DEBUG0) -Popenmp
+#... Compiler flags
+###### F_F = -R5  -Wf,-A,dbl4  -Wf,-pvctl,fullmsg  -clear  -dw -float0 -Pstack \
+######      -Wf,-pvctl,nomsg,loopcnt=1000000,vl=fix256,vwork=stack,-P nh,-ptr byte
+F_F = -Cvopt -ftrace -R5 -dw -float0 -NV \
+      -pi auto exp=xind1 expin=mod_modaux.F90 -Wf"-s -msg b \
+      -L fmtlist transform -pvctl fullmsg" -sx9 -Pstack -f2003
+F_F = -dw -c -R5 -pi auto -Wf\"-pvctl loopcnt=500000\" -Wf\"-pvctl nocollapse\" -ftrace
+#... Compiler flags F77
+F_F77 = $(F_F) 
+#... Pre-processor options
+P_P = -EP -Wp,-Dopt_netcdf -Wp,-DNOMPI -Wp,-DNECSX -Wp,-DDEEPLY_FGAT -Wp,-DSHARED_MEMORY
+#... Optimization flags
+F_O = -Cvopt -Wf,-pvctl,noassume -pi auto line=500
+F_O = 
+#... Debug flags
+F_D = -Cdebug
+#... For deep debugging add this to F_D
+# -qinitauto=7FF7FFFF -qsigtrap=xl__trcedump -qextchk \
+# -qflttrap=overflow:underflow:zerodivide:invalid:inexact:enable:nanq
+#... C Compiler
+C_C = sxc++ -c -Wf,-A,dbl4 -R5 -Wf,-pvctl,fullmsg
+C_C = sxc++ -c -Rdiaglist -pvctl fullmsg
+#... C Flags
+C_F = -DNECSX -DSTATIC_LINKING -DXPRIVATE=PRIVATE  -ftrace \
+  -UINTERCEPT_ALLOC -DINTEGER_IS_INT -D_ABI64 -UHAS_XMOTIF \
+  -Cvopt -pvctl loopcnt=1000000 -sx9
+#... Linker
+F_L = sxf90 
+#... Linking options
+L_O = -Wl,-Z,5G -Pstack -ftrace
+L_O = -dw -pi auto -ftrace -Popenmp
+#... Debug flag (Debug on: 1 ; Debug off: whatelse)
+DEBUG = 0
+#... AR add
+AR_I = sxar -rv
+#... AR delete
+AR_E = sxar -d
+#.. Remove
+RM      = /bin/rm -f
+
+#... Include dirs
+EXTINC = -I/SX/lib/netcdf/include-dw-stack-32 \
+         -I../include
+#... Libraries
+DRHOOK_LIB = /home/ans012/model/3dvar/model/aux/drhook_CY33R1.007
+EXTLIB = -L/SX/lib/netcdf/lib-dw-stack-32 -lnetcdf \
+         -L$(DRHOOK_LIB) -ldrhook -lmpi_serial
+#

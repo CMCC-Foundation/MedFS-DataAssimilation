@@ -1,0 +1,202 @@
+SUBROUTINE WRT_OBS
+
+!-----------------------------------------------------------------------
+!                                                                      !
+! WRITE OUTPUTS
+!                                                                      !
+! VERSION 1: S.DOBRICIC 2006                                           !
+! VERSION 2: S.DOBRICIC 2006                                           !
+!-----------------------------------------------------------------------
+
+
+ USE SET_KND
+ USE OBS_STR
+ USE OBSDEF
+ USE GRD_STR
+ USE IOUNITS
+ USE RUN
+ USE MYFRTPROF
+ USE TLAD_VARS
+
+ IMPLICIT NONE
+
+ INTEGER(I4)  :: I,J,K, KK,JVL,JOBS,I2,JLEV,NPQ2
+ INTEGER(I4)  :: XIND1
+ INTEGER(I4)  :: NOOBS(NOFAMS)
+
+ INTEGER(I4), ALLOCATABLE, DIMENSION(:) ::  OTY,OPA,OKB
+ INTEGER(I4), ALLOCATABLE, DIMENSION(:,:) ::  OIB,OJB
+ INTEGER(I4), ALLOCATABLE :: INST(:)
+ REAL(R8),ALLOCATABLE, DIMENSION(:) ::  OMA,LON,LAT,&
+ & VAL,DEP,BIAS,BGE,INC,OPERT
+ REAL(DP),ALLOCATABLE, DIMENSION(:) ::  TIME
+ REAL(R8),ALLOCATABLE, DIMENSION(:,:) ::  OPQ,OTB,OSB
+
+ CALL MYFRTPROF_WALL('WRT_OBS: WRITE OBSERVATION OUTPUT',0)
+
+ IF( OBS%NO .LE. 0 ) THEN
+     CALL MYFRTPROF_WALL('WRT_OBS: WRITE OBSERVATION OUTPUT',1)
+     RETURN
+ ENDIF
+
+  !... FINAL CALL TO T-L MODEL FOR OBS MINUS ANALYSIS
+  IF(.NOT. LL_4DVAR ) CALL OBSOP
+
+  NPQ2 = NPQ*2
+
+  !... FORM ADDITIONAL VECTORS FOR OUTPUT
+  ALLOCATE(OMA(OBS%NO),OTY(OBS%NO),LON(OBS%NO),LAT(OBS%NO),OPA(OBS%NO),&
+       & OIB(OBS%NO,NPQ),OJB(OBS%NO,NPQ),OKB(OBS%NO),BGE(OBS%NO),OPQ(OBS%NO,NPQ2),&
+       & TIME(OBS%NO),VAL(OBS%NO),DEP(OBS%NO),INST(OBS%NO),BIAS(OBS%NO),&
+       & OTB(OBS%NO,GRD%KM),OSB(OBS%NO,GRD%KM),INC(OBS%NO),OPERT(OBS%NO))
+
+  OPQ=0._R8
+  OTB=0._R8
+  OSB=0._R8
+  OMA=0._R8
+  LON=0._R8
+  LAT=0._R8
+  OPA=0
+  OTY=0
+  OIB=0
+  OJB=0
+  OKB=0
+  BGE=0._R8
+  TIME=0._R8
+  VAL=0._R8
+  DEP=0._R8
+  INST=0
+  BIAS=0._R8
+  INC=0._R8
+
+  NOOBS = (/ INS%NO, SLA%NO, SST%NO, SSS%NO /)
+
+  K=0
+  !-- SLA
+  O1 : DO JOBS=1,SLA%NO
+     IF(SLA%FLC(JOBS).NE.1) CYCLE O1
+     K=K+1
+     INC(K) = OBS%INC(K)
+     OMA(K) = OBS%RES(K) - OBS%INC(K)
+     OPERT(K) = OBS%PERT(K)
+     OTY(K) = 21
+     OPA(K) = 21
+     LON(K) = SLA%LON(JOBS)
+     LAT(K) = SLA%LAT(JOBS)
+     TIME(K) = SLA%TIM(JOBS)
+     VAL (K) = SLA%VAL(JOBS)
+     IF ( ABS(IDOUBLEDOM) .EQ. 1 ) THEN
+       OIB(K,:) = SLA%IBH(JOBS,:)+GRD%I0-1
+       OJB(K,:) = SLA%JBH(JOBS,:)+GRD%J0-1
+       OPQ(K,1:NPQ) = SLA%PQH(JOBS,1:NPQ)
+     ELSE
+       OIB(K,:) = SLA%IB(JOBS,:)+GRD%I0-1
+       OJB(K,:) = SLA%JB(JOBS,:)+GRD%J0-1
+       OPQ(K,1:NPQ) = SLA%PQ(JOBS,1:NPQ)
+     ENDIF
+     OKB(K) = SLA%BOT(JOBS)
+     DEP (K) = OSUM(SLA%PQ(JOBS,1:NPQ),GRD%MDT(SLA%IB(JOBS,1:NPQ),SLA%JB(JOBS,1:NPQ) ) )
+     INST(K) = SLA%KSAT(JOBS)
+     BIAS(K) = SLA%BIA(JOBS)
+     BGE(K)  = SLA%BGERR(JOBS)
+     IF( NCONF .NE. 202 ) THEN
+       OTB(K,:) = SLA%TB(JOBS,:)
+       OSB(K,:) = SLA%SB(JOBS,:)
+     ELSE
+       OTB(K,:) = 0._R8
+       OSB(K,:) = 0._R8
+     ENDIF
+  ENDDO O1
+  !-- INS
+  O2 : DO JOBS=1,INS%NO
+     IF(INS%FLC(JOBS).EQ.0) CYCLE O2
+     K=K+1
+     INC(K) = OBS%INC(K)
+     OMA(K) = OBS%RES(K) - OBS%INC(K)
+     OPERT(K) = OBS%PERT(K)
+     OTY(K) = INS%OTYPE(JOBS)
+     OPA(K) = INS%PAR(JOBS)
+     LON(K) = INS%LON(JOBS)
+     LAT(K) = INS%LAT(JOBS)
+     TIME(K) = INS%TIM(JOBS)
+     VAL (K) = INS%VAL(JOBS)
+     DEP (K) = INS%DPT(JOBS)
+     INST(K) = TRANSFER(INS%PLNO(JOBS)(1:8),INST(K))
+     BIAS(K) = INS%BIA(JOBS)
+     OKB(K) = INS%KB(JOBS)
+     BGE(K) = INS%BGERR(JOBS)
+     IF( ABS(IDOUBLEDOM) .EQ. 1 ) THEN
+       OIB(K,:) = INS%IBH(JOBS,:)+GRD%I0-1
+       OJB(K,:) = INS%JBH(JOBS,:)+GRD%J0-1
+       OPQ(K,1:NPQ2) = INS%PQH(JOBS,1:NPQ2)
+     ELSE
+       OIB(K,:) = INS%IB(JOBS,:)+GRD%I0-1
+       OJB(K,:) = INS%JB(JOBS,:)+GRD%J0-1
+       OPQ(K,1:NPQ2) = INS%PQ(JOBS,1:NPQ2)
+     ENDIF
+  ENDDO O2
+  !-- SST
+  O3 : DO JOBS=1,SST%NO
+     IF(SST%FLC(JOBS).EQ.0) CYCLE O3
+     K=K+1
+     INC(K) = OBS%INC(K)
+     OMA(K) = OBS%RES(K) - OBS%INC(K)
+     OPERT(K) = OBS%PERT(K)
+     OTY(K) = 20
+     OPA(K) = 20
+     LON(K) = SST%LON(JOBS)
+     LAT(K) = SST%LAT(JOBS)
+     TIME(K) = SST%TIM(JOBS)
+     VAL (K) = SST%VAL(JOBS)
+     DEP (K) = 0._R8
+     INST(K) = SST%KSAT(JOBS)
+     BIAS(K) = SST%BIA(JOBS)
+     IF ( ABS(IDOUBLEDOM) .EQ. 1 ) THEN
+       OIB(K,:) = SST%IBH(JOBS,:)+GRD%I0-1
+       OJB(K,:) = SST%JBH(JOBS,:)+GRD%J0-1
+       OPQ(K,1:NPQ) = SST%PQH(JOBS,1:NPQ)
+     ELSE
+       OIB(K,:) = SST%IB(JOBS,:)+GRD%I0-1
+       OJB(K,:) = SST%JB(JOBS,:)+GRD%J0-1
+       OPQ(K,1:NPQ) = SST%PQ(JOBS,1:NPQ)
+     ENDIF
+     OKB(K) = 0
+     BGE(K) = SST%BGERR(JOBS)
+  ENDDO O3
+  !-- SSS
+  O4 : DO JOBS=1,SSS%NO
+     IF(SSS%FLC(JOBS).EQ.0) CYCLE O4
+     K=K+1
+     INC(K) = OBS%INC(K)
+     OMA(K) = OBS%RES(K) - OBS%INC(K)
+     OPERT(K) = OBS%PERT(K)
+     OTY(K) = 19
+     OPA(K) = 19
+     LON(K) = SSS%LON(JOBS)
+     LAT(K) = SSS%LAT(JOBS)
+     TIME(K) = SSS%TIM(JOBS)
+     VAL (K) = SSS%VAL(JOBS)
+     DEP (K) = 0._R8
+     INST(K) = SSS%KSAT(JOBS)
+     BIAS(K) = SSS%BIA(JOBS)
+     IF ( ABS(IDOUBLEDOM) .EQ. 1 ) THEN
+       OIB(K,:) = SSS%IBH(JOBS,:)+GRD%I0-1
+       OJB(K,:) = SSS%JBH(JOBS,:)+GRD%J0-1
+       OPQ(K,1:NPQ) = SSS%PQH(JOBS,1:NPQ)
+     ELSE
+       OIB(K,:) = SSS%IB(JOBS,:)+GRD%I0-1
+       OJB(K,:) = SSS%JB(JOBS,:)+GRD%J0-1
+       OPQ(K,1:NPQ) = SSS%PQ(JOBS,1:NPQ)
+     ENDIF
+     OKB(K) = 0
+     BGE(K) = SSS%BGERR(JOBS)
+  ENDDO O4
+
+  CALL WRITENCOBS(OBS%NO,NPQ,GRD%KM,NOFAMS,OTY,OPA,INST,LON,LAT,TIME,DEP,VAL,&
+          & OBS%ERR,OBS%RES,OMA,BIAS,OIB,OJB,OKB,BGE,OPQ,OTB,OSB,NOOBS,INC,OPERT)
+
+  DEALLOCATE(OMA,OTY,LON,LAT,BGE,OPERT,&
+          & TIME,VAL,DEP,INST,OIB,OJB,OKB,INC)
+
+ CALL MYFRTPROF_WALL('WRT_OBS: WRITE OBSERVATION OUTPUT',1)
+END SUBROUTINE WRT_OBS

@@ -1,0 +1,59 @@
+{
+    "description": "<p>The data assimilation system of MedFS is based on a three-dimensional variational assimilation scheme (OceanVAR), originally developed for the Mediterranean Sea by Dobricic and Pinardi (2008) and later extended for the global ocean by Storto et al. (2016) implemented with a specific background error correlation matrix formulation.</p> <p>The assimilated data includes: sea level anomaly (SLA), in situ temperature profiles by VOS XBTs (Voluntary Observing Ship-eXpandable Bathythermograph), in situ temperature and salinity profiles by ARGO floats and from different survey CTD profiles. Satellite objectively analysed Sea Surface Temperature (SST) is used for the correction of surface heat fluxes. All the assimilated observations are provided by the Copernicus Marine Thematic Assembly Centers.</p>",
+    "title": "MedFS Data Assimilation module",
+    "license": "Apache-2.0",
+    "upload_type": "software",
+    "creators": [
+        {
+            "affiliation": "Ocean Modeling and Data Assimilation Division, Centro Euro-Mediterraneo sui Cambiamenti Climatici, Italy",
+            "name": "Aydogdu, Ali",
+            "orcid": "0000-0002-1557-7502"
+        },
+        {
+            "affiliation": "Ocean Modeling and Data Assimilation Division, Centro Euro-Mediterraneo sui Cambiamenti Climatici, Italy",
+            "name": "Pistoia, Jenny",
+            "orcid": "0000-0001-9410-5425"
+        },
+        {
+            "affiliation": "Ocean Modeling and Data Assimilation Division, Centro Euro-Mediterraneo sui Cambiamenti Climatici, Italy",
+            "name": "Escudier, Romain",
+            "orcid": "0000-0002-8532-0024"
+        },
+        {
+            "affiliation": "Ocean Predictions and Applications Division, Centro Euro-Mediterraneo sui Cambiamenti Climatici, Italy",
+            "name": "Drudi, Massimiliano",
+            "orcid": "0000-0002-9951-740X"
+        },
+        {
+            "affiliation": "Ocean Predictions and Applications Division, Centro Euro-Mediterraneo sui Cambiamenti Climatici, Italy",
+            "name": "Grandi, Alessandro",
+            "orcid": "0000-0002-7372-3184"
+        },
+        {
+            "affiliation": "Ocean Predictions and Applications Division, Centro Euro-Mediterraneo sui Cambiamenti Climatici, Italy",
+            "name": "Mariani, Antonio",
+            "orcid": "0000-0001-5720-3069"
+        },
+        {
+            "affiliation": "Ocean Modeling and Data Assimilation Division, Centro Euro-Mediterraneo sui Cambiamenti Climatici, Italy",
+            "name": "Masina, Simona",
+            "orcid": "0000-0001-6273-7065"
+        },
+        {
+            "affiliation": "Ocean Predictions and Applications Division, Centro Euro-Mediterraneo sui Cambiamenti Climatici, Italy",
+            "name": "Coppini, Giovanni",
+            "orcid": "0000-0003-3664-3983"
+        },
+        {
+            "affiliation": "Department of Physics and Astronomy, University of Bologna, Italy",
+            "name": "Pinardi, Nadia",
+            "orcid": "0000-0003-4765-0775"
+        }
+    ],
+    "access_right": "open",
+    "version": "1.0",
+    "references": [
+        "Dobricic, S. and N. Pinardi, 2008. An oceanographic three-dimensional variational data assimilation scheme. Ocean Modelling, 22, 3-4, 89-105.",
+        "Storto, A., S. Masina, A. Navarra (2016), Evaluation of the CMCC eddy-permitting global ocean physical reanalysis system (C-GLORS, 1982-2012) and its assimilation components. Q.J.R. Meteorol. Soc"
+    ]
+}

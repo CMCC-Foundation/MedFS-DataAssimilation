@@ -1,0 +1,44 @@
+#... Compiler F90
+DEBUG0 = -g -fpe0 -traceback -check all
+DEBUG0 = 
+F_C = ifort -c -openmp -threads
+#... Compiler F77
+F_77 = ifort -c -openmp -i4 -r8
+#... Compiler flags
+F_F = -convert big_endian -align all -assume byterecl
+#... Compiler flags F77
+F_F77 = $(F_F) -fpconstant 
+#... Pre-processor options
+P_P = -Dopt_netcdf -DNOMPI -DLINUX -DINTEL -DLITTLE -DSTATIC_LINKING -DINTEGER_IS_INT -DDEEPLY_FGAT -DSHARED_MEMORY -DXPRIVATE=PRIVATE
+# -Wp,-DUSE_POINTERS
+#... Optimization flags
+F_O = -O3 -static -xHost -fno-alias
+#... Debug flags
+F_D = -Cdebug
+#... C Compiler
+C_C = icc -c
+#... C Flags
+C_F = -DLINUX -DSTATIC_LINKING -DXPRIVATE=PRIVATE \
+  -UINTERCEPT_ALLOC -DINTEGER_IS_INT -D_ABI64
+#... Linker
+F_L = ifort
+#... Linking options
+L_O = -openmp -threads
+#... Debug flag (Debug on: 1 ; Debug off: whatelse)
+DEBUG = 0
+#... AR add
+AR_I = ar -rv
+#... AR delete
+AR_E = ar -d
+#.. Remove
+RM   = rm -f
+
+#... Include dirs
+EXTINC = -I/opt/netcdf-4.1.3-ifort/include -I../include
+#... Libraries
+DRHOOK_LIB = /data2/ANALYSIS_LOCAL/3dvar/aux/drhook_CY33R1
+ARPACK = /data2/ANALYSIS_LOCAL/3dvar/aux/arpack
+EXTLIB = -L/opt/netcdf-4.1.3-ifort/lib -lnetcdf -lnetcdff \
+         -L$(DRHOOK_LIB) -ldrhook -lmpi_serial \
+         -L$(ARPACK) -larpack_IFORT
+#

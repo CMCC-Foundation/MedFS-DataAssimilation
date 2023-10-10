@@ -1,0 +1,12 @@
+######
+Pre-processor keys:
+
+NOMPI
+opt_huge_memory
+LINUX
+RS6K
+NECSX
+VPP
+__INTEL_COMPILER
+SUN4
+opt_netcdf

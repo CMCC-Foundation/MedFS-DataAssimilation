@@ -1,0 +1,60 @@
+#... Compiler F90
+### DEBUG0 = -qflttrap=ov:zero:inv:en -C -qinitauto=7FF7FFFF
+DEBUG0 = -qsigtrap=xl__trcedump -qflttrap=nanq -g
+DEBUG0 =
+F_C = xlf90_r -qsmp=omp -c -qfree=F90 -qsuffix=cpp=F90 -qsuffix=f=f90 $(DEBUG0)
+#... Compiler F90 No OMP
+F_CS = xlf90_r -c -qfree=F90 -qsuffix=cpp=F90 -qsuffix=f=f90 $(DEBUG0)
+#... Compiler F77
+F_77 = xlf_r -qsmp=omp -c -qfixed -qsuffix=cpp=F -qsuffix=f=f $(DEBUG0)
+#... Compiler flags
+F_F = -q64 -qmaxmem=-1 -NS32648 -qextname -qsource -qcache=auto
+#... Compiler flags F77
+F_F77 = -qautodbl=dbl4 -qdpc=e
+#... Pre-processor options
+P_P = -WF,-Dopt_netcdf,-DNOMPI,-DRS6K,-DDEEPLY_FGAT,-DSHARED_MEMORY
+#... Optimization flags
+F_O = -g -qstrict -O3 -qarch=pwr6 -qtune=pwr6
+#... Debug flags
+F_D = -O0 -C -g -qsource 
+#... For deep debugging add this to F_D
+# -qinitauto=7FF7FFFF -qsigtrap=xl__trcedump -qextchk \
+# -qflttrap=overflow:underflow:zerodivide:invalid:inexact:enable:nanq
+#... C Compiler
+C_C = xlc_r -c -q64 $(DEBUG0)
+#... C Flags
+C_F = -DRS6K -g -qarch=pwr6 -qtune=pwr6 -DSTATIC_LINKING -DXPRIVATE=PRIVATE \
+  -DINTERCEPT_ALLOC -DUSE_ALLOCA_H -DHPM -O3 -qmaxmem=-1 -qstrict -qsource
+#... Linker
+F_L = xlf90_r -qsmp=omp -q64 $(DEBUG0)
+#... Linking options
+L_O = -qsmp=omp -b64 -bbigtoc -bmaxstack:0x8000000000 -bnoquiet \
+       -bmaxdata:0x06FFFFFFFFFFFFF8
+L_O = -qsmp=omp -b64 -bbigtoc -bnoquiet
+#... Debug flag (Debug on: 1 ; Debug off: whatelse) 
+DEBUG = 0
+#... AR add
+AR_I = ar -X64 -r -v
+#... AR delete
+AR_E = ar -X64 -d
+#.. Remove
+RM      = /bin/rm -f
+
+#... Include dirs
+ARPACK = /users/home/ans012/local/ARPACK_OMP
+# NETCDF = /users/home/ans012/local/netcdf-4.0.1-2012-09
+# NETCDF = /users/home/ans012/local/netcdf-4.0-R64-underscore_2
+# NETCDF = /users/home/ans012/local/netcdf-4.1.3
+NETCDF = /users/home/ans012/local/netcdf-4.2-fortran
+ LIBNETCDFF = -lnetcdff
+# LIBNETCDFF = 
+DRHOOK = /users/home/ans012/local/drhook_CY33R1.007
+#
+EXTINC = -I$(NETCDF)/include \
+         -I../include
+#... Libraries
+EXTLIB = -L$(NETCDF)/lib -lnetcdf $(LIBNETCDFF) \
+         -lpmapi \
+	 -L$(DRHOOK)/lib -ldrhook \
+	 -lmpi_serial -lessl \
+	 -L$(ARPACK) -larpack_RS6K_EXTNAME -lmass -lmassvp4

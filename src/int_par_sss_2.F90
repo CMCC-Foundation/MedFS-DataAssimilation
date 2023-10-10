@@ -1,0 +1,93 @@
+#undef SHARED_MEMORY
+SUBROUTINE INT_PAR_SSS_2
+
+!-----------------------------------------------------------------------
+!                                                                      !
+! GET INTERPOLATION PARAMETERS FOR A GRID                              !
+!                                                                      !
+! VERSION 1: S.DOBRICIC 2006                                           !
+!-----------------------------------------------------------------------
+
+ USE SET_KND
+ USE GRD_STR
+ USE PHINTERP
+ USE PHINTERP2
+ USE RUN
+ USE OBS_STR
+ USE MYFRTPROF, ONLY : MYFRTPROF_WALL
+ USE IOUNITS
+
+ IMPLICIT NONE
+
+  INTEGER(I4)   ::  K, N_TOPEX, N_ERS, II, JJ,I2
+  INTEGER(I4)   ::  I1, J1, KK, I, J, ITER, IAUX, JP
+  INTEGER(I4)   ::  MSCOUNT
+  REAL(R8)      ::  P1, Q1, P, Q, SUMT, SUMI, TIMP,NEWLON
+  REAL(R8)      ::  MSK4, ZZSS
+
+#include "obs_events.h"
+
+ CALL MYFRTPROF_WALL('INT_PAR_SSS_2: SSS INTERPOLATION',0)
+
+ IF(SSS%NO.EQ.0) THEN
+   CALL MYFRTPROF_WALL('INT_PAR_SSS_2: SSS INTERPOLATION',1)
+   RETURN
+ ENDIF
+
+ SSS%IB = 0
+ SSS%JB = 0
+
+#ifdef SHARED_MEMORY
+!$OMP PARALLEL DEFAULT(PRIVATE), SHARED(SSS)
+!$OMP DO SCHEDULE(DYNAMIC)
+#endif
+CYOBS0 : DO KK = 1,SSS%NO
+
+      IF( NN_INTERPM .EQ. 1 ) THEN
+       CALL PREPINTERP(SSS%LON(KK),SSS%LAT(KK),SSS%IB(KK,:),SSS%JB(KK,:),SSS%PQ(KK,:))
+      ELSEIF ( NN_INTERPM .EQ. 2 ) THEN
+       CALL PREPINTERP2(SSS%LON(KK),SSS%LAT(KK),SSS%IB(KK,:),SSS%JB(KK,:),SSS%PQ(KK,:))
+      ENDIF
+
+
+ENDDO CYOBS0
+#ifdef SHARED_MEMORY
+!$OMP END DO
+!$OMP END PARALLEL
+#endif
+
+#ifdef SHARED_MEMORY
+!$OMP PARALLEL DEFAULT(SHARED), PRIVATE(KK,ZZSS,JP,MSK4)
+!$OMP DO SCHEDULE(DYNAMIC)
+#endif
+CYOBS : DO KK = 1,SSS%NO
+       SSS%FLC(KK) = 1
+
+       SSS%PQ(KK,1) = SSS%PQ(KK,1) * GRD%MSK(SSS%IB(KK,1),SSS%JB(KK,1),1)
+       SSS%PQ(KK,2) = SSS%PQ(KK,2) * GRD%MSK(SSS%IB(KK,2),SSS%JB(KK,2),1)
+       SSS%PQ(KK,3) = SSS%PQ(KK,3) * GRD%MSK(SSS%IB(KK,3),SSS%JB(KK,3),1)
+       SSS%PQ(KK,4) = SSS%PQ(KK,4) * GRD%MSK(SSS%IB(KK,4),SSS%JB(KK,4),1)
+
+       IF( SUM(SSS%PQ(KK,:)) .GT. 0._R8 ) THEN
+          SSS%PQ(KK,:) = SSS%PQ(KK,:) / SUM(SSS%PQ(KK,:))
+       ELSE
+          SSS%PQ(KK,:) = 0._R8
+       ENDIF
+
+ENDDO CYOBS
+#ifdef SHARED_MEMORY
+!$OMP END DO
+!$OMP END PARALLEL
+#endif
+
+! ---
+! COUNT GOOD OBSERVATIONS
+  SSS%NC = COUNT(SSS%FLC(1:SSS%NO) .EQ. 1)
+
+  WRITE(IOUNLOG,*)
+  WRITE(IOUNLOG,*) ' *** SSS OBS AFTER INTERPOLATION SET-UP'
+  WRITE(IOUNLOG,*) ' TOTAL NUMBER OF SSS OBS           :',SSS%NO
+  WRITE(IOUNLOG,*) ' TOTAL NUMBER OF RETAINED SSS  OBS :',SSS%NC
+
+CALL MYFRTPROF_WALL('INT_PAR_SSS_2: SSS INTERPOLATION',1)
+END SUBROUTINE INT_PAR_SSS_2

@@ -1,0 +1,93 @@
+Sender: LSF System <lsfadmin@n157.cluster.net>
+Subject: Job 44733: <REANAL> Exited
+
+Job <REANAL> was submitted from host <login1.cluster.net> by user <ans012> in cluster <sandy>.
+Job was executed on host(s) <16*n157>, in queue <poe_short>, as user <ans012> in cluster <sandy>.
+</users/home/ans012> was used as the home directory.
+</users/home/ans012/model/3dvar/src> was used as the working directory.
+Started at Thu Apr 11 17:37:35 2013
+Results reported at Thu Apr 11 17:38:08 2013
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/ksh
+#-----------------------------------------------------------------------
+# Run_Slot - Running 3DVAR+NEMO in Configuration ORCA0.25
+#-----------------------------------------------------------------------
+#
+# Andrea.Storto, *CMCC*, 2010-03
+#
+
+#BSUB -a poe
+#BSUB -J REANAL          # Name of the job.
+#BSUB -o REANAL_%J.out  # Appends std output to file %J.out.
+#BSUB -e REANAL_%J.err  # Appends std error to file %J.err.
+#BSUB -P MYOCEAN2
+#BSUB -q poe_short
+#BSUB -n 16    # Number of CPUs
+#BSUB -R "span[ptile=16]"
+#BSUB -x
+
+set -x
+
+#--- 1. Initialize main variables
+
+export MEMORY_AFFINITY=MCM
+export MP_WAIT_MODE=poll
+export MP_SINGLE_THREAD=yes
+export MP_PGMMODEL=mpmd
+export MP_MSG_API=MPI,LAPI
+export MP_POLLING_INTERVAL=30000000
+export MP_SHARED_MEMORY=yes
+export MP_EUILIB=us
+export MP_EUIDEVICE=sn_all
+export MP_TASK_AFFINITY=core
+export KMP_AFFINITY="physical,0"
+
+# Scripts repertoire
+export EXPNAME=REAN05_POb
+export SCRDIR=$HOME/model/run/$EXPNAME
+LLSTARTFRC=0
+LLOPARESTART=0
+LLRECOVER=0
+
+if [ -s $SCRDIR/startfrc ]; then
+	LLSTARTFRC=`cat $SCRDIR/startfrc`
+	rm $SCRDIR/startfrc
+fi
+
+ctrl_file=$SCRDIR/which_step
+tctrl_file=$SCRDIR/timing
+slot_file=$SCRDIR/slot
+
+
+(... more ...)
+------------------------------------------------------------
+
+Exited with exit code 92.
+
+Resource usage summary:
+
+    CPU time   :     16.94 sec.
+    Max Memory :       629 MB
+    Max Swap   :      7964 MB
+
+    Max Processes  :         5
+    Max Threads    :        22
+
+The output (if any) follows:
+
+
+          *****************************
+              EXPERIMENT : REAN05_POb
+          *****************************
+
+3DVAR returned non-zero status, aborting!
+
+
+PS:
+
+Read file <REANAL_44733.err> for stderr output of this job.
+

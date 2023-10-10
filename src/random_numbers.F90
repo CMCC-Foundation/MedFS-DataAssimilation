@@ -1,0 +1,344 @@
+MODULE RANDOM_NUMBERS
+
+!**** *RANDOM_NUMBERS*  - PORTABLE RANDOM NUMBER GENERATOR
+
+!     PURPOSE.
+!     --------
+!           GENERATE MACHINE-INDEPENDENT PSEUDO-RANDOM NUMBERS
+
+!**   INTERFACE.
+!     ----------
+!        CALL INITIALIZE_RANDOM_NUMBERS (KSEED, YD_STREAM)
+!        CALL UNIFORM_DISTRIBUTION      (PX   , YD_STREAM)
+!        CALL GAUSSIAN_DISTRIBUTION     (PX   , YD_STREAM)
+
+!        EXPLICIT ARGUMENTS :
+!        --------------------
+!        KSEED  (INPUT)    : INTEGER SEED IN THE RANGE [0,HUGE(KSEED)]
+!        YD_STREAM (OPTIONAL) : THE STATE OF THE RANDOM NUMBER GENERATOR
+!        PX     (OUTPUT)   : ARRAY TO RECEIVE RANDOM NUMBERS IN THE RANGE
+
+!        IN THE CASE OF UNIFORM_DISTRIBUTION, PX HAS VALUES IN THE RANGE [0.0,1.0)
+
+!        IMPLICIT ARGUMENTS :
+!        --------------------
+!        NONE
+
+!     METHOD.
+!     -------
+!        BASED LOOSLY ON ZUFALL (PETERSEN, 1994).
+
+!        THE MAIN DIFFERENCE BETWEEN THIS GENERATOR AND ZUFALL IS THAT INTEGER ARITHMETIC
+!        IS USED. THIS ENSURES PORTABILITY TO VECTOR MACHINES THAT IMPLEMENT DIFFERENT
+!        REAL ARITHMETIC. IN PARTICULAR, VECTOR MACHINES OFTEN IMPLEMENT NON-IEEE
+!        ARITHMETIC FOR THEIR VECTOR PIPES. THIS ROUTINE WILL GIVE IDENTICAL RESULTS FOR
+!        ANY INTEGER TYPE WITH AT LEAST 32 BITS.
+
+!        THE GENERATOR IS A LAGGED-FIBONACCI GENERATOR: X(I) = X(I-P) + X(I-Q) MOD 2**M.
+!        LAGGED-FIBONACCI GENERATORS HAVE VERY LONG REPEAT PERIODS: (2**Q -1) * 2**(M-1)
+!        (I.E ABOUT 2.85E191 FOR Q=607, M=30). THEY PASS MOST TESTS FOR RANDOMNESS.
+
+!        P AND Q MUST BE CHOSEN CAREFULLY. VALUES FROM THE FOLLOWING TABLE ARE OK.
+!        LARGER VALUES GIVE BETTER RANDOM NUMBERS, BUT SMALLER VALUES ARE MORE
+!        CACHE-FRIENDLY.
+
+!          Q         P
+!        9689      4187
+!        4423      2098
+!        2281      1029
+!        1279       418
+!         607       273
+!         521       168
+!         250       103
+!         127        63
+!          97        33
+!          55        24
+!          43        22
+!          31        13
+!          24        10
+
+!        THE INITIAL Q VALUES OF X ARE SET USING THE BINARY SHIRT REGISTER METHOD OF
+!        BURNS AND PRYOR 1999.
+
+!        MASCAGNI ET AL (1995) SHOW HOW TO CHOOSE DIFFERENT SETS OF INITIAL VALUES THAT
+!        ARE GUARANTEED TO BE DRAWN FROM DIFFERENT MAXIMAL-LENGTH CYCLES. THIS REQUIRES
+!        THE INITIAL VALUES OF X(1)...X(Q) TO BE IN "CANONICAL FORM". SPECIFICALLY,
+!        X(1) MUST BE ZERO AND ALL BUT A PARTICULAR ONE OR TWO VALUES OF X MUST BE
+!        EVEN. FOR Q=607 AND P=273, ONLY ONE ELEMENT (JPQ-JPS) MUST BE ODD.
+
+!     EXTERNALS.
+!     ----------
+!        NONE
+
+!     REFERENCE.
+!     ----------
+!        BURNS P.J. AND PRYOR D.V. 1999,
+!                             SURFACE RADIATIVE TRANSPORT AT LARGE SCALE VIA MONTE CARLO.
+!                             ANNUAL REVIEW OF HEAT TRANSFER, VOL 9.
+!
+!        PETERSEN W.P., 1994, LAGGED FIBONACCI SERIES RANDOM NUMBER GENERATOR
+!                             FOR THE NEC SX-3. INTERNATIONAL JOURNAL OF HIGH SPEED COMPUTING
+!                             VOL. 6, NO. 3, PP387-398.
+!
+!        MASCAGNI M., CUCCARO S.A., PRYOR D.V., ROBINSON M.L., 1995,
+!                             A FAST, HIGH QUALITY AND REPRODUCIBLE PARALLEL LAGGED-FIBONACCI
+!                             PSEUDORANDOM NUMBER GENERATOR. JOURNAL OF COMPUTATIONAL PHYSICS
+!                             VOL 119. PP211-219.
+
+!     AUTHOR.
+!     -------
+!        MIKE FISHER *ECMWF*
+
+!     MODIFICATIONS.
+!     --------------
+!        ORIGINAL : 2002-09-25
+!        MADE PARALLEL FRIENDLY: 2003-08-11 ROBERT PINCUS
+!        M LEUTBECHER: 2004-05-10 RESTART CAPABILITY
+!        M FISHER:     2005-03-30 REPLACED LCG INITIALIZATION WITH SHIFT REGISTER
+!        A STORTO:     2009-02-14 CLEANING AND LOCAL MODIFS
+!
+!     EXAMPLES
+!     --------
+!     [...]
+!     USE RANDOM_NUMBERS ! MODULE
+!     [...]
+!     TYPE(RANDOMNUMBERSTREAM) :: GOLUM ! DECLARATION
+!     INTEGER(KIND=I4) :: ISEED=1     ! RANDOM SEED
+!     REAL(KIND=R8)    :: ZRAND(:)    ! RANDOM VALUES VECTOR
+!     [...]
+!     CALL INITIALIZE_RANDOM_NUMBERS(ISEED,GOLUM)
+!
+!     CALL GAUSSIAN_DISTRIBUTION(ZRAND(:),GOLUM)
+!     OR
+!     CALL UNIFORM_DISTRIBUTION(ZRAND(:),GOLUM)
+!     ------------------------------------------------------------------
+
+USE SET_KND ,ONLY : I4     ,R8
+
+IMPLICIT NONE
+
+SAVE
+
+PRIVATE
+PUBLIC RANDOMNUMBERSTREAM, &
+     & INITIALIZE_RANDOM_NUMBERS, UNIFORM_DISTRIBUTION, GAUSSIAN_DISTRIBUTION
+
+INTEGER(KIND=I4), PARAMETER      :: JPP=273, JPQ=607, JPS=105
+INTEGER(KIND=I4), PARAMETER      :: JPMM=30
+INTEGER(KIND=I4), PARAMETER      :: JPM=2**JPMM
+INTEGER(KIND=I4), PARAMETER      :: JPNUMSPLIT=(JPQ-2)/(JPP-1)
+INTEGER(KIND=I4), PARAMETER      :: JPLENSPLIT=(JPQ-JPP+JPNUMSPLIT-1)/JPNUMSPLIT
+INTEGER(KIND=I4), PARAMETER      :: INITVALUE = 12345678
+
+TYPE RANDOMNUMBERSTREAM
+  PRIVATE
+  INTEGER(KIND=I4)                 :: IUSED
+  INTEGER(KIND=I4)                 :: INITTEST ! SHOULD INITIALIZE TO ZERO, BUT CAN'T IN F90
+  INTEGER(KIND=I4), DIMENSION(JPQ) :: IX
+  REAL(KIND=R8)                    :: ZRM
+END TYPE RANDOMNUMBERSTREAM
+
+CONTAINS
+!-------------------------------------------------------------------------------
+SUBROUTINE INITIALIZE_RANDOM_NUMBERS (KSEED, YD_STREAM)
+  !-------------------------------------------------------------------------------
+  ! INITIALIZE FIBGEN
+  !-------------------------------------------------------------------------------
+  INTEGER(KIND=I4),                INTENT(IN   ) :: KSEED
+  TYPE(RANDOMNUMBERSTREAM), INTENT(INOUT) :: YD_STREAM
+
+  INTEGER, PARAMETER :: JPMASK=123459876
+  INTEGER(KIND=I4), PARAMETER     :: JPWARMUP_SHFT=64, JPWARMUP_LFG=999
+  INTEGER(KIND=I4)                :: IDUM,JK,JJ,JBIT
+  REAL(KIND=R8), DIMENSION(JPWARMUP_LFG)   :: ZWARMUP
+
+  !-------------------------------------------------------------------------------
+  ! INITIALIZE THE BUFFER USING A BINARY SHIFT REGISTER (BURNS AND PRYOR, 1999).
+  ! THE GALOIS REPRESENTATION IS USED FOR THE SHIFT REGISTER AS IT IS MORE
+  ! EFFICIENT THAN THE FIBONACCI REPRESENTATION. THE MAGIC NUMBERS 31 AND 87
+  ! DEFINE THE SHIFT REGISTER PRIMITIVE POLYNOMIAL=(32,7,5,3,2,1,0).
+  !
+  ! TO ENSURE THAT DIFFERENT SEEDS PRODUCE DISTINCT INITIAL BUFFER STATES IN
+  ! CANONICAL FORM, BITS 0...JPMM-2 OF THE INITIAL SEED (AFTER XORING WITH JPMASK
+  ! AND SPINNING UP USING THE LINEAR CONGRUENTIAL GENERATOR) ARE USED TO CONSTRUCT
+  ! X(2), AND THE REMAINING BITS ARE USED TO CONSTRUCT X(JPQ).
+  !-------------------------------------------------------------------------------
+
+  IDUM = ABS(IEOR(KSEED,JPMASK))
+  IF (IDUM==0) IDUM=JPMASK
+
+  DO JJ=1,JPWARMUP_SHFT
+    IF (BTEST(IDUM,31)) THEN
+      IDUM=IBSET(ISHFT(IEOR(IDUM,87),1),0)
+    ELSE
+      IDUM=IBCLR(ISHFT(IDUM,1),0)
+    ENDIF
+  ENDDO
+
+  YD_STREAM%IX(1:JPQ-1)= 0
+  YD_STREAM%IX(2)      = ISHFT(IBITS(IDUM,0,JPMM-1),1)
+  YD_STREAM%IX(JPQ)    = IBITS(IDUM,JPMM-1,BIT_SIZE(IDUM)+1-JPMM)
+
+  DO JBIT=1,JPMM-1
+    DO JJ=3,JPQ-1
+      IF (BTEST(IDUM,31)) THEN
+        IDUM=IBSET(ISHFT(IEOR(IDUM,87),1),0)
+        YD_STREAM%IX(JJ)=IBSET(YD_STREAM%IX(JJ),JBIT)
+      ELSE
+        IDUM=IBCLR(ISHFT(IDUM,1),0)
+      ENDIF
+    ENDDO
+  ENDDO
+
+  YD_STREAM%IX(JPQ-JPS) = IBSET(YD_STREAM%IX(JPQ-JPS),0)
+
+  !-------------------------------------------------------------------------------
+  ! INITIALIZE SOME CONSTANTS
+  !-------------------------------------------------------------------------------
+
+  YD_STREAM%IUSED=JPQ
+  YD_STREAM%ZRM=1.0_R8/REAL(JPM,R8)
+
+  !-------------------------------------------------------------------------------
+  ! CHECK THE CALCULATION OF JPNUMSPLIT AND JPLENSPLIT.
+  !-------------------------------------------------------------------------------
+
+  IF (JPP+JPNUMSPLIT*JPLENSPLIT < JPQ) THEN
+    CALL ABOR1 ('INITIALIZE_RANDOM_NUMBERS: UPPER LIMIT OF LAST LOOP < JPQ')
+  ENDIF
+
+  IF (JPLENSPLIT >=JPP) THEN
+    CALL ABOR1 ('INITIALIZE_RANDOM_NUMBERS: LOOP LENGTH > JPP')
+  ENDIF
+
+  IF (JPNUMSPLIT>1) THEN
+    IF ((JPQ-JPP+JPNUMSPLIT-2)/(JPNUMSPLIT-1) < JPP) THEN
+      CALL ABOR1 ('INITIALIZE_RANDOM_NUMBERS: JPNUMSPLIT IS BIGGER THAN NECESSARY')
+    ENDIF
+  ENDIF
+
+  !-------------------------------------------------------------------------------
+  ! SET INITTEST TO SHOW THAT THE STREAM IS INITIALIZED.
+  !-------------------------------------------------------------------------------
+
+  YD_STREAM%INITTEST = INITVALUE
+
+  !-------------------------------------------------------------------------------
+  ! WARM UP THE GENERATOR.
+  !-------------------------------------------------------------------------------
+
+  CALL UNIFORM_DISTRIBUTION (ZWARMUP, YD_STREAM)
+
+END SUBROUTINE INITIALIZE_RANDOM_NUMBERS
+
+SUBROUTINE UNIFORM_DISTRIBUTION (PX,YD_STREAM)
+  !--------------------------------------------------------------------------------
+  ! GENERATE UNIFORMLY DISTRIBUTED RANDOM NUMBERS IN THE RANGE 0.0<= PX < 1.0
+  !--------------------------------------------------------------------------------
+  TYPE(RANDOMNUMBERSTREAM), INTENT(INOUT) :: YD_STREAM
+  REAL(KIND=R8), DIMENSION(:),     INTENT(  OUT) :: PX
+
+  INTEGER(KIND=I4)                :: JJ, JK, IN, IFILLED
+
+  ! THIS TEST IS A LITTLE DIRTY BUT FORTRAN 90 DOESN'T ALLOW FOR THE INITIALIZATION
+  !   OF COMPONENTS OF DERIVED TYPES.
+  IF(YD_STREAM%INITTEST /= INITVALUE) &
+    & CALL ABOR1 ('UNIFORM_DISTRIBUTION CALLED BEFORE INITIALIZE_RANDOM_NUMBERS')
+
+  !--------------------------------------------------------------------------------
+  ! COPY NUMBERS THAT WERE GENERATED DURING THE LAST CALL, BUT NOT USED.
+  !--------------------------------------------------------------------------------
+
+  IN=SIZE(PX)
+  IFILLED=0
+
+  DO JJ=YD_STREAM%IUSED+1,MIN(JPQ,IN+YD_STREAM%IUSED)
+    PX(JJ-YD_STREAM%IUSED) = YD_STREAM%IX(JJ)*YD_STREAM%ZRM
+    IFILLED=IFILLED+1
+  ENDDO
+
+  YD_STREAM%IUSED=YD_STREAM%IUSED+IFILLED
+
+  IF (IFILLED==IN) RETURN
+
+  !--------------------------------------------------------------------------------
+  ! GENERATE BATCHES OF JPQ NUMBERS UNTIL PX HAS BEEN FILLED
+  !--------------------------------------------------------------------------------
+
+  DO WHILE (IFILLED<IN)
+
+  !--------------------------------------------------------------------------------
+  ! GENERATE JPQ NUMBERS IN VECTORIZABLE LOOPS. THE FIRST LOOP IS LENGTH JPP. THE
+  ! REMAINING JPQ-JPP ELEMENTS ARE CALCULATED IN LOOPS OF LENGTH SHORTER THAN JPP.
+  !--------------------------------------------------------------------------------
+
+  !OCL NOVREC
+    DO JJ=1,JPP
+      YD_STREAM%IX(JJ) = YD_STREAM%IX(JJ) + YD_STREAM%IX(JJ-JPP+JPQ)
+      IF (YD_STREAM%IX(JJ)>=JPM) YD_STREAM%IX(JJ) = YD_STREAM%IX(JJ)-JPM
+    ENDDO
+
+    DO JK=1,JPNUMSPLIT
+  !OCL NOVREC
+      DO JJ=1+JPP+(JK-1)*JPLENSPLIT,MIN(JPQ,JPP+JK*JPLENSPLIT)
+        YD_STREAM%IX(JJ) = YD_STREAM%IX(JJ) + YD_STREAM%IX(JJ-JPP)
+        IF (YD_STREAM%IX(JJ)>=JPM) YD_STREAM%IX(JJ) = YD_STREAM%IX(JJ)-JPM
+      ENDDO
+    ENDDO
+
+    YD_STREAM%IUSED = MIN(JPQ,IN-IFILLED)
+    PX(IFILLED+1:IFILLED+YD_STREAM%IUSED) = YD_STREAM%IX(1:YD_STREAM%IUSED)*YD_STREAM%ZRM
+    IFILLED = IFILLED+YD_STREAM%IUSED
+  ENDDO
+
+END SUBROUTINE UNIFORM_DISTRIBUTION
+!-------------------------------------------------------------------------------
+SUBROUTINE GAUSSIAN_DISTRIBUTION (PX, YD_STREAM)
+  TYPE(RANDOMNUMBERSTREAM), INTENT(INOUT) :: YD_STREAM
+  REAL(KIND=R8),                   INTENT(  OUT) :: PX(:)
+  !--------------------------------------------------------------------------------
+  ! GENERATE NORMALLY-DISTRIBUTED RANDOM NUMBERS USING THE BOX-MULLER METHOD.
+  !
+  ! NB: THIS ROUTINE DOES NOT USE BUFFERING. THIS MEANS THAT THE FOLLOWING CALLS:
+  !     CALL GAUSSIAN_DISTRIBUTION (ZX(1:K))
+  !     CALL GAUSSIAN_DISTRIBUTION (ZX(K+1:N))
+  ! WILL PRODUCE DIFFERENT NUMBERS FOR ELEMENTS K+1 ONWARDS THAN THE SINGLE CALL:
+  !     CALL GAUSSIAN_DISTRIBUTION (ZX(1:N))
+  !--------------------------------------------------------------------------------
+
+  INTEGER(KIND=I4) :: ILEN, J
+  REAL(KIND=R8) :: ZFAC, ZTWOPI
+  REAL(KIND=R8) :: ZX(SIZE(PX)+1)
+
+  !--------------------------------------------------------------------------------
+  ! GENERATE UNIFORM RANDOM POINTS IN THE RANGE [0,1)
+  !--------------------------------------------------------------------------------
+
+    CALL UNIFORM_DISTRIBUTION (ZX, YD_STREAM)
+
+  !--------------------------------------------------------------------------------
+  ! GENERATE GAUSSIAN DEVIATES USING BOX-MULLER METHOD
+  !--------------------------------------------------------------------------------
+
+  ZTWOPI = 8.0_R8*ATAN(1.0_R8)
+  ILEN=SIZE(PX)
+
+  DO J=1,ILEN-1,2
+    ZFAC = SQRT(-2.0_R8*LOG(1.0_R8-ZX(J)))
+    PX(J  ) = ZFAC*COS(ZTWOPI*ZX(J+1))
+    PX(J+1) = ZFAC*SIN(ZTWOPI*ZX(J+1))
+  ENDDO
+
+  !--------------------------------------------------------------------------------
+  ! GENERATE THE LAST POINT IF ILEN IS ODD
+  !--------------------------------------------------------------------------------
+
+  IF (MOD(ILEN,2) /= 0) THEN
+    ZFAC = SQRT(-2.0_R8*LOG(1.0_R8-ZX(ILEN)))
+    PX(ILEN) = ZFAC*COS(ZTWOPI*ZX(ILEN+1))
+  ENDIF
+
+END SUBROUTINE GAUSSIAN_DISTRIBUTION
+!-------------------------------------------------------------------------------
+
+END MODULE RANDOM_NUMBERS

@@ -1,0 +1,208 @@
+SUBROUTINE PRINT_EOFS
+
+  USE SET_KND
+  USE EOF_STR
+  USE GRD_STR
+  USE IOUNITS, ONLY : IOUNERR, IOUNLOG, IOUNOUT,IOUNEOF
+  USE MYFRTPROF,ONLY : MYFRTPROF_WALL
+  USE MPIREL,ONLY : CMPIDOM
+  USE MYNETCDF
+  USE STATS, ONLY : MEAN
+
+  IMPLICIT NONE
+
+  INTEGER(I4)                 :: NEC, K, JLEV, JI, JJ, KR
+
+  REAL(R8) :: ZL(ROS%NEOF,3)
+  REAL(R8) :: ZC(ROS%NEOF,ROS%KMT,3)
+  REAL(R8), ALLOCATABLE :: ZTEMP2(:,:,:),ZTEMP3(:,:,:,:), BSD(:,:,:)
+  CHARACTER(LEN=99) :: CFORM1, CFORM2, CFORM3
+
+CALL MYFRTPROF_WALL('PRINT_EOFS: PRINT EOFS DIAGNOSTICS',0)
+
+#ifdef opt_huge_memory
+     DO NEC=1,ROS%NEOF
+       ZL(NEC,1) = MEAN(ROS%EVA(:,:,NEC),MASK=(ROS%EVA(:,:,NEC).GT.0._R8))
+       ZL(NEC,2) = MINVAL(ROS%EVA(:,:,NEC),MASK=(ROS%EVA(:,:,NEC).GT.0._R8))
+       ZL(NEC,3) = MAXVAL(ROS%EVA(:,:,NEC),MASK=(ROS%EVA(:,:,NEC).GT.0._R8))
+     ENDDO
+
+     DO K=1,ROS%KMT
+      DO NEC=1,ROS%NEOF
+        ZC(NEC,K,1) = MEAN(ROS%EVC(:,:,K,NEC),MASK=(ROS%EVC(:,:,K,NEC).NE.0._R8))
+        ZC(NEC,K,2) = MINVAL(ROS%EVC(:,:,K,NEC),MASK=(ROS%EVC(:,:,K,NEC).NE.0._R8))
+        ZC(NEC,K,3) = MAXVAL(ROS%EVC(:,:,K,NEC),MASK=(ROS%EVC(:,:,K,NEC).NE.0._R8))
+      ENDDO
+     ENDDO
+#else
+     DO NEC=1,ROS%NEOF
+       ZL(NEC,1) = MEAN(ROS%EVA(:,NEC),MASK=(ROS%EVA(:,NEC).GT.0._R8))
+       ZL(NEC,2) = MINVAL(ROS%EVA(:,NEC),MASK=(ROS%EVA(:,NEC).GT.0._R8))
+       ZL(NEC,3) = MAXVAL(ROS%EVA(:,NEC),MASK=(ROS%EVA(:,NEC).GT.0._R8))
+     ENDDO
+
+     DO K=1,ROS%KMT
+      DO NEC=1,ROS%NEOF
+        ZC(NEC,K,1) = MEAN(ROS%EVC(:,K,NEC),MASK=(ROS%EVC(:,K,NEC).NE.0._R8))
+        ZC(NEC,K,2) = MINVAL(ROS%EVC(:,K,NEC),MASK=(ROS%EVC(:,K,NEC).NE.0._R8))
+        ZC(NEC,K,3) = MAXVAL(ROS%EVC(:,K,NEC),MASK=(ROS%EVC(:,K,NEC).NE.0._R8))
+      ENDDO
+     ENDDO
+#endif
+
+     WRITE(CFORM1,'(A,I2.2,A)') '(4X,',ROS%NEOF,'E12.3)'
+     WRITE(CFORM2,'(A,I2.2,A)') '(X,A,',ROS%NEOF,'E12.3)'
+     WRITE(CFORM3,'(A,I2.2,A)') '(I4,',ROS%NEOF,'E12.3)'
+
+     WRITE(IOUNLOG,*)
+     WRITE(IOUNLOG,*) '======== GLOBALLY AVERAGED EIGENVALUES/EIGENVECTORS'
+     WRITE(IOUNLOG,*) 'LEV  EOFN'
+     WRITE(IOUNLOG,CFORM1) ZL(:,1)
+     WRITE(IOUNLOG,CFORM2) 'PRC',ZL(:,1)*100/SUM(ZL(:,1))
+     WRITE(IOUNLOG,*) '----------------------------------------'
+     DO JLEV=1,ROS%KMT
+       WRITE(IOUNLOG,CFORM3) JLEV, ZC(:,JLEV,1)
+     ENDDO
+     WRITE(IOUNLOG,*)
+     WRITE(IOUNLOG,*) '----------------------------------------'
+     CALL FLUSH(IOUNLOG)
+
+     WRITE(IOUNLOG,*)
+     WRITE(IOUNLOG,*) '======== GLOBAL MINIMA EIGENVALUES/EIGENVECTORS'
+     WRITE(IOUNLOG,*) 'LEV  EOFN'
+     WRITE(IOUNLOG,CFORM1) ZL(:,2)
+     WRITE(IOUNLOG,*) '----------------------------------------'
+     DO JLEV=1,ROS%KMT
+       WRITE(IOUNLOG,CFORM3) JLEV, ZC(:,JLEV,2)
+     ENDDO
+     WRITE(IOUNLOG,*)
+     WRITE(IOUNLOG,*) '----------------------------------------'
+     CALL FLUSH(IOUNLOG)
+
+     WRITE(IOUNLOG,*)
+     WRITE(IOUNLOG,*) '======== GLOBAL MAXIMA EIGENVALUES/EIGENVECTORS'
+     WRITE(IOUNLOG,*) 'LEV  EOFN'
+     WRITE(IOUNLOG,CFORM1) ZL(:,3)
+     WRITE(IOUNLOG,*) '----------------------------------------'
+     DO JLEV=1,ROS%KMT
+       WRITE(IOUNLOG,CFORM3) JLEV, ZC(:,JLEV,3)
+     ENDDO
+     WRITE(IOUNLOG,*)
+     WRITE(IOUNLOG,*) '----------------------------------------'
+     CALL FLUSH(IOUNLOG)
+
+     IF(NPRINTEOF .GE. 5) THEN
+       ALLOCATE( BSD(GRD%IM,GRD%JM,ROS%KMT) )
+       BSD = 0._R8
+       DO JLEV=1,ROS%KMT
+         DO JJ=1,GRD%JM
+           DO JI=1,GRD%IM
+             KR=GRD%REG(JI,JJ)
+             IF (KR .GT. 0) THEN
+                BSD(JI,JJ,JLEV) = SQRT(SUM(ROS%EVA(KR,:)*ROS%EVA(KR,:)*&
+                & ROS%EVC(KR,JLEV,:)*ROS%EVC(KR,JLEV,:)) )
+             ENDIF
+           ENDDO
+         ENDDO
+       ENDDO
+       CALL WRITE_VARNCDF('BG_STDEV_'//TRIM(CMPIDOM)//'.NC',&
+       & GRD%IM,GRD%JM,ROS%KMT,BSD,'bgsd',&
+       & ' ','background-error st.dev.')
+       DEALLOCATE( BSD )
+     ENDIF
+
+     IF(NPRINTEOF .GE. 10) THEN
+
+#ifdef opt_huge_memory
+      OPEN(888,FILE='eofs_x187y586.dat')
+      WRITE(888,'(4X,10F9.5)') ROS%EVA(187,586,1:10)
+      DO JLEV=1,ROS%KMT 
+         WRITE(888,'(I4,10F9.5)') JLEV, ROS%EVC(187,586,JLEV,1:10)
+      ENDDO
+      CLOSE(888)
+
+      OPEN(888,FILE='eofs_x258y640.dat')
+      WRITE(888,'(4X,10F9.5)') ROS%EVA(258,640,1:10)
+      DO JLEV=1,ROS%KMT 
+         WRITE(888,'(I4,10F9.5)') JLEV, ROS%EVC(258,640,JLEV,1:10)
+      ENDDO
+      CLOSE(888)
+#else
+      OPEN(888,FILE='eofs_x187y586.dat')
+      WRITE(888,'(4X,10F9.5)') ROS%EVA(GRD%REG(187,586),1:10)
+      DO JLEV=1,ROS%KMT 
+         WRITE(888,'(I4,10F9.5)') JLEV, ROS%EVC(GRD%REG(187,586),JLEV,1:10)
+      ENDDO
+      CLOSE(888)
+
+      OPEN(888,FILE='eofs_x258y640.dat')
+      WRITE(888,'(4X,10F9.5)') ROS%EVA(GRD%REG(258,640),1:10)
+      DO JLEV=1,ROS%KMT 
+         WRITE(888,'(I4,10F9.5)') JLEV, ROS%EVC(GRD%REG(258,640),JLEV,1:10)
+      ENDDO
+      CLOSE(888)
+#endif
+
+#ifdef opt_huge_memory
+     CALL WRITE_VARNCDF('EIGENVALUES_1.NC',GRD%IM,GRD%JM,ROS%EVA(:,:,1),'eva1',' ',&
+& 'EOF1 Eigenvalues')
+     CALL WRITE_VARNCDF('EIGENVALUES_2.NC',GRD%IM,GRD%JM,ROS%EVA(:,:,2),'eva2',' ',&
+& 'EOF2_Eigenvalues')
+     CALL WRITE_VARNCDF('EIGENVALUES_3.NC',GRD%IM,GRD%JM,ROS%EVA(:,:,3),'eva3',' ',&
+& 'EOF3 Eigenvalues')
+     CALL WRITE_VARNCDF('EIGENVECTORS_1.NC',GRD%IM,GRD%JM,ROS%KMT,ROS%EVC(:,:,:,1),'evc1',' ',&
+& 'EOF1 Eigenvectors')
+     CALL WRITE_VARNCDF('EIGENVECTORS_2.NC',GRD%IM,GRD%JM,ROS%KMT,ROS%EVC(:,:,:,2),'evc2',' ',&
+& 'EOF2 Eigenvectors')
+     CALL WRITE_VARNCDF('EIGENVECTORS_3.NC',GRD%IM,GRD%JM,ROS%KMT,ROS%EVC(:,:,:,3),'evc3',' ',&
+& 'EOF3 Eigenvectors')
+#else
+     ALLOCATE(ZTEMP2(GRD%IM,GRD%JM,3))
+     ZTEMP2 = 0._R8
+     DO JJ=1,GRD%JM
+       DO JI=1,GRD%IM
+          IF (GRD%REG(JI,JJ) .GT. 0) THEN
+             ZTEMP2(JI,JJ,1) = ROS%EVA(GRD%REG(JI,JJ),1)
+             ZTEMP2(JI,JJ,2) = ROS%EVA(GRD%REG(JI,JJ),2)
+             ZTEMP2(JI,JJ,3) = ROS%EVA(GRD%REG(JI,JJ),3)
+          ENDIF
+       ENDDO
+     ENDDO
+
+     CALL WRITE_VARNCDF('EIGENVALUES_1.NC',GRD%IM,GRD%JM,ZTEMP2(:,:,1),'eva1',' ',&
+& 'EOF1 Eigenvalues')
+     CALL WRITE_VARNCDF('EIGENVALUES_2.NC',GRD%IM,GRD%JM,ZTEMP2(:,:,2),'eva2',' ',&
+& 'EOF2 Eigenvalues')
+     CALL WRITE_VARNCDF('EIGENVALUES_3.NC',GRD%IM,GRD%JM,ZTEMP2(:,:,3),'eva3',' ',&
+& 'EOF3 Eigenvalues')
+     DEALLOCATE(ZTEMP2)
+
+     ALLOCATE(ZTEMP3(GRD%IM,GRD%JM,ROS%KMT,3))
+     ZTEMP3 = 0._R8
+     DO JJ=1,GRD%JM
+       DO JI=1,GRD%IM
+          IF (GRD%REG(JI,JJ) .GT. 0) THEN
+             ZTEMP3(JI,JJ,:,1) = ROS%EVC(GRD%REG(JI,JJ),:,1)
+             ZTEMP3(JI,JJ,:,2) = ROS%EVC(GRD%REG(JI,JJ),:,2)
+             ZTEMP3(JI,JJ,:,3) = ROS%EVC(GRD%REG(JI,JJ),:,3)
+          ENDIF
+       ENDDO
+     ENDDO
+
+     CALL WRITE_VARNCDF('EIGENVECTORS_1.NC',GRD%IM,GRD%JM,ROS%KMT,ZTEMP3(:,:,:,1),'evc1',' ',&
+& 'EOF1 Eigenvectors')
+     CALL WRITE_VARNCDF('EIGENVECTORS_2.NC',GRD%IM,GRD%JM,ROS%KMT,ZTEMP3(:,:,:,2),'evc2',' ',&
+& 'EOF2 Eigenvectors')
+     CALL WRITE_VARNCDF('EIGENVECTORS_3.NC',GRD%IM,GRD%JM,ROS%KMT,ZTEMP3(:,:,:,3),'evc3',' ',&
+& 'EOF3 Eigenvectors')
+
+     DEALLOCATE(ZTEMP3)
+#endif
+
+     ENDIF
+
+WRITE(IOUNLOG,*) ' END OF PRINTEOFS'
+CALL FLUSH(IOUNLOG)
+
+CALL MYFRTPROF_WALL('PRINT_EOFS: PRINT EOFS DIAGNOSTICS',1)
+END SUBROUTINE PRINT_EOFS

@@ -1,0 +1,92 @@
+#undef SHARED_MEMORY
+SUBROUTINE INT_PAR_SLA_2
+
+!-----------------------------------------------------------------------
+!                                                                      !
+! GET INTERPOLATION PARAMETERS FOR A GRID                              !
+!                                                                      !
+! VERSION 1: S.DOBRICIC 2006                                           !
+!-----------------------------------------------------------------------
+
+ USE SET_KND
+ USE GRD_STR
+ USE PHINTERP
+ USE PHINTERP2
+ USE RUN
+ USE OBS_STR
+ USE MYFRTPROF, ONLY : MYFRTPROF_WALL
+ USE IOUNITS
+
+ IMPLICIT NONE
+
+  INTEGER(I4)   ::  K, N_TOPEX, N_ERS, II, JJ,I2
+  INTEGER(I4)   ::  I1, J1, KK, I, J, ITER, IAUX, JP
+  INTEGER(I4)   ::  MSCOUNT
+  REAL(R8)      ::  P1, Q1, P, Q, SUMT, SUMI, TIMP,NEWLON
+  REAL(R8)      ::  MSK4, ZZSS
+
+#include "obs_events.h"
+
+ CALL MYFRTPROF_WALL('INT_PAR_SLA_2: SLA INTERPOLATION',0)
+
+ IF(SLA%NO.EQ.0) THEN
+   CALL MYFRTPROF_WALL('INT_PAR_SLA_2: SLA INTERPOLATION',1)
+   RETURN
+ ENDIF
+
+ SLA%IB = 0
+ SLA%JB = 0
+
+#ifdef SHARED_MEMORY
+!$OMP PARALLEL DEFAULT(PRIVATE), SHARED(SLA)
+!$OMP DO SCHEDULE(DYNAMIC)
+#endif
+CYOBS0 : DO KK = 1,SLA%NO
+
+      IF( NN_INTERPM .EQ. 1 ) THEN
+         CALL PREPINTERP(SLA%LON(KK),SLA%LAT(KK),SLA%IB(KK,:),SLA%JB(KK,:),SLA%PQ(KK,:))
+      ELSEIF ( NN_INTERPM .EQ. 2 ) THEN
+         CALL PREPINTERP2(SLA%LON(KK),SLA%LAT(KK),SLA%IB(KK,:),SLA%JB(KK,:),SLA%PQ(KK,:))
+      ENDIF
+
+ENDDO CYOBS0
+#ifdef SHARED_MEMORY
+!$OMP END DO
+!$OMP END PARALLEL
+#endif
+
+#ifdef SHARED_MEMORY
+!$OMP PARALLEL DEFAULT(SHARED), PRIVATE(KK,ZZSS,JP,MSK4)
+!$OMP DO SCHEDULE(DYNAMIC)
+#endif
+CYOBS : DO KK = 1,SLA%NO
+       SLA%FLC(KK) = 1
+
+       SLA%PQ(KK,1) = SLA%PQ(KK,1) * GRD%MSK(SLA%IB(KK,1),SLA%JB(KK,1),1)
+       SLA%PQ(KK,2) = SLA%PQ(KK,2) * GRD%MSK(SLA%IB(KK,2),SLA%JB(KK,2),1)
+       SLA%PQ(KK,3) = SLA%PQ(KK,3) * GRD%MSK(SLA%IB(KK,3),SLA%JB(KK,3),1)
+       SLA%PQ(KK,4) = SLA%PQ(KK,4) * GRD%MSK(SLA%IB(KK,4),SLA%JB(KK,4),1)
+
+       IF( SUM(SLA%PQ(KK,:)) .GT. 0._R8 ) THEN
+          SLA%PQ(KK,:) = SLA%PQ(KK,:) / SUM(SLA%PQ(KK,:))
+       ELSE
+          SLA%PQ(KK,:) = 0._R8
+       ENDIF
+
+ENDDO CYOBS
+#ifdef SHARED_MEMORY
+!$OMP END DO
+!$OMP END PARALLEL
+#endif
+
+! ---
+! COUNT GOOD OBSERVATIONS
+  SLA%NC = COUNT(SLA%FLC(1:SLA%NO) .EQ. 1)
+
+  WRITE(IOUNLOG,*)
+  WRITE(IOUNLOG,*) ' *** SLA OBS AFTER INTERPOLATION SET-UP'
+  WRITE(IOUNLOG,*) ' TOTAL NUMBER OF SLA OBS           :',SLA%NO
+  WRITE(IOUNLOG,*) ' TOTAL NUMBER OF RETAINED SLA  OBS :',SLA%NC
+
+CALL MYFRTPROF_WALL('INT_PAR_SLA_2: SLA INTERPOLATION',1)
+END SUBROUTINE INT_PAR_SLA_2

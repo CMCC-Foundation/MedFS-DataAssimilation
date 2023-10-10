@@ -1,0 +1,7 @@
+#!/bin/ksh
+
+pgf90 -Mpreprocess -Dopt_netcdf -Kieee -byteswapio -r8 -i4 -g -O2 -Mscalarsse \
+	-I/opt/netcdf-4.0-pgi/include prog_rho.f90 readfg4df.f90 -o rho.x \
+	-L/opt/netcdf-4.0-pgi/lib -lnetcdf -L. -loceanvar
+
+

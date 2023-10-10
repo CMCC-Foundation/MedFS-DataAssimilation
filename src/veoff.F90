@@ -1,0 +1,89 @@
+SUBROUTINE VEOFF
+
+!-----------------------------------------------------------------------
+!                                                                      !
+! VERTICAL TRANSFORM FROM CONTROL TO PHYSICAL SPACE
+!                                                                      !
+! VERSION 1: S.DOBRICIC 2006                                           !
+! A.STORTO 2009-03 ADPATED FOR GLOBAL MODEL W/O ETA EOFS               !
+!-----------------------------------------------------------------------
+
+
+ USE SET_KND
+ USE DRV_STR
+ USE GRD_STR
+ USE EOF_STR
+ USE CTL_STR
+ USE RUN, ONLY : LLVARMDT, LL_SSH_UNBALANCED, LL_TQ2_UNBALANCED
+ USE MYFRTPROF, ONLY : MYFRTPROF_WALL
+ USE IOUNITS, ONLY : IOUNLOG
+ USE HYBRID
+
+ IMPLICIT NONE
+
+ INTEGER(I4)     :: I, J, K, N,KOFFSET, NKMT
+ INTEGER(I4)     :: KT2M, KQ2M, KSSH, KSIC, KSIT, KICU, KICV
+ LOGICAL  :: LLV(ROS%KMT)
+
+ CALL MYFRTPROF_WALL('VEOF: VERTICAL TRANSFORM',0)
+
+ NKMT = ROS%KMT
+ LLV = .TRUE.
+ IF (LL_SSH) KSSH = PSV3D*GRD%KM+1
+
+ IF (LL_TQ2) THEN
+  IF(LL_ICE) THEN
+   KT2M = NKMT-5
+   KQ2M = NKMT-4
+  ELSE
+   KT2M = NKMT-1
+   KQ2M = NKMT
+  ENDIF
+ ENDIF
+ IF(LL_ICE) THEN
+   KSIC = NKMT-3
+   KSIT = NKMT-2
+   KICU = NKMT-1
+   KICV = NKMT
+ ENDIF
+
+IF (DRV%BAL(DRV%KTR) .EQ. 1 .AND. .NOT. LL_SSH_UNBALANCED .AND. LL_SSH ) &
+   LLV(KSSH) = .FALSE.
+
+IF (DRV%BA2(DRV%KTR) .EQ. 1 .AND. .NOT. LL_TQ2_UNBALANCED .AND. LL_TQ2 ) THEN
+    LLV(KT2M) = .FALSE.
+    LLV(KQ2M) = .FALSE.
+ENDIF
+
+IF ( LL_ICE ) THEN
+   LLV(KSIC) = .FALSE.
+   LLV(KSIT) = .FALSE.
+   LLV(KICU) = .FALSE.
+   LLV(KICV) = .FALSE.
+ENDIF
+
+PSVF = 0._R8
+
+#ifdef SHARED_MEMORY
+!$OMP PARALLEL DEFAULT(SHARED), PRIVATE(K,J,I,N)
+!$OMP DO SCHEDULE(DYNAMIC)
+#endif
+  DO K=1,NKMT
+   IF(LLV(K)) THEN
+   DO J=1,GRD%JM
+    DO I=1,GRD%IM
+     DO N=1,ROSH%NEOF
+      PSVF(I,J,K) = PSVF(I,J,K)+ROSH%EVC(REGHH(I,J), K ,N)  * &
+                    GRD%MVLOC_H(I,J,K) * ROSH%EVA(REGHH(I,J), N) * GRD%ROH(I,J,N)
+     ENDDO
+    ENDDO
+   ENDDO
+   ENDIF
+  ENDDO
+#ifdef SHARED_MEMORY
+!$OMP END DO
+!$OMP END PARALLEL
+#endif
+
+ CALL MYFRTPROF_WALL('VEOF: VERTICAL TRANSFORM',1)
+END SUBROUTINE VEOFF

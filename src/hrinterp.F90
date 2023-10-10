@@ -1,0 +1,327 @@
+SUBROUTINE HRINTERP
+
+!----------------------------------------------------------------------
+! HIGH-RESOLUTION INTERPOLATION
+!  
+!
+!----------------------------------------------------------------------
+
+USE IOUNITS
+USE GRD_STR
+USE MYNETCDF
+USE EOF_STR
+USE MYFRTPROF
+
+IMPLICIT NONE
+       
+CHARACTER(LEN=200) :: CFGHR, CFGP
+
+REAL(R8), DIMENSION(:,:), ALLOCATABLE :: LONC, LONHR,LATHR,I0R,J0R
+REAL(R8) :: DSTM,DST, DSTP, DSTX, DSTY, LONP, LATP, LATB, LATT, LONL, LONR, SOUT
+
+INTEGER(I4) :: IK, JK, KK
+INTEGER(I4) :: IERR,MYL,MYL2
+
+INTEGER(I4) :: IMHR,JMHR,I,J,K,II,JJ, NOUT, KMHR
+INTEGER(I4) :: IDNEW_LON,IDNEW_LAT,IDNEW_DEPTHT,IDNEW_TIME,IDNEW_SAL,IDNEW_TEMP,IDNEW_I0,IDNEW_J0
+INTEGER(I4) :: JST, JEN, IST, IEN, ISTP, ITER, NITER, IP, JP, ICM
+INTEGER(I4), DIMENSION(:,:), ALLOCATABLE :: I0,J0
+REAL(R8), DIMENSION(:)  , ALLOCATABLE :: DEPHR
+REAL(R8), DIMENSION(:,:,:)  , ALLOCATABLE :: TMSKH1
+REAL(R8), DIMENSION(:,:,:)  , ALLOCATABLE :: TMSKHR
+REAL(R8), DIMENSION(:,:)  , ALLOCATABLE :: TMSK2D
+REAL(R8), DIMENSION(:,:)  , ALLOCATABLE :: TMP
+REAL(R8), DIMENSION(:,:)  , ALLOCATABLE :: TOPOHR
+REAL(R8), DIMENSION(:,:,:), ALLOCATABLE :: TEMH2
+REAL(R8), DIMENSION(:,:,:), ALLOCATABLE :: SALH2
+REAL(R8), DIMENSION(:,:,:), ALLOCATABLE :: TEMHR
+REAL(R8), DIMENSION(:,:,:), ALLOCATABLE :: SALHR
+REAL(R8), DIMENSION(:,:,:), ALLOCATABLE :: ROHR
+
+LOGICAL :: LL_3DIM, LLEX
+LOGICAL, PARAMETER :: LL_ADJMSK = .FALSE.
+
+REAL(R8) :: PI, ZC
+REAL(R8), PARAMETER :: ZCSCVAL=1.E-5_R8
+
+CALL MYFRTPROF_WALL('HRINTERP: INTERPOLATION ON HR GRID',0)
+
+WRITE(IOUNLOG,*)
+WRITE(IOUNLOG,*) ' *** INTERPOLATION ONTO HR GRID'
+WRITE(IOUNLOG,*)
+
+CFGHR = 'GRID_HR.nc'
+
+PI=2._R8*ASIN(1._R8)
+
+CALL GETNCDIM(CFGHR,'x',IMHR)
+CALL GETNCDIM(CFGHR,'y',JMHR)
+CALL GETNCDIM(CFGHR,'z',KMHR)
+
+WRITE(IOUNLOG,*) 'NEW GRID INDEXES: ',IMHR,JMHR, GRD%KM
+
+ALLOCATE(LONHR(IMHR,JMHR))
+ALLOCATE(LATHR(IMHR,JMHR))
+ALLOCATE(DEPHR(KMHR))
+ALLOCATE(TMSKH1(IMHR,JMHR,GRD%KM))
+ALLOCATE(TMSKHR(IMHR,JMHR,KMHR))
+ALLOCATE(TMSK2D(IMHR,JMHR))
+ALLOCATE(TOPOHR(IMHR,JMHR))
+ALLOCATE(TEMHR(IMHR,JMHR,GRD%KM))
+ALLOCATE(SALHR(IMHR,JMHR,GRD%KM))
+ALLOCATE(TEMH2(IMHR,JMHR,KMHR))
+ALLOCATE(SALH2(IMHR,JMHR,KMHR))
+ALLOCATE(ROHR(IMHR,JMHR,ROS%NEOF))
+ALLOCATE(I0(IMHR,JMHR))
+ALLOCATE(J0(IMHR,JMHR))
+ALLOCATE(I0R(IMHR,JMHR))
+ALLOCATE(J0R(IMHR,JMHR))
+
+CALL GETNCVAR(CFGHR,'lon',IMHR,JMHR,LONHR)
+CALL GETNCVAR(CFGHR,'lat',IMHR,JMHR,LATHR)
+CALL GETNCVAR(CFGHR,'dep',KMHR,DEPHR)
+CALL GETNCVAR(CFGHR,'topo',IMHR,JMHR,TOPOHR)
+CALL GETNCVAR(CFGHR,'tmsk',IMHR,JMHR,KMHR,TMSKHR)
+
+TMSKH1=0._R8
+DO J=1,JMHR
+ DO I=1,IMHR
+  DO K=1,GRD%KM
+    IF(TOPOHR(I,J) .GE. GRD%DEP(K) ) TMSKH1(I,J,K) = 1._R8
+  ENDDO
+ ENDDO
+ENDDO
+
+WHERE( TMSKHR .GT. 0.5_R8 ) 
+    TMSKHR = 1._R8
+ELSEWHERE
+    TMSKHR = 0._R8
+ENDWHERE
+
+IF( LL_ADJMSK ) THEN
+
+ DO K=1,GRD%KM
+   TMSK2D(:,:) = TMSKHR(:,:,K)
+   DO J=2,JMHR-1
+      DO I=2,IMHR-1
+         IF( TMSKHR(I,J,K) .EQ. 0._R8 .AND.  (  &
+             TMSKHR(I+1,J  ,K) .EQ. 1._R8 .OR. &
+             TMSKHR(I-1,J  ,K) .EQ. 1._R8 .OR. &
+             TMSKHR(I  ,J+1,K) .EQ. 1._R8 .OR. &
+             TMSKHR(I  ,J-1,K) .EQ. 1._R8 ) ) THEN
+             TMSK2D(I,J) = 1._R8
+         ENDIF
+      ENDDO
+   ENDDO
+   J=1
+   DO I=2,IMHR-1
+      IF( TMSKHR(I,J,K) .EQ. 0._R8 .AND.  (  &
+             TMSKHR(I+1,J  ,K) .EQ. 1._R8 .OR. &
+             TMSKHR(I-1,J  ,K) .EQ. 1._R8 .OR. &
+             TMSKHR(I  ,J+1,K) .EQ. 1._R8 ) ) THEN
+             TMSK2D(I,J) = 1._R8
+      ENDIF
+   ENDDO
+   J=JMHR
+   DO I=2,IMHR-1
+      IF( TMSKHR(I,J,K) .EQ. 0._R8 .AND.  (  &
+             TMSKHR(I+1,J  ,K) .EQ. 1._R8 .OR. &
+             TMSKHR(I-1,J  ,K) .EQ. 1._R8 .OR. &
+             TMSKHR(I  ,J-1,K) .EQ. 1._R8 ) ) THEN
+             TMSK2D(I,J) = 1._R8
+      ENDIF
+   ENDDO
+   TMSKHR(:,:,K) = TMSK2D(:,:)
+ ENDDO
+ TMSKHR(1,:,:) = TMSKHR(IMHR-1,:,:)
+ TMSKHR(IMHR,:,:) = TMSKHR(2,:,:)
+ENDIF
+    
+I0(:,:)=0
+J0(:,:)=0
+    
+! DEFINITION OF THE INTERPOLATION INDEXES (MATRIX I0 AND J0) BETWEEN THE 2 GRIDS. THE LOOP ARE MADE ONLY ON THE COAST POINTS.
+    
+NITER = 7
+ISTP = 2**(NITER-1)
+ICM = GRD%IM-1 + 2*ISTP
+    
+ALLOCATE (LONC(ICM,GRD%JM) )
+   
+DO J=1,GRD%JM
+   DO I=2,GRD%IM
+      LONC(I,J) = GRD%LON(I,J)
+   ENDDO
+   DO I=1,2*ISTP
+      LONC(GRD%IM-1+I,J) = GRD%LON(I+1,J)
+   ENDDO
+ENDDO
+
+CFGP='lr_hr.interp'
+
+INQUIRE( FILE=CFGP, EXIST=LLEX )
+
+WRITE(IOUNLOG,*) ' EXISTENCE OF FILE ',TRIM(CFGP),': ',LLEX
+
+IF( LLEX ) THEN
+
+   OPEN(71,FILE=CFGP,FORM='UNFORMATTED',ACCESS='SEQUENTIAL',IOSTAT=IERR)
+   IF(IERR.NE.0) CALL ABOR1('INTERPOLATION MAPPING FILE: PROBLEMS OPENING')
+   READ(71,IOSTAT=IERR) I0,J0
+   IF(IERR.NE.0) CALL ABOR1('INTERPOLATION MAPPING FILE: PROBLEMS READING')
+   CLOSE(71,IOSTAT=IERR)
+   IF(IERR.NE.0) CALL ABOR1('INTERPOLATION MAPPING FILE: PROBLEMS CLOSING')
+
+ELSE
+    
+   DO J=1,JMHR 
+      DO I=1,IMHR
+
+          I0(I,J) = 1
+          J0(I,J) = 1
+!          IF (TMSKH1(I,J,1).GT.0.5_R8) THEN
+
+            DSTM=1.E20_R8
+            NITER = 7
+            ISTP = 2**(NITER-1)
+            JST  = 1
+            JEN  = GRD%JM-1
+            IST  = ISTP+1
+            IEN  = GRD%IM-1
+            LATP = LATHR(I,J)
+            LONP = LONHR(I,J)
+
+            DO ITER=1,NITER
+                  DO JJ=JST,JEN,ISTP
+                    DO II=IST,IEN,ISTP
+                       LATB = GRD%LAT(II,JJ) 
+                       LONL = LONC(II,JJ) 
+                       DSTX = LONL-LONP
+                       DSTY = LATB-LATP
+                       DST= ( DSTX*COS( (LATP+LATB)*PI/180._R8*0.5_R8 ) )**2 + DSTY**2
+                       IF(DST.LE.DSTM) THEN
+                          I0(I,J) = II
+                          J0(I,J) = JJ
+                          DSTM = DST
+                       ENDIF
+                    ENDDO
+                 ENDDO
+                 JST  = MAX(1,J0(I,J)-2*ISTP)
+                 JEN  = MIN(GRD%JM,J0(I,J)+2*ISTP)
+                 IST  = MAX(1,I0(I,J)-2*ISTP)
+                 IEN  = I0(I,J)+2*ISTP
+                 ISTP = ISTP/2
+            ENDDO ! ITER
+!         ENDIF
+     ENDDO
+   ENDDO
+    
+   WHERE( I0 .GT. GRD%IM-1 ) I0 = I0 - (GRD%IM-1)
+
+   OPEN(71,FILE=CFGP,FORM='UNFORMATTED',ACCESS='SEQUENTIAL',IOSTAT=IERR)
+   IF(IERR.NE.0) CALL ABOR1('INTERPOLATION MAPPING FILE: PROBLEMS OPENING')
+   WRITE(71,IOSTAT=IERR) I0,J0
+   IF(IERR.NE.0) CALL ABOR1('INTERPOLATION MAPPING FILE: PROBLEMS WRITING')
+   CLOSE(71,IOSTAT=IERR)
+   IF(IERR.NE.0) CALL ABOR1('INTERPOLATION MAPPING FILE: PROBLEMS CLOSING')
+
+ENDIF
+
+TEMHR(:,:,:) = 0._R8
+SALHR(:,:,:) = 0._R8
+ROHR(:,:,:) = 0._R8
+         
+NITER = 7
+
+!$OMP PARALLEL DEFAULT(SHARED),PRIVATE(K,J,I,NOUT,II,JJ,SOUT,ISTP,IK,JK,DSTX,DSTY,DST)
+!$OMP DO SCHEDULE(DYNAMIC,1)
+DO K=1,GRD%KM
+         
+      NOUT = 0
+    
+          DO J=1,JMHR
+           DO I=1,IMHR
+!           IF (TMSKH1(I,J,K).GT.0.5_R8) THEN
+             JJ = J0(I,J)
+             II = I0(I,J)
+              SOUT = 0._R8
+              ISTP = 1
+             DO ITER = 1,NITER
+              IF(SOUT.EQ.0._R8)THEN
+                DO JK=MAX(1,JJ-ISTP),MIN(GRD%JM,JJ+ISTP)
+                DO IK=MAX(1,II-ISTP),MIN(GRD%IM,II+ISTP)
+                 IF(GRD%MSK(IK,JK,K).EQ.1._R8)THEN
+                   DSTX = LONL-LONP
+                   DSTY = LATB-LATP
+                   DST= ( DSTX*COS( (LATP+LATB)*PI/180._R8*0.5_R8 ) )**2 + DSTY**2
+                   DST= EXP(-MIN(16._R8,DST))
+                   TEMHR(I,J,K) = TEMHR(I,J,K) + GRD%TEM(IK,JK,K)*DST
+                   SALHR(I,J,K) = SALHR(I,J,K) + GRD%SAL(IK,JK,K)*DST
+                   IF( K.EQ.1 ) THEN
+                     ROHR(I,J,:) = ROHR(I,J,:) + GRD%RO(IK,JK,:)*DST
+                   ENDIF
+                   SOUT = SOUT + DST
+                 ENDIF
+                ENDDO
+                ENDDO
+              ENDIF
+               ISTP = ISTP+1
+             ENDDO
+             IF(SOUT.GT.0._R8)THEN
+               TEMHR(I,J,K) = TEMHR(I,J,K)/SOUT
+               SALHR(I,J,K) = SALHR(I,J,K)/SOUT
+               IF(K.EQ.1) ROHR(I,J,:) = ROHR(I,J,:)/SOUT
+             ELSE
+               IF( K .GT. 1 .AND. TMSKHR(I,J,K).EQ.1._R8 ) THEN
+                 TEMHR(I,J,K) = TEMHR(I,J,K-1) - ZCSCVAL
+                 SALHR(I,J,K) = SALHR(I,J,K-1) - ZCSCVAL
+                 NOUT = NOUT + 1
+               ENDIF
+             ENDIF
+!            ENDIF
+           ENDDO
+          ENDDO
+
+ENDDO
+!$OMP END DO
+!$OMP END PARALLEL
+
+WRITE(IOUNLOG,*) ' HORIZ INTERPOLATION PERFORMED'
+WRITE(IOUNLOG,*)
+
+DO K=1,KMHR
+  MYL=0
+  DO J=1,GRD%KM-1
+   IF( DEPHR(K).GE.GRD%DEP(J) .AND. DEPHR(K).LT.GRD%DEP(J+1) ) THEN
+     MYL=J
+     MYL2=J+1
+     ZC=1._R8-ABS(DEPHR(K)-GRD%DEP(J))/ABS(GRD%DEP(J+1)-GRD%DEP(J))
+   ENDIF
+  ENDDO
+  IF( MYL .EQ. 0 ) THEN
+    IF( DEPHR(K) .LT. GRD%DEP(1) ) THEN
+      MYL=1
+      MYL2=1
+      ZC=1._R8
+    ENDIF
+    IF( DEPHR(K) .GE. GRD%DEP(GRD%KM) ) THEN
+      MYL=GRD%KM
+      MYL2=GRD%KM
+      ZC=1._R8
+    ENDIF
+  ENDIF
+  WRITE(IOUNLOG,*) ' INTERPOLATING LEVEL ',K
+  WRITE(IOUNLOG,*) '             COEFFS: ',MYL,MYL2,ZC
+  TEMH2(:,:,K) = ZC*TEMHR(:,:,MYL) + (1._R8-ZC)*TEMHR(:,:,MYL2) 
+  SALH2(:,:,K) = ZC*SALHR(:,:,MYL) + (1._R8-ZC)*SALHR(:,:,MYL2) 
+ENDDO
+
+WRITE(IOUNLOG,*) ' VERT  INTERPOLATION PERFORMED'
+WRITE(IOUNLOG,*)
+
+CALL WRANINCHR(IMHR,JMHR,KMHR,ROS%NEOF,LONHR,LATHR,DEPHR,SALH2*TMSKHR,TEMH2*TMSKHR,ROHR)
+    
+CALL MYFRTPROF_WALL('HRINTERP: INTERPOLATION ON HR GRID',1)
+
+!----------------------------------------------------------------------
+END SUBROUTINE HRINTERP
